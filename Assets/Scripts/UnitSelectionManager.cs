@@ -10,9 +10,9 @@ using NaughtyAttributes;
 public class UnitSelectionManager : MonoBehaviour
 {
     [SerializeField] private Camera cam;
-    [SerializeField] SelectableCollection selected_table;
+    [SerializeField] SelectableCollection selectableCollection;
+    
     RaycastHit hit;
-
     bool dragSelect;
 
     //Collider variables
@@ -66,12 +66,12 @@ public class UnitSelectionManager : MonoBehaviour
                 {
                     if (Input.GetKey(KeyCode.LeftShift)) //inclusive select
                     {
-                        selected_table.addSelected(hit.transform.gameObject);
+                        selectableCollection.addSelected(hit.transform.gameObject);
                     }
                     else //exclusive selected
                     {
-                        selected_table.deselectAll();
-                        selected_table.addSelected(hit.transform.gameObject);
+                        selectableCollection.deselectAll();
+                        selectableCollection.addSelected(hit.transform.gameObject);
                     }
                 }
                 else //if we didnt hit something
@@ -82,7 +82,7 @@ public class UnitSelectionManager : MonoBehaviour
                     }
                     else
                     {
-                        selected_table.deselectAll();
+                        selectableCollection.deselectAll();
                     }
                 }
             }
@@ -117,7 +117,7 @@ public class UnitSelectionManager : MonoBehaviour
 
                 if (!Input.GetKey(KeyCode.LeftShift))
                 {
-                    selected_table.deselectAll();
+                    selectableCollection.deselectAll();
                 }
 
                 Destroy(selectionBox, 0.02f);
@@ -188,7 +188,7 @@ public class UnitSelectionManager : MonoBehaviour
     {
         if (other.gameObject.GetComponent<Unit>())
         {
-            selected_table.addSelected(other.gameObject);
+            selectableCollection.addSelected(other.gameObject);
         }
     }
 

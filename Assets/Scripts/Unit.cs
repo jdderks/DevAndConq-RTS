@@ -4,14 +4,28 @@ using UnityEngine;
 
 public class Unit : MonoBehaviour, ISelectableMultiple
 {
+    private GameObject selectableHighlightParent;
+    [SerializeField] private GameObject cone = null;
+
+    private void OnEnable()
+    {
+        foreach (Transform t in transform)
+        {
+            if (t.name == "Selection")
+            {
+                selectableHighlightParent = t.gameObject;
+            }
+        }
+    }
+
     public void Select()
     {
-        GetComponent<Renderer>().material.color = Color.red;
+        cone = Instantiate(selectableHighlightParent, cone.transform);
     }
 
     public void Deselect()
     {
-        GetComponent<Renderer>().material.color = Color.white;
+        Destroy(cone);
     }
 
     public GameObject GetObject()
