@@ -7,5 +7,5 @@ using UnityEngine;
 
 public class MainGameSettings : ScriptableObject
 {
-    public ModelSettings modelSettings;
+    public ModelSettings ModelSettings;
 }

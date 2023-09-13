@@ -12,3 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b107643f5d38574488553728de2c3c68, type: 3}
   m_Name: ModelSettings
   m_EditorClassIdentifier: 
+  unitSelectionHighlightGameObject: {fileID: 5018503143670621054, guid: 1207f58a6800a5e4bbaf401d5756ea80,
+    type: 3}
+  terrainInteractionObject: {fileID: 5018503143670621054, guid: 2539c0bf3d0ed3d4a93ed38c9b129320,
+    type: 3}

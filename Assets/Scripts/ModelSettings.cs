@@ -8,4 +8,5 @@ using UnityEngine;
 public class ModelSettings : ScriptableObject
 {
     public GameObject unitSelectionHighlightGameObject;
+    public GameObject terrainInteractionObject;
 }

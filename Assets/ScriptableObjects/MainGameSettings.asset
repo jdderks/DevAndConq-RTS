@@ -12,3 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53025d2d7b862504ca658712d266c93a, type: 3}
   m_Name: MainGameSettings
   m_EditorClassIdentifier: 
+  ModelSettings: {fileID: 11400000, guid: 3b47e15817cab1c428cd4e1ed03c3782, type: 2}

@@ -27,7 +27,7 @@ public class CameraOrbitBehaviour : MonoBehaviour
 
     void LateUpdate()
     {
-        if (Input.GetKey(orbitInput))
+        if (Input.GetKey(orbitInput) || Input.GetKey(KeyCode.LeftAlt))
         {
             //Rotation of the Camera based on Mouse Coordinates
             if (Input.GetAxis("Mouse X") != 0 || Input.GetAxis("Mouse Y") != 0)

@@ -1,21 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-using UnityEngine.Diagnostics;
 using static UnitSelectionHelper;
-using NaughtyAttributes;
 
 //Made following: https://youtu.be/OL1QgwaDsqo by Seabass under the open-source MIT License
-public class UnitSelectionManager : MonoBehaviour
+/// <summary>
+/// This script is responsable for all the unit-selection and movement commands of units.
+/// The script may need to split up into multiple other scripts in the future to adhere to the single-responsibility prinsiple
+/// </summary>
+public class UnitSelection : MonoBehaviour
 {
     [SerializeField] private Camera cam;
-    [SerializeField] SelectableCollection selectableCollection;
-    
+
+
     RaycastHit hit;
     bool dragSelect;
 
-    //Collider variables
+    //Selection collider variables
     //=======================================================//
 
     MeshCollider selectionBox;
@@ -40,14 +41,15 @@ public class UnitSelectionManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        #region unit selection
         //1. when left mouse button clicked (but not released)
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0)) //TODO: Make InputManager 
         {
             p1 = Input.mousePosition;
         }
 
         //2. while left mouse button held
-        if (Input.GetMouseButton(0))
+        if (Input.GetMouseButton(0)) //TODO: Make InputManager 
         {
             if ((p1 - Input.mousePosition).magnitude > 40)
             {
@@ -56,7 +58,7 @@ public class UnitSelectionManager : MonoBehaviour
         }
 
         //3. when mouse button comes up
-        if (Input.GetMouseButtonUp(0))
+        if (Input.GetMouseButtonUp(0)) //TODO: Make InputManager 
         {
             if (dragSelect == false) //single select
             {
@@ -66,12 +68,12 @@ public class UnitSelectionManager : MonoBehaviour
                 {
                     if (Input.GetKey(KeyCode.LeftShift)) //inclusive select
                     {
-                        selectableCollection.addSelected(hit.transform.gameObject);
+                        GameManager.Instance.UnitManager.AddSelected(hit.transform.gameObject);//selectableCollection.addSelected(hit.transform.gameObject);
                     }
                     else //exclusive selected
                     {
-                        selectableCollection.deselectAll();
-                        selectableCollection.addSelected(hit.transform.gameObject);
+                        GameManager.Instance.UnitManager.DeselectAll();
+                        GameManager.Instance.UnitManager.AddSelected(hit.transform.gameObject);//selectableCollection.addSelected(hit.transform.gameObject);
                     }
                 }
                 else //if we didnt hit something
@@ -82,7 +84,7 @@ public class UnitSelectionManager : MonoBehaviour
                     }
                     else
                     {
-                        selectableCollection.deselectAll();
+                        GameManager.Instance.UnitManager.DeselectAll();
                     }
                 }
             }
@@ -110,14 +112,14 @@ public class UnitSelectionManager : MonoBehaviour
                 //generate the mesh
                 selectionMesh = CreateSelectionMesh(verts, vecs);
 
-                selectionBox = gameObject.AddComponent<MeshCollider>(); 
+                selectionBox = gameObject.AddComponent<MeshCollider>();
                 selectionBox.sharedMesh = selectionMesh;
                 selectionBox.convex = true;
                 selectionBox.isTrigger = true;
 
                 if (!Input.GetKey(KeyCode.LeftShift))
                 {
-                    selectableCollection.deselectAll();
+                    GameManager.Instance.UnitManager.DeselectAll();
                 }
 
                 Destroy(selectionBox, 0.02f);
@@ -127,7 +129,30 @@ public class UnitSelectionManager : MonoBehaviour
             dragSelect = false;
 
         }
+        #endregion
 
+        #region unit movement & unit interaction
+        if (Input.GetMouseButtonDown(1))
+        {
+            Ray ray = cam.ScreenPointToRay(Input.mousePosition);
+            int groundMask = 1 << 8;
+            if (Physics.Raycast(ray, out hit, 50000.0f, groundMask))
+            {
+                var instantiatedObject = Instantiate(GameManager.Instance.Settings.ModelSettings.terrainInteractionObject, hit.point, Quaternion.identity);
+                foreach (ISelectable item in GameManager.Instance.UnitManager.SelectableCollection.selectedTable.Values)
+                {
+                    if (item.GetObject().GetComponent<Unit>() != null)
+                    {
+
+
+                        item.GetObject().GetComponent<Unit>().Movement.Move(hit.point);
+                    }
+                }
+                Destroy(instantiatedObject, 0.4f);
+            }
+        }
+
+        #endregion
     }
 
     private void OnGUI()
@@ -139,7 +164,6 @@ public class UnitSelectionManager : MonoBehaviour
             DrawScreenRectBorder(rect, 2, new Color(0.8f, 0.8f, 0.95f));
         }
     }
-
 
     //create a bounding box (4 corners in order) from the start and end mouse position
     Vector2[] getBoundingBox(Vector2 p1, Vector2 p2)
@@ -164,7 +188,7 @@ public class UnitSelectionManager : MonoBehaviour
     Mesh CreateSelectionMesh(Vector3[] corners, Vector3[] vecs)
     {
         Vector3[] verts = new Vector3[8];
-        int[] tris = { 0, 1, 2, 2, 1, 3, 4, 6, 0, 0, 6, 2, 6, 7, 2, 2, 7, 3, 7, 5, 3, 3, 5, 1, 5, 0, 1, 1, 4, 0, 4, 5, 6, 6, 5, 7 }; //map the tris of our cube
+        int[] tris = { 0, 1, 2, 2, 1, 3, 4, 6, 0, 0, 6, 2, 6, 7, 2, 2, 7, 3, 7, 5, 3, 3, 5, 1, 5, 0, 1, 1, 4, 0, 4, 5, 6, 6, 5, 7 }; //map the tris of our frustum/pyramid
 
         for (int i = 0; i < 4; i++)
         {
@@ -188,8 +212,7 @@ public class UnitSelectionManager : MonoBehaviour
     {
         if (other.gameObject.GetComponent<Unit>())
         {
-            selectableCollection.addSelected(other.gameObject);
+            GameManager.Instance.UnitManager.AddSelected(other.gameObject);
         }
     }
-
 }

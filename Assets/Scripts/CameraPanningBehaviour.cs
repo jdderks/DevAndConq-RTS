@@ -15,7 +15,6 @@ public class CameraPanningBehaviour : MonoBehaviour
     [Header("Edge scrolling settings")]
     [SerializeField] private float screenEdgeBorder = 25.0f;
 
-
     [Header("Use keyboard or edge scrolling")]
     [SerializeField] private bool useKeyboardInput = true;
     [SerializeField] private bool useEdgeScrolling = true;

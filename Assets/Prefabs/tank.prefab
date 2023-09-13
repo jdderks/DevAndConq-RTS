@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3637473818536721182}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Selection
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 6288274087400181182}
   - component: {fileID: 8212310287864851499}
   - component: {fileID: 4699372776139511489}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Base
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -126,7 +126,7 @@ GameObject:
   - component: {fileID: 9027691771251386518}
   - component: {fileID: 1136240284823895820}
   - component: {fileID: 1425869135494699314}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: tank
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -190,6 +190,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30188ef46fab9434cadf05f888bffaaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  selectableHighlightParent: {fileID: 3637473818536721182}
 --- !u!64 &1425869135494699314
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -223,7 +224,7 @@ GameObject:
   - component: {fileID: 8728882362034200697}
   - component: {fileID: 6059671515161568063}
   - component: {fileID: 6107985887717926212}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Turret
   m_TagString: Untagged
   m_Icon: {fileID: 0}

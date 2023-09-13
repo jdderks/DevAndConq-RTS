@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class SelectableCollection : MonoBehaviour
@@ -42,4 +43,17 @@ public class SelectableCollection : MonoBehaviour
         }
         selectedTable.Clear();
     }
+
+    public IEnumerable<ISelectable> GetSelectedObjects()
+    {
+        return selectedTable.Values;
+    }
+
+    public IEnumerable<Unit> GetSelectedUnits()
+    {
+        return selectedTable.Values.
+            Select(item => item.GetObject().GetComponent<Unit>()).
+            Where(unit => unit != null);
+    }
+
 }
