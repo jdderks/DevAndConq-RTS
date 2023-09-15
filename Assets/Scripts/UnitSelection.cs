@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using static UnitSelectionHelper;
 
@@ -132,22 +133,32 @@ public class UnitSelection : MonoBehaviour
         #endregion
 
         #region unit movement & unit interaction
-        if (Input.GetMouseButtonDown(1))
+        if (Input.GetMouseButtonUp(1))
         {
             Ray ray = cam.ScreenPointToRay(Input.mousePosition);
             int groundMask = 1 << 8;
             if (Physics.Raycast(ray, out hit, 50000.0f, groundMask))
             {
-                var instantiatedObject = Instantiate(GameManager.Instance.Settings.ModelSettings.terrainInteractionObject, hit.point, Quaternion.identity);
-                foreach (ISelectable item in GameManager.Instance.SelectableCollection.selectedTable.Values)
+                var selectables = GameManager.Instance.SelectableCollection.selectedTable.Values;
+                var units = new List<Unit>();
+
+                foreach (var item in selectables)
                 {
                     if (item.GetGameObject().GetComponent<Unit>() != null)
                     {
-                        var unit = item.GetGameObject().GetComponent<Unit>();
-                        unit.StartTask(new MoveUnitTask(unit, hit.point));
+                        units.Add(item.GetGameObject().GetComponent<Unit>());
                     }
                 }
-                Destroy(instantiatedObject, 0.4f);
+
+                List<Vector3> movementPoints = PointGenerator.GenerateSunflowerPoints(hit.point, units.Count, 10);
+
+                for (int i = 0; i < units.Count; i++)
+                {
+                    var instantiatedObject = Instantiate(GameManager.Instance.Settings.ModelSettings.terrainInteractionObject, movementPoints[i], Quaternion.identity);
+                    Unit unit = units[i];
+                    unit.StartTask(new MoveUnitTask(unit, movementPoints[i]));
+                    Destroy(instantiatedObject, 0.4f);
+                }
             }
         }
 
