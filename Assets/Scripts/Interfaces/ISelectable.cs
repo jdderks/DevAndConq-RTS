@@ -6,5 +6,5 @@ public interface ISelectable
 {
     public void Select();
     public void Deselect();
-    public GameObject GetObject();
+    public GameObject GetGameObject();
 }

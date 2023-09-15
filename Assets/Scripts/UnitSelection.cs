@@ -68,12 +68,12 @@ public class UnitSelection : MonoBehaviour
                 {
                     if (Input.GetKey(KeyCode.LeftShift)) //inclusive select
                     {
-                        GameManager.Instance.UnitManager.AddSelected(hit.transform.gameObject);//selectableCollection.addSelected(hit.transform.gameObject);
+                        GameManager.Instance.unitManager.AddSelected(hit.transform.gameObject);//selectableCollection.addSelected(hit.transform.gameObject);
                     }
                     else //exclusive selected
                     {
-                        GameManager.Instance.UnitManager.DeselectAll();
-                        GameManager.Instance.UnitManager.AddSelected(hit.transform.gameObject);//selectableCollection.addSelected(hit.transform.gameObject);
+                        GameManager.Instance.unitManager.DeselectAll();
+                        GameManager.Instance.unitManager.AddSelected(hit.transform.gameObject);//selectableCollection.addSelected(hit.transform.gameObject);
                     }
                 }
                 else //if we didnt hit something
@@ -84,7 +84,7 @@ public class UnitSelection : MonoBehaviour
                     }
                     else
                     {
-                        GameManager.Instance.UnitManager.DeselectAll();
+                        GameManager.Instance.unitManager.DeselectAll();
                     }
                 }
             }
@@ -119,7 +119,7 @@ public class UnitSelection : MonoBehaviour
 
                 if (!Input.GetKey(KeyCode.LeftShift))
                 {
-                    GameManager.Instance.UnitManager.DeselectAll();
+                    GameManager.Instance.unitManager.DeselectAll();
                 }
 
                 Destroy(selectionBox, 0.02f);
@@ -139,13 +139,13 @@ public class UnitSelection : MonoBehaviour
             if (Physics.Raycast(ray, out hit, 50000.0f, groundMask))
             {
                 var instantiatedObject = Instantiate(GameManager.Instance.Settings.ModelSettings.terrainInteractionObject, hit.point, Quaternion.identity);
-                foreach (ISelectable item in GameManager.Instance.UnitManager.SelectableCollection.selectedTable.Values)
+                foreach (ISelectable item in GameManager.Instance.SelectableCollection.selectedTable.Values)
                 {
-                    if (item.GetObject().GetComponent<Unit>() != null)
+                    if (item.GetGameObject().GetComponent<Unit>() != null)
                     {
 
 
-                        item.GetObject().GetComponent<Unit>().Movement.Move(hit.point);
+                        //item.GetObject().GetComponent<Unit>().Movement.Move(hit.point);
                     }
                 }
                 Destroy(instantiatedObject, 0.4f);
@@ -212,7 +212,7 @@ public class UnitSelection : MonoBehaviour
     {
         if (other.gameObject.GetComponent<Unit>())
         {
-            GameManager.Instance.UnitManager.AddSelected(other.gameObject);
+            GameManager.Instance.unitManager.AddSelected(other.gameObject);
         }
     }
 }

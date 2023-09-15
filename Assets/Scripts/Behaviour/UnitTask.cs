@@ -6,6 +6,8 @@ using UnityEngine;
 public abstract class UnitTask
 {
 
+    protected Unit agent;
+
     public Action Completed;
     public Action Canceled;
     public Action Begun;
@@ -15,7 +17,6 @@ public abstract class UnitTask
     public abstract void OnCancel();
 
     public abstract void OnComplete();
-
 
     public void Begin()
     {
@@ -31,5 +32,4 @@ public abstract class UnitTask
     {
         OnComplete();
     }
-
 }

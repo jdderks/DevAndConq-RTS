@@ -1,28 +1,30 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-using UnityEngine.Diagnostics;
-using NaughtyAttributes;
-using UnityEngine.EventSystems;
-using UnityEngine.UI;
-using UnityEngine.AI;
 
 
 public class UnitManager : MonoBehaviour
 {
-    [SerializeField] private SelectableCollection selectableCollection;
+    public List<Unit> units = new List<Unit>();
 
-    public SelectableCollection SelectableCollection { get => selectableCollection; set => selectableCollection = value; }
-
-    public void AddSelected(GameObject gameobject)
+    public void RegisterUnit(Unit unit)
     {
-        SelectableCollection.addSelected(gameObject);
+        units.Add(unit);
     }
 
-    public void DeselectAll() 
-    { 
-        SelectableCollection.deselectAll();
+    public void UnRegisterUnit(Unit unit)
+    {
+        units.Remove(unit);
+    }
+
+    public void AddSelected(GameObject go)
+    {
+        GameManager.Instance.SelectableCollection.addSelected(go);
+    }
+
+    public void DeselectAll()
+    {
+        GameManager.Instance.SelectableCollection.deselectAll();
     }
 
 

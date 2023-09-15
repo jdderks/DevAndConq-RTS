@@ -52,8 +52,17 @@ public class SelectableCollection : MonoBehaviour
     public IEnumerable<Unit> GetSelectedUnits()
     {
         return selectedTable.Values.
-            Select(item => item.GetObject().GetComponent<Unit>()).
+            Select(item => item.GetGameObject().GetComponent<Unit>()).
             Where(unit => unit != null);
+    }
+
+
+    public Unit GetUnitFromSelectable(ISelectable selectable)
+    {
+        if (selectable.GetGameObject().GetComponent<Unit>() != null)
+            return selectable.GetGameObject().GetComponent<Unit>();
+        else
+            return null;
     }
 
 }

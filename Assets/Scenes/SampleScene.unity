@@ -801,6 +801,51 @@ MonoBehaviour:
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
   m_SoftShadowQuality: 1
+--- !u!1 &506134502
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 506134503}
+  - component: {fileID: 506134504}
+  m_Layer: 0
+  m_Name: MovementManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &506134503
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 506134502}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2024898263}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &506134504
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 506134502}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b59b74697e977624299473a314955847, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitManager: {fileID: 1706050629}
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -914,11 +959,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24729ddb42ac4184ba94d28c09a171dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetPosition: {x: 0, y: 0, z: 0}
-  moveForce: 50
-  maxSpeed: 10
-  turnForce: 1
-  easingThreshold: 5
 --- !u!1 &1612632354
 GameObject:
   m_ObjectHideFlags: 0
@@ -964,8 +1004,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cam: {fileID: 330585545}
-  unitSelection: {fileID: 0}
-  selectableCollection: {fileID: 0}
 --- !u!1 &1706050627
 GameObject:
   m_ObjectHideFlags: 0
@@ -1010,6 +1048,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef3b1f2bac7b22e41baebc73f84aa130, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  units: []
 --- !u!1 &2024898262
 GameObject:
   m_ObjectHideFlags: 0
@@ -1043,6 +1082,7 @@ Transform:
   m_Children:
   - {fileID: 1706050628}
   - {fileID: 1612632355}
+  - {fileID: 506134503}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2024898265
@@ -1070,8 +1110,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Settings: {fileID: 11400000, guid: 0ba82e2328eec7f4d825cf0d0f7f452f, type: 2}
-  UnitManager: {fileID: 1706050629}
-  UnitSelection: {fileID: 1612632356}
+  unitManager: {fileID: 0}
+  unitSelection: {fileID: 0}
+  movementManager: {fileID: 0}
+  selectableCollection: {fileID: 2024898265}
 --- !u!54 &148185948853053397
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1347,6 +1389,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selectableHighlightParent: {fileID: 5565425126425162845}
+  unitType: 1
 --- !u!65 &8107049996359725136
 BoxCollider:
   m_ObjectHideFlags: 0
