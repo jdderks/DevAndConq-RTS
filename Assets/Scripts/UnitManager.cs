@@ -1,3 +1,4 @@
+using NaughtyAttributes;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,16 +6,18 @@ using UnityEngine;
 
 public class UnitManager : MonoBehaviour
 {
-    public List<Unit> units = new List<Unit>();
+    [ReorderableList] private List<Unit> units = new List<Unit>();
+
+    public List<Unit> Units { get => units; set => units = value; }
 
     public void RegisterUnit(Unit unit)
     {
-        units.Add(unit);
+        Units.Add(unit);
     }
 
     public void UnRegisterUnit(Unit unit)
     {
-        units.Remove(unit);
+        Units.Remove(unit);
     }
 
     public void AddSelected(GameObject go)

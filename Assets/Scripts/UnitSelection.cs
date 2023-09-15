@@ -143,9 +143,8 @@ public class UnitSelection : MonoBehaviour
                 {
                     if (item.GetGameObject().GetComponent<Unit>() != null)
                     {
-
-
-                        //item.GetObject().GetComponent<Unit>().Movement.Move(hit.point);
+                        var unit = item.GetGameObject().GetComponent<Unit>();
+                        unit.StartTask(new MoveUnitTask(unit, hit.point));
                     }
                 }
                 Destroy(instantiatedObject, 0.4f);

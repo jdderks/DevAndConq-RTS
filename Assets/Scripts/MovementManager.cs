@@ -25,12 +25,12 @@ public class MovementManager : MonoBehaviour
     //Custom update method which can be enabled/disabled
     public void OnUpdate()
     {
-        HandleMovement();
+        //HandleMovement();
     }
 
     public void HandleMovement()
     {
-        foreach (Unit unit in unitManager.units)
+        foreach (Unit unit in unitManager.Units)
         {
             if (unit.CurrentTask is MoveUnitTask)
             {
@@ -45,7 +45,7 @@ public class MovementManager : MonoBehaviour
     void OnDrawGizmos()
     {
         Gizmos.color = Color.blue;
-        foreach (Unit unit in unitManager.units)
+        foreach (Unit unit in unitManager.Units)
         {
             if (unit.CurrentTask is MoveUnitTask)
             {
@@ -59,7 +59,11 @@ public class MovementManager : MonoBehaviour
                         Gizmos.DrawLine(task.Path.corners[i], task.Path.corners[i + 1]);
                     }
                 }
+
+                // Add a debug ray for the forward direction of the agent
+                Debug.DrawRay(unit.transform.position, unit.transform.forward * 5f, Color.red);
             }
         }
     }
+
 }
