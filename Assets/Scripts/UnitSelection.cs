@@ -1,21 +1,39 @@
+using NUnit.Framework.Constraints;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+
 using static UnitSelectionHelper;
+using static UnityEngine.Rendering.DebugUI.MessageBox;
 
 //Made following: https://youtu.be/OL1QgwaDsqo by Seabass under the open-source MIT License
 /// <summary>
 /// This script is responsable for all the unit-selection and movement commands of units.
 /// The script may need to split up into multiple other scripts in the future to adhere to the single-responsibility prinsiple
 /// </summary>
+/// 
+
+public enum CursorInputState
+{
+    None = 0,
+    HoldingLeft = 1,
+    HoldingRight = 2
+}
+
+
 public class UnitSelection : MonoBehaviour
 {
     [SerializeField] private Camera cam;
-
+    [SerializeField] private bool debugMouseState = true;
 
     RaycastHit hit;
     bool dragSelect;
+    bool lineInput;
+
+    Vector2 lineSelectOrigin;
+
+    public CursorInputState cursorState = CursorInputState.None;
 
     //Selection collider variables
     //=======================================================//
@@ -44,22 +62,16 @@ public class UnitSelection : MonoBehaviour
     {
         #region unit selection
         //1. when left mouse button clicked (but not released)
-        if (Input.GetMouseButtonDown(0)) //TODO: Make InputManager 
-        {
+        if (GameManager.Instance.inputManager.GetMouseToSelectInputDown())//(Input.GetMouseButtonDown(0)) //TODO: Make InputManager 
             p1 = Input.mousePosition;
-        }
 
         //2. while left mouse button held
-        if (Input.GetMouseButton(0)) //TODO: Make InputManager 
-        {
+        if (GameManager.Instance.inputManager.GetMouseToSelectInput()) //TODO: Make InputManager 
             if ((p1 - Input.mousePosition).magnitude > 40)
-            {
                 dragSelect = true;
-            }
-        }
 
         //3. when mouse button comes up
-        if (Input.GetMouseButtonUp(0)) //TODO: Make InputManager 
+        if (GameManager.Instance.inputManager.GetMouseToSelectInputUp()) //TODO: Make InputManager 
         {
             if (dragSelect == false) //single select
             {
@@ -133,25 +145,58 @@ public class UnitSelection : MonoBehaviour
         #endregion
 
         #region unit movement & unit interaction
-        if (Input.GetMouseButtonUp(1))
-        {
-            Ray ray = cam.ScreenPointToRay(Input.mousePosition);
-            int groundMask = 1 << 8;
-            if (Physics.Raycast(ray, out hit, 50000.0f, groundMask))
-            {
-                var selectables = GameManager.Instance.SelectableCollection.selectedTable.Values;
-                var units = new List<Unit>();
 
-                foreach (var item in selectables)
+        int groundMask = 1 << 8;
+
+        //1. register start of line input
+        if (GameManager.Instance.inputManager.GetMouseToMoveInputDown())
+        {
+            lineSelectOrigin = Input.mousePosition;
+        }
+
+        if (GameManager.Instance.inputManager.GetMouseToMoveInput())
+        {
+            if (Vector2.Distance(lineSelectOrigin, Input.mousePosition) > 10)
+            {
+                lineInput = true;
+                //Debug line drawing here
+            }
+        }
+
+        if (GameManager.Instance.inputManager.GetMouseToMoveInputUp())//(Input.GetMouseButtonUp(1))
+        {
+            var selectables = GameManager.Instance.SelectableCollection.selectedTable.Values;
+            var units = new List<Unit>();
+
+            foreach (var item in selectables)
+            {
+                if (item.GetGameObject().GetComponent<Unit>() != null)
                 {
-                    if (item.GetGameObject().GetComponent<Unit>() != null)
-                    {
-                        units.Add(item.GetGameObject().GetComponent<Unit>());
-                    }
+                    units.Add(item.GetGameObject().GetComponent<Unit>());
+                }
+            }
+
+            if (lineInput == true)
+            {
+                Ray ray1 = cam.ScreenPointToRay(lineSelectOrigin);//Ray 1 of the line
+                Ray ray2 = cam.ScreenPointToRay(Input.mousePosition); //Ray 2 of the line
+
+                RaycastHit hit1;
+                RaycastHit hit2;
+
+                Vector3 point1 = new Vector3();
+                Vector3 point2 = new Vector3();
+
+                if (Physics.Raycast(ray1, out hit1, 5000f, groundMask))
+                {
+                    point1 = hit1.point;
+                }
+                if (Physics.Raycast(ray2, out hit2, 5000f, groundMask))
+                {
+                    point2 = hit2.point;
                 }
 
-                List<Vector3> movementPoints = PointGenerator.GenerateSunflowerPoints(hit.point, units.Count, 10);
-
+                List<Vector3> movementPoints = PointGenerator.GeneratePointsInLine(point1, point2, units.Count).ToList();
                 for (int i = 0; i < units.Count; i++)
                 {
                     var instantiatedObject = Instantiate(GameManager.Instance.Settings.ModelSettings.terrainInteractionObject, movementPoints[i], Quaternion.identity);
@@ -160,6 +205,27 @@ public class UnitSelection : MonoBehaviour
                     Destroy(instantiatedObject, 0.4f);
                 }
             }
+
+
+
+
+            Ray ray = cam.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out hit, 50000.0f, groundMask))
+            {
+                if (lineInput == false)
+                {
+                    List<Vector3> movementPoints = PointGenerator.GenerateSunflowerPoints(hit.point, units.Count, 10);
+
+                    for (int i = 0; i < units.Count; i++)
+                    {
+                        var instantiatedObject = Instantiate(GameManager.Instance.Settings.ModelSettings.terrainInteractionObject, movementPoints[i], Quaternion.identity);
+                        Unit unit = units[i];
+                        unit.StartTask(new MoveUnitTask(unit, movementPoints[i]));
+                        Destroy(instantiatedObject, 0.4f);
+                    }
+                }
+            }
+            lineInput = false;
         }
 
         #endregion
@@ -173,6 +239,23 @@ public class UnitSelection : MonoBehaviour
             DrawScreenRect(rect, new Color(0.8f, 0.8f, 0.95f, 0.25f));
             DrawScreenRectBorder(rect, 2, new Color(0.8f, 0.8f, 0.95f));
         }
+        if (debugMouseState)
+        {
+            if (lineInput)
+                ShowTextBelowMouse("Drawing a line.");
+            else
+                ShowTextBelowMouse(cursorState.ToString());
+        }
+
+    }
+
+    void ShowTextBelowMouse(string text, float textSize = 16f)
+    {
+        GUIStyle style = new GUIStyle(GUI.skin.label);
+        style.fontSize = Mathf.RoundToInt(textSize);
+
+        Vector3 mousePosition = Input.mousePosition;
+        GUI.Label(new Rect(mousePosition.x, Screen.height - mousePosition.y, 200, 30), text, style);
     }
 
     //create a bounding box (4 corners in order) from the start and end mouse position

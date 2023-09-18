@@ -42,22 +42,14 @@ public static class PointGenerator
         return points;
     }
 
-    public static List<Vector3> GenerateExperimentalPoints(Vector3 position, int numberOfPoints, float radius)
+    public static Vector3[] GeneratePointsInLine(Vector3 point1, Vector3 point2, int amount)
     {
-        List<Vector3> points = new List<Vector3>();
-
-        for (int i = 0; i < numberOfPoints; i++)
+        Vector3[] points = new Vector3[amount + 1];
+        for (int i = 0; i <= amount; i++)
         {
-            float angle = Random.Range(0f, 2f * Mathf.PI); // Random angle
-            float randomRadius = Mathf.Sqrt(Random.Range(0f, 1f)) * radius; // Random radius within the circle
-
-            float x = position.x + randomRadius * Mathf.Cos(angle);
-            float z = position.z + randomRadius * Mathf.Sin(angle);
-
-            Vector3 point = new Vector3(x, position.y, z);
-            points.Add(point);
+            float t = i / (float)amount;
+            points[i] = Vector3.Lerp(point1, point2, t);
         }
-
         return points;
     }
 }

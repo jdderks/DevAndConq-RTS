@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour
     public UnitManager unitManager;
     public UnitSelection unitSelection;
     public MovementManager movementManager;
+    public InputManager inputManager;
 
 
     [SerializeField] private SelectableCollection selectableCollection;

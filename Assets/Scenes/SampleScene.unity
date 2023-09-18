@@ -603,6 +603,54 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1249700020}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &208433317
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 208433318}
+  - component: {fileID: 208433319}
+  m_Layer: 0
+  m_Name: InputManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &208433318
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 208433317}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2024898263}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &208433319
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 208433317}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8cb26c8fb65e3d940a3a528ec70e655a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mouseInputToSelect: 0
+  mouseInputToMoveCamera: 1
+  keyToOrbitCameraWihoutMouse: 308
+  keyToKeepSelectedUnits: 304
 --- !u!4 &230482681 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7337393460853754355, guid: d16d61a8fbc16b44394f3438fff6a179,
@@ -2230,6 +2278,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cam: {fileID: 330585545}
+  debugMouseState: 1
+  cursorState: 0
 --- !u!4 &1634645515 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7337393460853754355, guid: d16d61a8fbc16b44394f3438fff6a179,
@@ -2666,6 +2716,7 @@ Transform:
   - {fileID: 1706050628}
   - {fileID: 1612632355}
   - {fileID: 506134503}
+  - {fileID: 208433318}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2024898265
@@ -2696,6 +2747,7 @@ MonoBehaviour:
   unitManager: {fileID: 1706050629}
   unitSelection: {fileID: 1612632356}
   movementManager: {fileID: 506134504}
+  inputManager: {fileID: 208433319}
   selectableCollection: {fileID: 2024898265}
 --- !u!1001 &2067206547
 PrefabInstance:
