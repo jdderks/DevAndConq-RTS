@@ -50,6 +50,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30188ef46fab9434cadf05f888bffaaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  idleAnimation: {fileID: 0}
   thresholdDistance: 1.2
   downwardForce: 9.81
   unitSpeed: 12.91

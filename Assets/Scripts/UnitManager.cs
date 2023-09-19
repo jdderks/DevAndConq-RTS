@@ -10,6 +10,16 @@ public class UnitManager : MonoBehaviour
 
     public List<Unit> Units { get => units; set => units = value; }
 
+    public void Update()
+    {
+        foreach (var unit in units)
+        {
+            if (unit.CurrentTask == null)
+                unit.StartTask(new IdleTask(unit));
+        }
+    }
+
+
     public void RegisterUnit(Unit unit)
     {
         Units.Add(unit);

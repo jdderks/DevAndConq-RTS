@@ -11,10 +11,17 @@ public enum TaskState
     Completed = 3
 }
 
+public enum TaskPriority
+{
+    Idle = 0,
+    Priority = 1
+}
+
 public abstract class UnitTask
 {
-
     protected Unit agent;
+
+    public TaskPriority priority;
 
     public Action Completed;
     public Action Canceled;
@@ -33,18 +40,30 @@ public abstract class UnitTask
     public void Begin()
     {
         this.TaskState = TaskState.Active;
-        OnBegin();
+        if (Begun == null)
+        {
+            Begun += OnBegin;
+            Begun.Invoke();
+        }
     }
 
     public void Cancel()
     {
         this.TaskState = TaskState.Cancelled;
-        OnCancel();
+        if (Canceled == null)
+        {
+            Canceled += OnCancel;
+            Canceled.Invoke();
+        }
     }
 
     public void Complete()
     {
         this.TaskState = TaskState.Completed;
-        OnComplete();
+        if (Completed == null)
+        {
+            Completed += OnComplete;
+            Completed.Invoke();
+        }
     }
 }

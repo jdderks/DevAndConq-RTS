@@ -14,6 +14,7 @@ public class MoveUnitTask : UnitTask
 
     public MoveUnitTask(Unit agent, Vector3 destination)
     {
+        priority = TaskPriority.Priority;
         this.agent = agent;
         this.destination = destination;
 

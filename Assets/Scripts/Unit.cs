@@ -16,6 +16,8 @@ public enum UnitType
 
 public class Unit : MonoBehaviour, ISelectableMultiple
 {
+    [SerializeField] private Animation idleAnimation;
+
     [SerializeField] float thresholdDistance = 0.1f;
     [SerializeField] private float downwardForce = 9.81f; //Controls gravity
 
@@ -40,13 +42,11 @@ public class Unit : MonoBehaviour, ISelectableMultiple
     public bool TaskDebugInfo { get => taskDebugInfo; set => taskDebugInfo = value; }
     public float UnitSpeed { get => unitSpeed; set => unitSpeed = value; }
     public NavMeshAgent Agent { get => agent; set => agent = value; }
+    public Animation IdleAnimation { get => idleAnimation; set => idleAnimation = value; }
 
     private void Start()
     {
         agent = GetComponent<NavMeshAgent>();
-        Debug.Log(GameManager.Instance);
-        Debug.Log(GameManager.Instance.unitManager);
-        Debug.Log(this);
         GameManager.Instance.unitManager.RegisterUnit(this);
         foreach (Transform t in transform)
         {
@@ -69,8 +69,6 @@ public class Unit : MonoBehaviour, ISelectableMultiple
     {
         Destroy(instantiatedObject);
     }
-
-
 
     public GameObject GetGameObject()
     {
@@ -95,22 +93,30 @@ public class Unit : MonoBehaviour, ISelectableMultiple
         if (isMoving == true) UpdateMovement();
     }
 
-    private void FallToGround()
-    {
-        Ray ray = new Ray(transform.position, Vector3.down);
-        RaycastHit hit;
+    /// <summary>
+    /// Virtual so specific types of units can have their own idle animations, the base unit has no idle or attack
+    /// </summary>
+    public virtual void PlayIdleAnimation(){}
+    public virtual void StopIdleAnimation(){}
+    public virtual void MeleeAttack(){}
+    public virtual void RangedAttack(Vector3 position, Unit targetUnit = null) { }
 
-        if (Physics.Raycast(ray, out hit, float.PositiveInfinity, 1 << 8)) //Layer 8 is ground
-        {
-            float distanceToGround = hit.distance;
+    //private void FallToGround()
+    //{
+    //    Ray ray = new Ray(transform.position, Vector3.down);
+    //    RaycastHit hit;
 
-            if (distanceToGround > thresholdDistance)
-            {
-                // Apply falling logic here (e.g., move the object down)
-                transform.position -= Vector3.up * Time.deltaTime * downwardForce; // Adjust the falling speed as needed
-            }
-        }
-    }
+    //    if (Physics.Raycast(ray, out hit, float.PositiveInfinity, 1 << 8)) //Layer 8 is ground
+    //    {
+    //        float distanceToGround = hit.distance;
+
+    //        if (distanceToGround > thresholdDistance)
+    //        {
+    //            // Apply falling logic here (e.g., move the object down)
+    //            transform.position -= Vector3.up * Time.deltaTime * downwardForce; // Adjust the falling speed as needed
+    //        }
+    //    }
+    //}
 
     [ExecuteInEditMode]
     private void OnDrawGizmos()

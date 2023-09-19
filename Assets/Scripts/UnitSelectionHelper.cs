@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 
@@ -54,6 +55,16 @@ public static class UnitSelectionHelper
         var bottomRight = Vector3.Max(screenPosition1, screenPosition2);
         // Create Rect
         return Rect.MinMaxRect(topLeft.x, topLeft.y, bottomRight.x, bottomRight.y);
+    }
+
+    public static void DrawLine(Color color, Vector2 startPosition)
+    {
+        Vector2 endPosition = Event.current.mousePosition;
+
+        Handles.BeginGUI();
+        Handles.color = color;
+        Handles.DrawAAPolyLine(2f, startPosition, endPosition);
+        Handles.EndGUI();
     }
 }
 
