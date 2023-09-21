@@ -16,15 +16,18 @@ public class IdleTask : UnitTask
         //Assert.IsNotNull(agent.IdleAnimation, "you have to assign an idle animation to the unit!");
         //if (agent.IdleAnimation != null)
         //    agent.IdleAnimation.Play();
+        agent.PlayIdleAnimation();
     }
 
     public override void OnCancel()
     {
         //throw new System.NotImplementedException();
+        agent.StopIdleAnimation();
     }
 
     public override void OnComplete()
     {
+        agent.StopIdleAnimation();
         //throw new System.NotImplementedException();
     }
 }

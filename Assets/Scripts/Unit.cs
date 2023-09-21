@@ -16,8 +16,6 @@ public enum UnitType
 
 public class Unit : MonoBehaviour, ISelectableMultiple
 {
-    [SerializeField] private Animation idleAnimation;
-
     [SerializeField] float thresholdDistance = 0.1f;
     [SerializeField] private float downwardForce = 9.81f; //Controls gravity
 
@@ -28,13 +26,14 @@ public class Unit : MonoBehaviour, ISelectableMultiple
     [SerializeField] private Transform selectableHighlightParent;
     [SerializeField] private UnitType unitType;
 
+    [SerializeField]private NavMeshAgent agent;
+    
     private bool isMoving;
 
     private GameObject instantiatedObject = null;
 
     private UnitTask currentTask;
 
-    private NavMeshAgent agent;
 
     public bool IsMoving { get => isMoving; set => isMoving = value; }
     public UnitType UnitType { get => unitType; set => unitType = value; }
@@ -42,11 +41,10 @@ public class Unit : MonoBehaviour, ISelectableMultiple
     public bool TaskDebugInfo { get => taskDebugInfo; set => taskDebugInfo = value; }
     public float UnitSpeed { get => unitSpeed; set => unitSpeed = value; }
     public NavMeshAgent Agent { get => agent; set => agent = value; }
-    public Animation IdleAnimation { get => idleAnimation; set => idleAnimation = value; }
 
     private void Start()
     {
-        agent = GetComponent<NavMeshAgent>();
+        //agent = GetComponent<NavMeshAgent>();
         GameManager.Instance.unitManager.RegisterUnit(this);
         foreach (Transform t in transform)
         {
@@ -77,7 +75,7 @@ public class Unit : MonoBehaviour, ISelectableMultiple
 
     public void StartTask(UnitTask task)
     {
-
+        if (currentTask != null) CurrentTask.Cancel();
         CurrentTask = task;
         task.Begin();
     }
@@ -96,10 +94,12 @@ public class Unit : MonoBehaviour, ISelectableMultiple
     /// <summary>
     /// Virtual so specific types of units can have their own idle animations, the base unit has no idle or attack
     /// </summary>
-    public virtual void PlayIdleAnimation(){}
-    public virtual void StopIdleAnimation(){}
-    public virtual void MeleeAttack(){}
+    public virtual void PlayIdleAnimation() { }
+    public virtual void StopIdleAnimation() { }
+    public virtual void MeleeAttack() { }
     public virtual void RangedAttack(Vector3 position, Unit targetUnit = null) { }
+    public virtual void RangedAttack(Unit unit, Unit targetUnit = null) { }
+    public virtual void Hit() { }
 
     //private void FallToGround()
     //{

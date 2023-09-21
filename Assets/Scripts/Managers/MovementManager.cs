@@ -25,7 +25,7 @@ public class MovementManager : MonoBehaviour
     //Custom update method which can be enabled/disabled
     public void OnUpdate()
     {
-        //HandleMovement();
+        HandleMovement();
     }
 
     public void HandleMovement()

@@ -14,7 +14,7 @@ public class UnitManager : MonoBehaviour
     {
         foreach (var unit in units)
         {
-            if (unit.CurrentTask == null)
+            if (unit.CurrentTask == null || unit.CurrentTask.TaskState == TaskState.Completed)
                 unit.StartTask(new IdleTask(unit));
         }
     }

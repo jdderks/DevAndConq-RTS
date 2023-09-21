@@ -25,6 +25,8 @@ public class MoveUnitTask : UnitTask
     public override void OnBegin()
     {
         //CalculatePath(destination);
+        Debug.Log(agent);
+        Debug.Log(agent.Agent);
         agent.Agent.SetDestination(destination);
     }
     public override void OnComplete()
@@ -42,21 +44,9 @@ public class MoveUnitTask : UnitTask
     /// </summary>
     public void Move()
     {
-        float rotationSpeed = 2.5f; // Rotation of the agent
-        if (currentCornerIndex < path.corners.Length)
+        if (agent.Agent.remainingDistance < 1)
         {
-            RotateToWaypoint(path.corners[currentCornerIndex],rotationSpeed);
-
-            // Move towards the current corner
-            Vector3 directionToNextCorner = (path.corners[currentCornerIndex] - agent.transform.position).normalized;
-            agent.transform.Translate(directionToNextCorner);//agent.transform.position += directionToNextCorner * moveSpeed * Time.deltaTime;
-
-            // Check if the agent is close enough to the current corner
-            if (Vector3.Distance(agent.transform.position, path.corners[currentCornerIndex]) < 0.1f)
-            {
-                // Move to the next corner
-                currentCornerIndex++;
-            }
+            Complete();
         }
     }
 
