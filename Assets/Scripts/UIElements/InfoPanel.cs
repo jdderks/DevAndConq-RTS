@@ -12,4 +12,5 @@ public class InfoPanel : MonoBehaviour
 
     public TextMeshProUGUI InfoPanelHeaderDescriptor { get => infoPanelHeaderDescriptor; set => infoPanelHeaderDescriptor = value; }
     public TextMeshProUGUI AmountOfUnitsSelectedDescriptor { get => amountOfUnitsSelectedDescriptor; set => amountOfUnitsSelectedDescriptor = value; }
+    public TextMeshProUGUI AmountOfUnitsSelectedValue { get => amountOfUnitsSelectedValue; set => amountOfUnitsSelectedValue = value; }
 }

@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class UnitManager : MonoBehaviour
 {
-    [ReorderableList] private List<Unit> units = new List<Unit>();
+    private List<Unit> units = new List<Unit>();
 
     public List<Unit> Units { get => units; set => units = value; }
 
@@ -18,7 +18,6 @@ public class UnitManager : MonoBehaviour
                 unit.StartTask(new IdleTask(unit));
         }
     }
-
 
     public void RegisterUnit(Unit unit)
     {

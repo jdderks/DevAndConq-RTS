@@ -215,7 +215,7 @@ public class UnitSelection : MonoBehaviour
             {
                 if (lineInput == false)
                 {
-                    List<Vector3> movementPoints = PointGenerator.GenerateSunflowerPoints(hit.point, units.Count, 10);
+                    List<Vector3> movementPoints = PointGenerator.GenerateSunflowerPoints(hit.point, numberOfPoints: units.Count, radius: units.Count * 0.5f);
 
                     for (int i = 0; i < units.Count; i++)
                     {

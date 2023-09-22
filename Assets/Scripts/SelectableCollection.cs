@@ -24,12 +24,14 @@ public class SelectableCollection : MonoBehaviour
                 Debug.Log("Added " + id + " to selected dict " + " (" + go.name + ")");
             }
         }
+        UpdateUnitUI();
     }
 
     public void deselect(int id)
     {
         selectedTable[id].Deselect();
         selectedTable.Remove(id);
+        UpdateUnitUI();
     }
 
     public void deselectAll()
@@ -42,6 +44,7 @@ public class SelectableCollection : MonoBehaviour
             }
         }
         selectedTable.Clear();
+        UpdateUnitUI();
     }
 
     public IEnumerable<ISelectable> GetSelectedObjects()
@@ -63,6 +66,11 @@ public class SelectableCollection : MonoBehaviour
             return selectable.GetGameObject().GetComponent<Unit>();
         else
             return null;
+    }
+
+    public void UpdateUnitUI()
+    {
+        GameManager.Instance.uiManager.UpdateInfoPanelValues();
     }
 
 }

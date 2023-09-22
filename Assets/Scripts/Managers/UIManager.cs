@@ -11,12 +11,12 @@ public class UIManager : MonoBehaviour
 
     [SerializeField] private LanguageSets currentSelectedLanguage = LanguageSets.English;
 
-    private TextMeshProUGUI InfoPanelText_UnitAmount;
+    //private TextMeshProUGUI InfoPanelText_UnitAmount;
 
 
     public void UpdateInfoPanelValues()
     {
-        InfoPanelText_UnitAmount.text = GameManager.Instance.unitManager.Units.Count.ToString();
+        infoPanel.AmountOfUnitsSelectedValue.text = GameManager.Instance.SelectableCollection.selectedTable.Values.Count.ToString();
     }
 
     public void SetInfoPanelDescriptors()
