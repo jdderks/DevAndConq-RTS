@@ -189,7 +189,6 @@ public class UnitSelection : MonoBehaviour
                 RaycastHit hit1;
                 RaycastHit hit2;
 
-                
 
                 if (Physics.Raycast(ray1, out hit1, 5000f, groundMask))
                 {

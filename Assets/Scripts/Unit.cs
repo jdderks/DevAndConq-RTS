@@ -14,8 +14,9 @@ public enum UnitType
     VTOL = 4         //For aircraft that can hover and land and take off vertically
 }
 
-public class Unit : MonoBehaviour, ISelectableMultiple
+public class Unit : MonoBehaviour, ISelectableMultiple, IDamageable
 {
+    [Header("Unit related")]
     [SerializeField] float thresholdDistance = 0.1f;
     [SerializeField] private float downwardForce = 9.81f; //Controls gravity
 
@@ -26,8 +27,10 @@ public class Unit : MonoBehaviour, ISelectableMultiple
     [SerializeField] private Transform selectableHighlightParent;
     [SerializeField] private UnitType unitType;
 
-    [SerializeField]private NavMeshAgent agent;
-    
+    [SerializeField] private NavMeshAgent agent;
+
+    [SerializeField] private TeamScriptableObject currentTeam;
+
     private bool isMoving;
 
     private GameObject instantiatedObject = null;
@@ -124,5 +127,13 @@ public class Unit : MonoBehaviour, ISelectableMultiple
         Debug.DrawRay(transform.position, -transform.up * thresholdDistance, Color.red);
     }
 
+    public virtual float TakeDamage()
+    {
+        return 0f;
+    }
 
+    public virtual void Die()
+    {
+        return;
+    }
 }

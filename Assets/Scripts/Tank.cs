@@ -4,20 +4,21 @@ using UnityEngine;
 
 public class Tank : Unit
 {
-    private GameObject turret;
-    private float idleTurretRotationRange = 30f;
-    private float turretRotationSpeed = 5f; // Adjust this value to control rotation speed
     private Quaternion originRotation = Quaternion.Euler(0,0,0);
     private Quaternion initialRotation;
     private Quaternion targetRotation;
     private Coroutine idleCoroutine = null;
     private Coroutine resetRotationCoroutine = null;
 
+    
+    [SerializeField, Header("Tank related")] private GameObject teamIndicatorObject;
+    [SerializeField] private GameObject turret;
+    [SerializeField] private float idleTurretRotationRange = 30f;
+    [SerializeField] private float turretRotationSpeed = 5f;
+
     void Start()
     {
         GameManager.Instance.unitManager.RegisterUnit(this);
-        turret = transform.Find("Turret").gameObject; // Assuming the turret is a child object named "Turret"
-        //originRotation = turret.transform.rotation;
         initialRotation = turret.transform.rotation;
     }
 

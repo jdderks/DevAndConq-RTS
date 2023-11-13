@@ -1,0 +1,36 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class CommandCenter : Building
+{
+    
+
+    // Start is called before the first frame update
+    void Start()
+    {
+
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+
+    }
+
+    public override void Deselect()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public override GameObject GetGameObject()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public override void Select()
+    {
+        throw new System.NotImplementedException();
+    }
+
+}
