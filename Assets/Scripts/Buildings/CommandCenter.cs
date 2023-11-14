@@ -1,10 +1,12 @@
+using NUnit.Framework;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class CommandCenter : Building
 {
-    
+
+
 
     // Start is called before the first frame update
     void Start()
@@ -20,17 +22,18 @@ public class CommandCenter : Building
 
     public override void Deselect()
     {
-        throw new System.NotImplementedException();
+        Destroy(instantiatedSelectionObject);
     }
 
     public override GameObject GetGameObject()
     {
-        throw new System.NotImplementedException();
+        return gameObject;
     }
 
     public override void Select()
     {
-        throw new System.NotImplementedException();
+        Assert.IsNotNull(selectableHighlightParent, "Parent object not set in prefab.");
+        instantiatedSelectionObject = Instantiate(GameManager.Instance.Settings.ModelSettings.unitSelectionHighlightGameObject, selectableHighlightParent);
     }
 
 }

@@ -22,8 +22,20 @@ public class SelectableCollection : MonoBehaviour
                     selectedTable.Add(id, go.GetComponent<Unit>());
                 }
                 Debug.Log("Added " + id + " to selected dict " + " (" + go.name + ")");
+            } 
+            else  if (go.GetComponent<Building>() != null)
+            {
+                var building = go.GetComponent<Building>();
+                if (building is ISelectable)
+                {
+                    building.Select();
+                    selectedTable.Add(id, go.GetComponent<Building>());
+                }
+                Debug.Log("Added " + id + " to selected dict " + " (" + go.name + ")");
+
             }
         }
+
         UpdateUnitUI();
     }
 

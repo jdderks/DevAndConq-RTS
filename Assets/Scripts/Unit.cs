@@ -29,7 +29,7 @@ public class Unit : MonoBehaviour, ISelectableMultiple, IDamageable
 
     [SerializeField] private NavMeshAgent agent;
 
-    [SerializeField] private TeamScriptableObject currentTeam;
+    [SerializeField] private TeamScriptableObject ownedByTeam;
 
     private bool isMoving;
 
@@ -61,9 +61,7 @@ public class Unit : MonoBehaviour, ISelectableMultiple, IDamageable
     public void Select()
     {
         Assert.IsNotNull(selectableHighlightParent, "Parent object not set in prefab.");
-        instantiatedObject = GameManager.Instance.Settings.ModelSettings.unitSelectionHighlightGameObject;
-        Assert.IsNotNull(instantiatedObject, "Object not assigned in the Game Settings or error in Unit.cs.");
-        instantiatedObject = Instantiate(instantiatedObject, selectableHighlightParent);
+        instantiatedObject = Instantiate(GameManager.Instance.Settings.ModelSettings.unitSelectionHighlightGameObject, selectableHighlightParent);
     }
 
     public void Deselect()
@@ -103,23 +101,6 @@ public class Unit : MonoBehaviour, ISelectableMultiple, IDamageable
     public virtual void RangedAttack(Vector3 position, Unit targetUnit = null) { }
     public virtual void RangedAttack(Unit unit, Unit targetUnit = null) { }
     public virtual void Hit() { }
-
-    //private void FallToGround()
-    //{
-    //    Ray ray = new Ray(transform.position, Vector3.down);
-    //    RaycastHit hit;
-
-    //    if (Physics.Raycast(ray, out hit, float.PositiveInfinity, 1 << 8)) //Layer 8 is ground
-    //    {
-    //        float distanceToGround = hit.distance;
-
-    //        if (distanceToGround > thresholdDistance)
-    //        {
-    //            // Apply falling logic here (e.g., move the object down)
-    //            transform.position -= Vector3.up * Time.deltaTime * downwardForce; // Adjust the falling speed as needed
-    //        }
-    //    }
-    //}
 
     [ExecuteInEditMode]
     private void OnDrawGizmos()

@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using NUnit.Framework.Constraints;
 using System.Collections;
 using System.Collections.Generic;
@@ -10,10 +11,9 @@ using static UnityEngine.Rendering.DebugUI.MessageBox;
 
 //Made following: https://youtu.be/OL1QgwaDsqo by Seabass under the open-source MIT License
 /// <summary>
-/// This script is responsable for all the unit-selection and movement commands of units.
+/// This script is responsable for all the unit-selection and building selection.
 /// The script may need to split up into multiple other scripts in the future to adhere to the single-responsibility prinsiple
 /// </summary>
-/// 
 
 public enum CursorInputState
 {
@@ -23,7 +23,7 @@ public enum CursorInputState
 }
 
 
-public class UnitSelection : MonoBehaviour
+public class SelectionManager : MonoBehaviour
 {
     [SerializeField] private Camera cam;
     [SerializeField] private bool debugMouseState = true;
@@ -250,11 +250,11 @@ public class UnitSelection : MonoBehaviour
         {
             if (lineInput)
             {
-                ShowTextBelowMouse("Drawing a line.");
+                ShowTextBelowCursor("Drawing a line.");
             }
             else
             {
-                ShowTextBelowMouse(cursorState.ToString());
+                ShowTextBelowCursor(cursorState.ToString());
             }
         }
 
@@ -274,7 +274,7 @@ public class UnitSelection : MonoBehaviour
 
 
 
-    void ShowTextBelowMouse(string text, float textSize = 16f)
+    void ShowTextBelowCursor(string text, float textSize = 16f)
     {
         GUIStyle style = new GUIStyle(GUI.skin.label);
         style.fontSize = Mathf.RoundToInt(textSize);

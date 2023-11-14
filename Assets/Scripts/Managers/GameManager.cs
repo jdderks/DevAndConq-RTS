@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour
     [Space]
     [Header("Managers")]
     public UnitManager unitManager;
-    public UnitSelection unitSelection;
+    public SelectionManager unitSelection;
     public MovementManager movementManager;
     public InputManager inputManager;
     public UIManager uiManager;
