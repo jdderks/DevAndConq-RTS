@@ -13,6 +13,11 @@ public class UIManager : MonoBehaviour
 
     //private TextMeshProUGUI InfoPanelText_UnitAmount;
 
+    public void UpdateSelectionUI()
+    {
+
+    }
+
 
     public void UpdateInfoPanelValues()
     {

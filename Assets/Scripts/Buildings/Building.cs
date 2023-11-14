@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract class Building : MonoBehaviour, ISelectable
 {
-    public List<BuildingAction> buildingActions = new(8);
+    public List<BuildingAction> buildingActions = new(8); //These are empty RTS action slots
 
     [SerializeField] protected Transform selectableHighlightParent;
     protected GameObject instantiatedSelectionObject;
