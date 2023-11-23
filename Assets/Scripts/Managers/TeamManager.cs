@@ -5,15 +5,7 @@ using UnityEngine;
 
 public class TeamManager : MonoBehaviour
 {
-    public TeamScriptableObject currentTeam = null;
+    public List<TeamScriptableObject> availableTeams = new();
 
-    public List<TeamScriptableObject> teams = new();
-
-    public List<Material> teamMaterials = new();
-
-
-    private void Start()
-    {
-        
-    }
+    public List<Team> teams = new();
 }

@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class CommandCenter : Building
 {
-    RTSAction constructDozerAction = new CreateUnitRTSAction();
+    RtsAction constructDozerAction = new CreateUnitRTSAction();
 
     // Start is called before the first frame update
     void Start()

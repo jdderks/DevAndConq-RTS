@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CreateUnitRTSAction : RTSAction
+public class CreateUnitRTSAction : RtsAction
 {
     [SerializeField] public Unit unit; //The unit that can be made
     [SerializeField] PanelInfoScriptableObject panelInfo; //The info that can be displayed

@@ -31,16 +31,21 @@ public class Unit : MonoBehaviour, ISelectableMultiple, IDamageable
 
     [SerializeField] private TeamScriptableObject ownedByTeam;
 
-    private bool isMoving;
+    private List<RtsUnitAction> _rtsActions = new(8); //Emtpy RTS unit slots, maximum of 8
 
-    private GameObject instantiatedObject = null;
+    public List<RtsUnitAction> RtsActions
+    {
+        get => _rtsActions;
+        set => _rtsActions = value;
+    }
 
-    private UnitTask currentTask;
+    private GameObject _instantiatedObject = null;
 
 
-    public bool IsMoving { get => isMoving; set => isMoving = value; }
+    public bool IsMoving { get; set; }
+
     public UnitType UnitType { get => unitType; set => unitType = value; }
-    public UnitTask CurrentTask { get => currentTask; set => currentTask = value; }
+    public UnitTask CurrentTask { get; private set; }
     public bool TaskDebugInfo { get => taskDebugInfo; set => taskDebugInfo = value; }
     public float UnitSpeed { get => unitSpeed; set => unitSpeed = value; }
     public NavMeshAgent Agent { get => agent; set => agent = value; }
@@ -61,12 +66,12 @@ public class Unit : MonoBehaviour, ISelectableMultiple, IDamageable
     public void Select()
     {
         Assert.IsNotNull(selectableHighlightParent, "Parent object not set in prefab.");
-        instantiatedObject = Instantiate(GameManager.Instance.Settings.ModelSettings.unitSelectionHighlightGameObject, selectableHighlightParent);
+        _instantiatedObject = Instantiate(GameManager.Instance.Settings.ModelSettings.unitSelectionHighlightGameObject, selectableHighlightParent);
     }
 
     public void Deselect()
     {
-        Destroy(instantiatedObject);
+        Destroy(_instantiatedObject);
     }
 
     public GameObject GetGameObject()
@@ -76,7 +81,7 @@ public class Unit : MonoBehaviour, ISelectableMultiple, IDamageable
 
     public void StartTask(UnitTask task)
     {
-        if (currentTask != null) CurrentTask.Cancel();
+        if (CurrentTask != null) CurrentTask.Cancel();
         CurrentTask = task;
         task.Begin();
     }
@@ -89,7 +94,7 @@ public class Unit : MonoBehaviour, ISelectableMultiple, IDamageable
     private void Update()
     {
         //FallToGround();
-        if (isMoving == true) UpdateMovement();
+        if (IsMoving == true) UpdateMovement();
     }
 
     /// <summary>

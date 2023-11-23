@@ -21,7 +21,7 @@ public class GameManager : MonoBehaviour
     public SelectionManager unitSelection;
     public MovementManager movementManager;
     public InputManager inputManager;
-    public UIManager uiManager;
+    public UiManager uiManager;
 
     [SerializeField] private SelectableCollection selectableCollection;
     public SelectableCollection SelectableCollection { get => selectableCollection; set => selectableCollection = value; }
