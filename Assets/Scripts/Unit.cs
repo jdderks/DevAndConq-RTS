@@ -63,6 +63,11 @@ public class Unit : MonoBehaviour, ISelectableMultiple, IDamageable
         }
     }
 
+    public void SetTeam(TeamScriptableObject team)
+    {
+        ownedByTeam = team;
+    }
+
     public void Select()
     {
         Assert.IsNotNull(selectableHighlightParent, "Parent object not set in prefab.");

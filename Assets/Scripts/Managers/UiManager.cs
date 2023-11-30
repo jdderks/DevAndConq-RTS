@@ -16,45 +16,34 @@ public class UiManager : MonoBehaviour
 
     //private TextMeshProUGUI InfoPanelText_UnitAmount;
 
-    public void UpdateRtsActionPanel(List<Unit> units = null, Building building = null)
+    public void UpdateRtsActionPanel(List<Unit> units = default, Building building = null)
     {
-        List<RtsAction> actions = new();
+        var actions = new List<RtsAction>();
 
-        actions.AddRange(UpdateRtsPanelUnits(units));
-        actions.AddRange(UpdateRtsPanelBuilding(building));
+        // Check if units is not null and contains at least one unit.
+        if (units != null && units.Count > 0)
+        {
+            // Get all the RtsActions of the first unit.
+            actions.AddRange(units[0].RtsActions);
+
+            // Loop through the remaining units and filter actions that are shared among all units.
+            for (var i = 1; i < units.Count; i++)
+            {
+                actions = actions.Intersect(units[i].RtsActions).ToList();
+            }
+        }
 
         foreach (var action in actions)
         {
             
         }
-
-        //
-        // actions.Add(UpdateRtsPanelBuilding(building));
+        
+        // 'actions' now contains RtsActions shared among all units (if any).
+        // You can perform further operations using the filtered actions list.
     }
 
-    private List<RtsUnitAction> UpdateRtsPanelUnits(List<Unit> units = null)
-    {
-        if (units == null) return null;
-        if (units.count == 0) return null;
 
-        List<RtsUnitAction> actions = new();
-        foreach (Unit unit in units)
-        {
-            foreach (var action in unit.RtsActions)
-            {
-                if (actions.Contains(action)) continue;
-                actions.Add(action);
-            }
-        }
 
-        return actions;
-    }
-
-    private List<RtsBuildingAction> UpdateRtsPanelBuilding(Building building)
-    {
-        if (building == null) return null;
-        return building.buildingActions.Count != 0 ? building.buildingActions : null;
-    }
 
 
     public void UpdateInfoPanelValues()

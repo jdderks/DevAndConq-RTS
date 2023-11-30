@@ -25,4 +25,17 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private SelectableCollection selectableCollection;
     public SelectableCollection SelectableCollection { get => selectableCollection; set => selectableCollection = value; }
+
+    public List<PanelItem> PanelItems = new();
+
+    public void UpdateSelectionUI()
+    {
+        PanelItems.Clear();
+
+        // for (int i = 0; i < GameManager.Instance.SelectableCollection; i++)
+        // {
+        //     
+        // }
+    }
+
 }

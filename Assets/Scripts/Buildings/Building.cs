@@ -7,11 +7,14 @@ public abstract class Building : MonoBehaviour, ISelectable
     public List<RtsBuildingAction> buildingActions = new(8); //These are empty RTS action slots
 
     [SerializeField] protected Transform selectableHighlightParent;
+    
+    public Transform unitSpawnPoint; //The place units will spawn from
+
     protected GameObject instantiatedSelectionObject;
 
-    protected Team ownedByTeam;
+    public Team ownedByTeam;
 
     public abstract void Deselect();
     public abstract GameObject GetGameObject();
-    public abstract void Select();
+    public abstract void Select();    
 }
