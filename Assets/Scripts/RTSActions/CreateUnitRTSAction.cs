@@ -7,10 +7,11 @@ public class CreateUnitRTSAction : RtsAction
 {
     public GameObject unitGameObject; //The unit gameobject that can be instantiated
     public Building building;
+    private PanelInfoScriptableObject panelInfo; //The info that can be displayed
 
     private Transform spawnPointOrigin = null;
 
-    PanelInfoScriptableObject panelInfo; //The info that can be displayed
+    public PanelInfoScriptableObject PanelInfo { get => panelInfo; set => panelInfo = value; }
 
     public void SetUnitValues(GameObject unit, Building building, Team team)
     {
@@ -19,8 +20,6 @@ public class CreateUnitRTSAction : RtsAction
 
         this.spawnPointOrigin = building.unitSpawnPoint;
     }
-
-
 
     //Create the unit
     public override void Activate()
@@ -36,6 +35,6 @@ public class CreateUnitRTSAction : RtsAction
     //This could be used in the future to get the origin of the action
     public override ISelectable GetOrigin()
     {
-        throw new System.NotImplementedException();
+        return building;
     }
 }

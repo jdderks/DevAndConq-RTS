@@ -5,24 +5,13 @@ using UnityEngine;
 
 public class CommandCenter : Building
 {
-    RtsAction constructDozerAction = new CreateUnitRTSAction();
+    CreateUnitRTSAction constructDozerAction = new CreateUnitRTSAction();
 
-    // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
-
+        constructDozerAction.PanelInfo = GameManager.Instance.Settings.rtsActionSettings.bullDozerPanelInfo;  
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
-    public override void Deselect()
-    {
-        Destroy(instantiatedSelectionObject);
-    }
 
     public override GameObject GetGameObject()
     {
@@ -33,6 +22,10 @@ public class CommandCenter : Building
     {
         Assert.IsNotNull(selectableHighlightParent, "Parent object not set in prefab.");
         instantiatedSelectionObject = Instantiate(GameManager.Instance.Settings.ModelSettings.unitSelectionHighlightGameObject, selectableHighlightParent);
+    }
+    public override void Deselect()
+    {
+        Destroy(instantiatedSelectionObject);
     }
 
 }

@@ -10,6 +10,7 @@ using UnityEngine;
 public class UiManager : MonoBehaviour
 {
     [SerializeField] private InfoPanel infoPanel;
+    [SerializeField] private RtsActionPanel rtsActionPanel;
 
 
     [SerializeField] private LanguageSets currentSelectedLanguage = LanguageSets.English;
@@ -33,13 +34,7 @@ public class UiManager : MonoBehaviour
             }
         }
 
-        foreach (var action in actions)
-        {
-            
-        }
-        
-        // 'actions' now contains RtsActions shared among all units (if any).
-        // You can perform further operations using the filtered actions list.
+        rtsActionPanel.UpdatePanels(actions);
     }
 
 

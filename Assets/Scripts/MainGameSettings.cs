@@ -8,4 +8,5 @@ using UnityEngine;
 public class MainGameSettings : ScriptableObject
 {
     public ModelSettings ModelSettings;
+    public RtsActionSettings rtsActionSettings;
 }

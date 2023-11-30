@@ -910,9 +910,11 @@ MonoBehaviour:
   - teamStyle: {fileID: 0}
     allies: []
     enemies: []
+    playerControlled: 1
   - teamStyle: {fileID: 0}
     allies: []
     enemies: []
+    playerControlled: 1
 --- !u!1001 &92913049
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3864,18 +3866,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d16d61a8fbc16b44394f3438fff6a179, type: 3}
---- !u!114 &400685572 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5138421781920708812, guid: e9e98542d9823784c86de0f2f02b7e85,
-    type: 3}
-  m_PrefabInstance: {fileID: 1115990531600156268}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &401131612 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7337393460853754355, guid: d16d61a8fbc16b44394f3438fff6a179,
@@ -9421,6 +9411,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   infoPanel: {fileID: 2070476219}
+  rtsActionPanel: {fileID: 0}
   currentSelectedLanguage: 0
 --- !u!1001 &1156006288
 PrefabInstance:
@@ -12511,7 +12502,6 @@ GameObject:
   - component: {fileID: 1522709763}
   - component: {fileID: 1522709766}
   - component: {fileID: 1522709765}
-  - component: {fileID: 1522709764}
   m_Layer: 5
   m_Name: RtsActionPanel
   m_TagString: Untagged
@@ -12540,21 +12530,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 407.5811, y: 250}
   m_Pivot: {x: 1, y: 0}
---- !u!114 &1522709764
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1522709762}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2546c44d592b65b49970ed22e08ff0ee, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  infoPanelHeaderDescriptor: {fileID: 1292679841}
-  amountOfUnitsSelectedDescriptor: {fileID: 0}
-  amountOfUnitsSelectedValue: {fileID: 400685572}
 --- !u!114 &1522709765
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16084,6 +16059,7 @@ MonoBehaviour:
   inputManager: {fileID: 208433319}
   uiManager: {fileID: 1145611812}
   selectableCollection: {fileID: 2024898265}
+  PanelItems: []
 --- !u!1001 &2026983132
 PrefabInstance:
   m_ObjectHideFlags: 0

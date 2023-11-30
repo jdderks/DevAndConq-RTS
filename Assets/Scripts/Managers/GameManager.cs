@@ -27,15 +27,4 @@ public class GameManager : MonoBehaviour
     public SelectableCollection SelectableCollection { get => selectableCollection; set => selectableCollection = value; }
 
     public List<PanelItem> PanelItems = new();
-
-    public void UpdateSelectionUI()
-    {
-        PanelItems.Clear();
-
-        // for (int i = 0; i < GameManager.Instance.SelectableCollection; i++)
-        // {
-        //     
-        // }
-    }
-
 }

@@ -6,7 +6,7 @@ public abstract class RtsAction
 {
     public abstract void Activate();
 
-    public abstract ISelectable GetOrigin();
+    public abstract ISelectable GetOrigin()
 }
 
 public abstract class RtsBuildingAction : RtsAction
