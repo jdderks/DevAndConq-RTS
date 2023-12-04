@@ -536,6 +536,7 @@ Transform:
   - {fileID: 5257856818522418645}
   - {fileID: 1797510729497389387}
   - {fileID: 4932796389901929149}
+  - {fileID: 8312614883363445547}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &5112606933372525163
@@ -550,6 +551,44 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c67eea61a988304985dde9e81b24893, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  selectableHighlightParent: {fileID: 0}
+  unitSpawnPoint: {fileID: 0}
+  ownedByTeam:
+    teamStyle: {fileID: 0}
+    allies: []
+    enemies: []
+    playerControlled: 1
+--- !u!1 &7841125433454724765
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8312614883363445547}
+  m_Layer: 0
+  m_Name: UnitSpawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8312614883363445547
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7841125433454724765}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 8.01, y: 0, z: -9.86}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1509757796723374169}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8196803555779213448
 GameObject:
   m_ObjectHideFlags: 0

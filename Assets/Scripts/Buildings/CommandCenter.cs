@@ -7,7 +7,7 @@ public class CommandCenter : Building
 {
     CreateUnitRTSAction constructDozerAction = new CreateUnitRTSAction();
 
-    private void Awake()
+    private void Start()
     {
         constructDozerAction.PanelInfo = GameManager.Instance.Settings.rtsActionSettings.bullDozerPanelInfo;  
     }
