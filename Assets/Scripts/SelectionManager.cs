@@ -91,6 +91,7 @@ public class SelectionManager : MonoBehaviour
                     {
                         GameManager.Instance.unitManager.DeselectAll();
                         GameManager.Instance.unitManager.AddSelected(hit.transform.gameObject);//selectableCollection.addSelected(hit.transform.gameObject);
+                        GameManager.Instance.uiManager.UpdateRtsActionPanel();
                     }
                 }
                 else //if we didnt hit something
@@ -270,9 +271,6 @@ public class SelectionManager : MonoBehaviour
             Handles.DrawBezier(p1, p2, p1, p2, Color.red, null, thickness);
         }
     }
-
-
-
 
     void ShowTextBelowCursor(string text, float textSize = 16f)
     {

@@ -7,7 +7,7 @@ public class SelectableCollection : MonoBehaviour
 {
     public Dictionary<int, ISelectable> selectedTable = new Dictionary<int, ISelectable>();
 
-    public void addSelected(GameObject go)
+    public void AddSelected(GameObject go)
     {
         int id = go.GetInstanceID();
 
@@ -38,6 +38,19 @@ public class SelectableCollection : MonoBehaviour
 
         UpdateUnitUI();
     }
+
+    //public List<ISelectable> GetSelectedObjects()
+    //{
+    //    List<ISelectable> selectedObjects = new List<ISelectable>();
+
+    //    foreach (var pair in selectedTable)
+    //    {
+    //        selectedObjects.Add(pair.Value);
+    //    }
+
+    //    return selectedObjects;
+    //}
+
 
     public void deselect(int id)
     {

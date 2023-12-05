@@ -31,7 +31,7 @@ public class UnitManager : MonoBehaviour
 
     public void AddSelected(GameObject go)
     {
-        GameManager.Instance.SelectableCollection.addSelected(go);
+        GameManager.Instance.SelectableCollection.AddSelected(go);
     }
 
     public void DeselectAll()
