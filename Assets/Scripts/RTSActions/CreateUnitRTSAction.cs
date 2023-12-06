@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-public class CreateUnitRTSAction : RtsAction
+public class CreateUnitRTSAction : RtsBuildingAction
 {
+    public Building building; //Origin building
     public GameObject unitGameObject; //The unit gameobject that can be instantiated
-    public Building building;
     private PanelInfoScriptableObject panelInfo; //The info that can be displayed
 
     private Transform spawnPointOrigin = null;
@@ -36,5 +36,10 @@ public class CreateUnitRTSAction : RtsAction
     public override ISelectable GetOrigin()
     {
         return building;
+    }
+
+    public override PanelInfoScriptableObject GetPanelInfo()
+    {
+        return panelInfo;
     }
 }

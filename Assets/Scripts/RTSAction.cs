@@ -7,11 +7,14 @@ public abstract class RtsAction
     public abstract void Activate();
 
     public abstract ISelectable GetOrigin();
+
+    public abstract PanelInfoScriptableObject GetPanelInfo();
 }
 
 public abstract class RtsBuildingAction : RtsAction
 {
-    
+    float actionDuration = 5f;
+    ActionQueueItem queueItem;
 }
 
 public abstract class RtsUnitAction : RtsAction

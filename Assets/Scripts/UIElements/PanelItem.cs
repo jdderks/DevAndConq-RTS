@@ -2,15 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PanelItem : MonoBehaviour
 {
-    public Sprite sprite;
+    public Image image;
     public TextMeshProUGUI itemText; 
 
-    public void SetPanelItemInfo(Sprite sprite, string text)
+    public void SetPanelItemInfo(Image image, string text)
     {
-        this.sprite = sprite;
+        this.image = image;
         itemText.text = text;
     }
 }

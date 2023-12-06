@@ -5,19 +5,21 @@ using UnityEngine;
 
 public class RtsActionPanel : MonoBehaviour
 {
+    [SerializeField] private Transform panelParent;
     List<PanelItem> panels = new();
+
 
     public void UpdatePanels(List<RtsAction> actions)
     {
-        if (panels.Count >= 8 || panels.Count == 0)
+        foreach (var panel in panels)
         {
-            Debug.LogWarning("Can not add 0 or more than 7 (8 including 0) panels!");
-            return; //Early return
+            Destroy(panel.gameObject);
         }
+        panels = new();
 
         foreach (var action in actions)
         {
-            CreatePanelItem(action);
+            var panel = Instantiate(GameManager.Instance.Settings.rtsActionSettings.bullDozerPanelInfo, parent: panelParent);
         }
     }
 

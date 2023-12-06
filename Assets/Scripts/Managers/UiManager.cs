@@ -37,14 +37,9 @@ public class UiManager : MonoBehaviour
         rtsActionPanel.UpdatePanels(actions);
     }
 
-
-
-
-
     public void UpdateInfoPanelValues()
     {
-        infoPanel.AmountOfUnitsSelectedValue.text =
-            GameManager.Instance.SelectableCollection.selectedTable.Values.Count.ToString();
+        infoPanel.AmountOfUnitsSelectedValue.text = GameManager.Instance.SelectableCollection.selectedTable.Values.Count.ToString();
     }
 
     private void SetInfoPanelDescriptors()

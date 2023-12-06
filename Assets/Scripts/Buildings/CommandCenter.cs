@@ -1,6 +1,7 @@
 using NUnit.Framework;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class CommandCenter : Building
@@ -9,7 +10,8 @@ public class CommandCenter : Building
 
     private void Start()
     {
-        constructDozerAction.PanelInfo = GameManager.Instance.Settings.rtsActionSettings.bullDozerPanelInfo;  
+        constructDozerAction.PanelInfo = GameManager.Instance.Settings.rtsActionSettings.bullDozerPanelInfo;
+        rtsBuildingActions.Add(constructDozerAction);
     }
 
 
@@ -22,7 +24,15 @@ public class CommandCenter : Building
     {
         Assert.IsNotNull(selectableHighlightParent, "Parent object not set in prefab.");
         instantiatedSelectionObject = Instantiate(GameManager.Instance.Settings.ModelSettings.unitSelectionHighlightGameObject, selectableHighlightParent);
+
+
+
+        //var selectableCollection = GameManager.Instance.SelectableCollection;
+        //var uimanager = GameManager.Instance.uiManager;
+
+        //uimanager.UpdateRtsActionPanel(units: selectableCollection.GetSelectedUnits(), building: this);
     }
+
     public override void Deselect()
     {
         Destroy(instantiatedSelectionObject);

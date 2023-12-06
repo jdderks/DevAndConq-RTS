@@ -1,4 +1,5 @@
 using NaughtyAttributes;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -47,5 +48,10 @@ public class UnitManager : MonoBehaviour
     public void SetTask(List<Unit> units, UnitTask task)
     {
 
+    }
+
+    internal List<Unit> GetUnits()
+    {
+        return GameManager.Instance.SelectableCollection.GetSelectedUnits();
     }
 }
