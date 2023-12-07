@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e541fc1ce6933ae40b4fbb6ccd597511, type: 3}
-  m_Name: bullDozerPanelInfo
+  m_Name: CreateLightTankPanelInfo
   m_EditorClassIdentifier: 
-  cost: 1000
-  panelText: Construct Dozer
+  cost: 500
+  panelText: Construct Light Tank
   image: {fileID: 21300000, guid: 4b8e35c10a8d810478bb42d179fcd213, type: 3}
-  unit: 1
+  unit: 2

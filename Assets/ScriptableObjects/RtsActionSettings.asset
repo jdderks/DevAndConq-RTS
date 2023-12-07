@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: RtsActionSettings
   m_EditorClassIdentifier: 
   bullDozerPanelInfo: {fileID: 11400000, guid: a4d3e6a0502ac5144abf69715f2cbbeb, type: 2}
+  lightTankPanelInfo: {fileID: 11400000, guid: 3232f129903b8b6429f391beeb2d50c2, type: 2}

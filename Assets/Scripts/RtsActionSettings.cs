@@ -8,4 +8,5 @@ using UnityEngine;
 public class RtsActionSettings : ScriptableObject
 {
     public PanelInfoScriptableObject bullDozerPanelInfo;
+    public PanelInfoScriptableObject lightTankPanelInfo;
 }

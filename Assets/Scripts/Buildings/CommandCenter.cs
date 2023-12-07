@@ -7,16 +7,25 @@ using UnityEngine;
 public class CommandCenter : Building
 {
     CreateUnitRTSAction constructDozerAction = new CreateUnitRTSAction();
+    CreateUnitRTSAction constructLightTankAction = new CreateUnitRTSAction();
 
     private void Start()
     {
         constructDozerAction.PanelInfo = GameManager.Instance.Settings.rtsActionSettings.bullDozerPanelInfo;
+        constructLightTankAction.PanelInfo = GameManager.Instance.Settings.rtsActionSettings.lightTankPanelInfo;
+        
         rtsBuildingActions.Add(constructDozerAction);
+        rtsBuildingActions.Add(constructLightTankAction);
 
         constructDozerAction.SetUnitValues(
-            UnitToSpawn.Bulldozer,
-            this,
-            ownedByTeam);
+            unit: UnitToSpawn.Bulldozer,
+            building: this,
+            team: ownedByTeam);
+
+        constructLightTankAction.SetUnitValues(
+            unit: UnitToSpawn.LightTank,
+            building: this,
+            team: ownedByTeam);
     }
 
 
@@ -28,7 +37,10 @@ public class CommandCenter : Building
     public override void Select()
     {
         Assert.IsNotNull(selectableHighlightParent, "Parent object not set in prefab.");
-        instantiatedSelectionObject = Instantiate(GameManager.Instance.Settings.modelSettings.unitSelectionHighlightGameObject, selectableHighlightParent);
+        instantiatedSelectionObject = Instantiate(
+            GameManager.Instance.Settings.modelSettings.unitSelectionHighlightGameObject,
+            selectableHighlightParent
+            );
 
 
 

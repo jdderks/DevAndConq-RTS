@@ -20,7 +20,6 @@ public class RtsActionPanel : MonoBehaviour
 
         foreach (var action in actions)
         {
-            Debug.Log("EE");
             GameObject panelGameObject = Instantiate(GameManager.Instance.Settings.uiPanelSettings.panelItemPrefab, panelParent);
             PanelItem panel = panelGameObject.GetComponent<PanelItem>();
             if (action is CreateUnitRTSAction)
