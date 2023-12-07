@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
 using UnityEngine;
-
+using UnityEngine.EventSystems;
 using static UnitSelectionHelper;
 using static UnityEngine.Rendering.DebugUI.MessageBox;
 
@@ -66,13 +66,19 @@ public class SelectionManager : MonoBehaviour
     {
         #region unit selection
         //1. when left mouse button clicked (but not released)
-        if (GameManager.Instance.inputManager.GetMouseToSelectInputDown())//(Input.GetMouseButtonDown(0)) //TODO: Make InputManager 
-            marqueePosition1 = Input.mousePosition;
+        if (GameManager.Instance.inputManager.GetMouseToSelectInputDown())
+            if (!EventSystem.current.IsPointerOverGameObject())
+                marqueePosition1 = Input.mousePosition;
+
+
+
+
 
         //2. while left mouse button held
         if (GameManager.Instance.inputManager.GetMouseToSelectInput()) //TODO: Make InputManager 
-            if ((marqueePosition1 - Input.mousePosition).magnitude > 40)
-                dragSelect = true;
+            if (!EventSystem.current.IsPointerOverGameObject())
+                if ((marqueePosition1 - Input.mousePosition).magnitude > 40)
+                    dragSelect = true;
 
         //3. when mouse button comes up
         if (GameManager.Instance.inputManager.GetMouseToSelectInputUp()) //TODO: Make InputManager 

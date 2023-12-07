@@ -14,7 +14,7 @@ public class CommandCenter : Building
         rtsBuildingActions.Add(constructDozerAction);
 
         constructDozerAction.SetUnitValues(
-            UnitToSpawn.LightTank,
+            UnitToSpawn.Bulldozer,
             this,
             ownedByTeam);
     }

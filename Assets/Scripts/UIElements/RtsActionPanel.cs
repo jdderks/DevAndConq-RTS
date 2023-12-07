@@ -35,7 +35,13 @@ public class RtsActionPanel : MonoBehaviour
             PanelInfoScriptableObject actionInfo = action.GetPanelInfo();
 
             panels.Add(panel);
-            panel.SetPanelItemInfo(actionInfo.image, actionInfo.panelText, action.Activate);
+
+            panel.SetPanelItemInfo(
+                image: actionInfo.image, 
+                buttonText: actionInfo.panelText,
+                textCost: actionInfo.cost.ToString(),
+                action.Activate
+            );
         }
     }
 }

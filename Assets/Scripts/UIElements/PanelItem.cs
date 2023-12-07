@@ -9,18 +9,15 @@ public class PanelItem : MonoBehaviour
 {
     public Image image;
     public TextMeshProUGUI itemText;
+    public TextMeshProUGUI textCost;
     public Button button;
 
-    public void SetPanelItemInfo(Image image, string text, UnityAction onClickListener = null)
+    public void SetPanelItemInfo(Image image, string buttonText, string textCost,UnityAction onClickListener = null)
     {
         this.image = image;
-        itemText.text = text;
+        this.textCost.text = textCost;
+        itemText.text = buttonText;
         button.onClick.AddListener(onClickListener);
-    }
-
-    public void AddEvents()
-    {
-        Debug.Log("Button pressed");
     }
 
     public void RemoveEvents()
