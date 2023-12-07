@@ -551,13 +551,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c67eea61a988304985dde9e81b24893, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selectableHighlightParent: {fileID: 0}
-  unitSpawnPoint: {fileID: 0}
-  ownedByTeam:
-    teamStyle: {fileID: 0}
-    allies: []
-    enemies: []
-    playerControlled: 1
+  selectableHighlightParent: {fileID: 4932796389901929149}
+  unitSpawnPoint: {fileID: 8312614883363445547}
 --- !u!1 &7841125433454724765
 GameObject:
   m_ObjectHideFlags: 0

@@ -13,22 +13,29 @@ public class RtsActionPanel : MonoBehaviour
     {
         foreach (var panel in panels)
         {
+            panel.RemoveEvents();
             Destroy(panel.gameObject);
         }
         panels = new();
 
         foreach (var action in actions)
         {
-            var panel = Instantiate(GameManager.Instance.Settings.rtsActionSettings.bullDozerPanelInfo, parent: panelParent);
+            Debug.Log("EE");
+            GameObject panelGameObject = Instantiate(GameManager.Instance.Settings.uiPanelSettings.panelItemPrefab, panelParent);
+            PanelItem panel = panelGameObject.GetComponent<PanelItem>();
+            if (action is CreateUnitRTSAction)
+            {
+                var CreateUnitAction = action as CreateUnitRTSAction;
+
+                var originBuilding = CreateUnitAction.GetBuilding();//.GetGameObject().GetComponent<Building>();
+
+            }
+
+
+            PanelInfoScriptableObject actionInfo = action.GetPanelInfo();
+
+            panels.Add(panel);
+            panel.SetPanelItemInfo(actionInfo.image, actionInfo.panelText, action.Activate);
         }
-    }
-
-    public void CreatePanelItem(RtsAction action)
-    {
-        PanelItem item = new();
-
-        //item.SetPanelItemInfo(action.GetSprite(), action.GetName());
-
-
     }
 }

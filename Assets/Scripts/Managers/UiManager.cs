@@ -17,18 +17,27 @@ public class UiManager : MonoBehaviour
 
     //private TextMeshProUGUI InfoPanelText_UnitAmount;
 
-    public void UpdateRtsActionPanel(List<Unit> units = default, Building building = null)
+    public void UpdateRtsActionPanel(List<Unit> units = null, Building building = null)
     {
         var actions = new List<RtsAction>();
 
-        // Check if units is not null and contains at least one unit.
+        if (building != null)
+        {
+            actions.AddRange(building.rtsBuildingActions);
+        }
+
         if (units != null && units.Count > 0)
         {
-            // Get all the RtsActions of the first unit.
-            actions.AddRange(units[0].RtsActions);
+            if (building != null)
+            {
+                actions = actions.Intersect(units[0].RtsActions).ToList();
+            }
+            else
+            {
+                actions.AddRange(units[0].RtsActions);
+            }
 
-            // Loop through the remaining units and filter actions that are shared among all units.
-            for (var i = 1; i < units.Count; i++)
+            for (int i = 1; i < units.Count; i++)
             {
                 actions = actions.Intersect(units[i].RtsActions).ToList();
             }
@@ -36,6 +45,7 @@ public class UiManager : MonoBehaviour
 
         rtsActionPanel.UpdatePanels(actions);
     }
+
 
     public void UpdateInfoPanelValues()
     {

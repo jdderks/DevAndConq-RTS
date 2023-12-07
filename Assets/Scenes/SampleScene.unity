@@ -12974,6 +12974,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e81d87033d96a048a2d478a64cb8288, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  panelParent: {fileID: 970381264}
 --- !u!1001 &1523190532
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -17831,7 +17832,7 @@ PrefabInstance:
     - target: {fileID: 2468021419826599717, guid: e9e98542d9823784c86de0f2f02b7e85,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2468021419826599717, guid: e9e98542d9823784c86de0f2f02b7e85,
         type: 3}
@@ -17841,17 +17842,17 @@ PrefabInstance:
     - target: {fileID: 2468021419826599717, guid: e9e98542d9823784c86de0f2f02b7e85,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2468021419826599717, guid: e9e98542d9823784c86de0f2f02b7e85,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 2468021419826599717, guid: e9e98542d9823784c86de0f2f02b7e85,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 2468021419826599717, guid: e9e98542d9823784c86de0f2f02b7e85,
         type: 3}
@@ -17891,12 +17892,12 @@ PrefabInstance:
     - target: {fileID: 2468021419826599717, guid: e9e98542d9823784c86de0f2f02b7e85,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 2468021419826599717, guid: e9e98542d9823784c86de0f2f02b7e85,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -50
       objectReference: {fileID: 0}
     - target: {fileID: 2468021419826599717, guid: e9e98542d9823784c86de0f2f02b7e85,
         type: 3}
@@ -17917,6 +17918,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: PanelItem
+      objectReference: {fileID: 0}
+    - target: {fileID: 6584719905135661436, guid: e9e98542d9823784c86de0f2f02b7e85,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

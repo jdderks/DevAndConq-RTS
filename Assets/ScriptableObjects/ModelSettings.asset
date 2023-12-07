@@ -16,3 +16,8 @@ MonoBehaviour:
     type: 3}
   terrainInteractionObject: {fileID: 5018503143670621054, guid: 2539c0bf3d0ed3d4a93ed38c9b129320,
     type: 3}
+  constructionDozer: {fileID: 882591618825355416, guid: 2e60c02deba0d4c40be63a193aa75b09,
+    type: 3}
+  lightTank: {fileID: 882591618825355416, guid: d16d61a8fbc16b44394f3438fff6a179,
+    type: 3}
+  heavyTank: {fileID: 0}

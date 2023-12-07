@@ -71,7 +71,7 @@ public class Unit : MonoBehaviour, ISelectableMultiple, IDamageable
     public void Select()
     {
         Assert.IsNotNull(selectableHighlightParent, "Parent object not set in prefab.");
-        _instantiatedObject = Instantiate(GameManager.Instance.Settings.ModelSettings.unitSelectionHighlightGameObject, selectableHighlightParent);
+        _instantiatedObject = Instantiate(GameManager.Instance.Settings.modelSettings.unitSelectionHighlightGameObject, selectableHighlightParent);
     }
 
     public void Deselect()

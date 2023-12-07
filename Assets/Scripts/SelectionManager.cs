@@ -203,7 +203,7 @@ public class SelectionManager : MonoBehaviour
                 List<Vector3> movementPoints = PointGenerator.GeneratePointsInLine(lineSelectionPosition1, lineSelectionPosition2, units.Count).ToList();
                 for (int i = 0; i < units.Count; i++)
                 {
-                    var instantiatedObject = Instantiate(GameManager.Instance.Settings.ModelSettings.terrainInteractionObject, movementPoints[i], Quaternion.identity);
+                    var instantiatedObject = Instantiate(GameManager.Instance.Settings.modelSettings.terrainInteractionObject, movementPoints[i], Quaternion.identity);
                     Unit unit = units[i];
                     unit.StartTask(new MoveUnitTask(unit, movementPoints[i]));
                     Destroy(instantiatedObject, 0.4f);
@@ -219,7 +219,7 @@ public class SelectionManager : MonoBehaviour
 
                     for (int i = 0; i < units.Count; i++)
                     {
-                        var instantiatedObject = Instantiate(GameManager.Instance.Settings.ModelSettings.terrainInteractionObject, movementPoints[i], Quaternion.identity);
+                        var instantiatedObject = Instantiate(GameManager.Instance.Settings.modelSettings.terrainInteractionObject, movementPoints[i], Quaternion.identity);
                         Unit unit = units[i];
                         var task = new MoveUnitTask(unit, movementPoints[i]);
                         unit.StartTask(task);

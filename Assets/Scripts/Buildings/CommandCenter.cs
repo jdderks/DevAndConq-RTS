@@ -12,6 +12,11 @@ public class CommandCenter : Building
     {
         constructDozerAction.PanelInfo = GameManager.Instance.Settings.rtsActionSettings.bullDozerPanelInfo;
         rtsBuildingActions.Add(constructDozerAction);
+
+        constructDozerAction.SetUnitValues(
+            UnitToSpawn.LightTank,
+            this,
+            ownedByTeam);
     }
 
 
@@ -23,7 +28,7 @@ public class CommandCenter : Building
     public override void Select()
     {
         Assert.IsNotNull(selectableHighlightParent, "Parent object not set in prefab.");
-        instantiatedSelectionObject = Instantiate(GameManager.Instance.Settings.ModelSettings.unitSelectionHighlightGameObject, selectableHighlightParent);
+        instantiatedSelectionObject = Instantiate(GameManager.Instance.Settings.modelSettings.unitSelectionHighlightGameObject, selectableHighlightParent);
 
 
 
