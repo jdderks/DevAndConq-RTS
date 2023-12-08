@@ -2510,7 +2510,7 @@ GameObject:
   - component: {fileID: 1612632355}
   - component: {fileID: 1612632356}
   m_Layer: 0
-  m_Name: UnitSelection
+  m_Name: selectionManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
