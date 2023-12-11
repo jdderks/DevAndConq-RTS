@@ -25,22 +25,28 @@ public class RtsActionPanel : MonoBehaviour
             if (action is CreateUnitRTSAction)
             {
                 var CreateUnitAction = action as CreateUnitRTSAction;
-
-                var originBuilding = CreateUnitAction.GetBuilding();//.GetGameObject().GetComponent<Building>();
-
             }
 
 
             PanelInfoScriptableObject actionInfo = action.GetPanelInfo();
 
             panels.Add(panel);
+            Building origin = action.GetOrigin() as Building;
 
             panel.SetPanelItemInfo(
                 image: actionInfo.image, 
                 buttonText: actionInfo.panelText,
-                textCost: actionInfo.cost.ToString(),
-                action.Activate
+                textCost: actionInfo.cost.ToString()
             );
+
+            var actionQueueItem = new ActionQueueItem(action,actionInfo.actionCooldownSeconds);
+
+            void AddActionQueueItem()
+            {
+                origin.actionQueue.AddToActionQueue(actionQueueItem);
+            }
+
+            panel.SetButtonInteraction(AddActionQueueItem);
         }
     }
 }

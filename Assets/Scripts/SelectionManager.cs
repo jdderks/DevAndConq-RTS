@@ -98,6 +98,7 @@ public class SelectionManager : MonoBehaviour
                         GameManager.Instance.unitManager.DeselectAll();
                         GameManager.Instance.unitManager.AddSelected(hit.transform.gameObject);//selectableCollection.addSelected(hit.transform.gameObject);
                         GameManager.Instance.uiManager.UpdateRtsActionPanel(units: GameManager.Instance.unitManager.GetUnits(), building: GameManager.Instance.SelectableCollection.GetBuilding());
+                        GameManager.Instance.uiManager.UpdateActionQueuePanel(queue: GameManager.Instance.SelectableCollection.GetBuilding().actionQueue);
                     }
                 }
                 else //if we didnt hit something

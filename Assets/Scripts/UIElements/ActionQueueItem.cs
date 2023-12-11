@@ -5,18 +5,19 @@ using UnityEngine.UI;
 
 public class ActionQueueItem : MonoBehaviour
 {
-    public RtsAction actionToExecute;
+    private RtsAction actionToExecute;
 
     public Image backImage; //Often black & white / monochrome
     public Image frontImage; //Foreground image that is filled over time
 
-    public float timeToFillSeconds = 5f;
+    private float waitDurationSeconds = 5f;
 
-    public void SetPanelItemInfo(Image backImage, Image frontImage, float timeToFillSeconds = 5f)
+    public float WaitDurationSeconds { get => waitDurationSeconds; private set => waitDurationSeconds = value; }
+    public RtsAction ActionToExecute { get => actionToExecute; private set => actionToExecute = value; }
+
+    public ActionQueueItem(RtsAction action,float waitDurationSeconds)
     {
-        this.backImage = backImage;
-        this.frontImage = frontImage;
-
-        this.timeToFillSeconds = timeToFillSeconds;
+        this.ActionToExecute = action;
+        this.WaitDurationSeconds = waitDurationSeconds;
     }
 }

@@ -16,3 +16,4 @@ MonoBehaviour:
   panelText: Construct Light Tank
   image: {fileID: 21300000, guid: 4b8e35c10a8d810478bb42d179fcd213, type: 3}
   unit: 2
+  actionCooldownSeconds: 5

@@ -11,7 +11,7 @@ public class UiManager : MonoBehaviour
 {
     [SerializeField] private InfoPanel infoPanel;
     [SerializeField] private RtsActionPanel rtsActionPanel;
-
+    [SerializeField] private ActionQueuePanel actionQueuePanel;
 
     [SerializeField] private LanguageSets currentSelectedLanguage = LanguageSets.English;
 
@@ -44,6 +44,11 @@ public class UiManager : MonoBehaviour
         }
 
         rtsActionPanel.UpdatePanels(actions);
+    }
+
+    public void UpdateActionQueuePanel(ActionQueue queue)
+    {
+        List<ActionQueueItem> queueItems = queue.Actions;
     }
 
 
