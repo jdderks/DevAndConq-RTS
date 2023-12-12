@@ -120,9 +120,9 @@ public class SelectionManager : MonoBehaviour
                             building.actionQueue.SetActions();
                         }
                         if(building != null)                       
-                            GameManager.Instance.uiManager.UpdateActionQueuePanel(building.actionQueue);
+                            GameManager.Instance.uiManager.OpenActionQueuePanel(building.actionQueue);
                         else
-                            GameManager.Instance.uiManager.UpdateActionQueuePanel(null);
+                            GameManager.Instance.uiManager.CloseActionQueuePanel();
                     }
                 }
                 else //if we didnt hit something

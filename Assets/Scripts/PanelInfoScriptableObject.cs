@@ -11,5 +11,5 @@ public class PanelInfoScriptableObject : ScriptableObject
     public string panelText;
     public Image image;
     public UnitToSpawn unit;
-    public float actionCooldownSeconds;
+    public float constructionTime;
 }

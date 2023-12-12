@@ -1,18 +1,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ActionQueue : MonoBehaviour
+public class ActionQueue
 {
-    private List<ActionQueueItem> actions = new List<ActionQueueItem>();
+    private List<RtsQueueAction> items = new();
     private bool isPaused = false;
     private bool isProcessingQueue = false;
-    private float remainingTime = 0f;
 
-    public List<ActionQueueItem> Actions { get => actions; private set => actions = value; }
+    public List<RtsQueueAction> Items { get => items; private set => items = value; }
 
-    private void Update()
+    public void Update()
     {
-        if (actions.Count > 0)
+        if (items.Count > 0)
         {
             if (!isProcessingQueue)
             {
@@ -27,47 +26,52 @@ public class ActionQueue : MonoBehaviour
 
     public void SetActions()
     {
-        Actions = new();
+        Items = new();
     }
 
     private void StartProcessingQueue()
     {
         isProcessingQueue = true;
-        ActionQueueItem currentAction = actions[0];
-        remainingTime = currentAction.WaitDurationSeconds;
+        RtsQueueAction currentAction = items[0];
+        currentAction.RemainingTime = currentAction.WaitForSeconds;
     }
 
     private void ProcessQueue()
     {
+        RtsQueueAction currentAction = items[0];
         if (!isPaused)
         {
-            remainingTime -= Time.deltaTime;
-            Debug.Log("Remaining Time" + remainingTime);
+
+            currentAction.RemainingTime -= Time.deltaTime;
+            Debug.Log("Remaining Time" + currentAction.RemainingTime);
         }
 
-        if (remainingTime <= 0)
+        if (currentAction.RemainingTime <= 0)
         {
-            ActionQueueItem currentAction = actions[0];
-            currentAction.ActionToExecute.Activate();
-            actions.RemoveAt(0);
+            currentAction.Action.Activate();
+            items.RemoveAt(0);
             isProcessingQueue = false;
         }
     }
 
-    public void AddToActionQueue(ActionQueueItem queueAction)
+    public void AddToActionQueue(RtsAction action)
     {
-        actions.Add(queueAction);
+        if (items.Count < 8)
+        {
+            items.Add(new RtsQueueAction(action, action.GetPanelInfo().constructionTime));
+
+        }
     }
 
     public void RemoveFromQueue(int i = 0)
     {
-        if (i < actions.Count)
+        if (i < items.Count)
         {
             if (i == 0 && isProcessingQueue)
             {
                 isProcessingQueue = false;
             }
-            actions.RemoveAt(i);
+            items.RemoveAt(i);
         }
     }
 
@@ -78,6 +82,6 @@ public class ActionQueue : MonoBehaviour
 
     public int GetQueueContentAmount()
     {
-        return actions.Count;
+        return items.Count;
     }
 }

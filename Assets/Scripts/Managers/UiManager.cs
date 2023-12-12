@@ -12,6 +12,7 @@ public class UiManager : MonoBehaviour
     [SerializeField] private InfoPanel infoPanel;
     [SerializeField] private RtsActionPanel rtsActionPanel;
     [SerializeField] private ActionQueuePanel actionQueuePanel;
+    [SerializeField] private GameObject actionQueuePanelGameObject;
 
     [SerializeField] private LanguageSets currentSelectedLanguage = LanguageSets.English;
 
@@ -46,18 +47,16 @@ public class UiManager : MonoBehaviour
         rtsActionPanel.UpdatePanels(actions);
     }
 
-    public void UpdateActionQueuePanel(ActionQueue queue)
+    public void OpenActionQueuePanel(ActionQueue queue)
     {
-        if (queue == null) //Just make the queue UI empty
-        {
-
-        }
-        else //Fill the queue UI with corresponding icons and things
-        {
-            List<ActionQueueItem> queueItems = queue.Actions;
-        }
+        actionQueuePanelGameObject.SetActive(true);
+        actionQueuePanel.SetActionQueueItems(queue);
     }
 
+    public void CloseActionQueuePanel()
+    {
+        actionQueuePanelGameObject.SetActive(false);
+    }
 
     public void UpdateInfoPanelValues()
     {

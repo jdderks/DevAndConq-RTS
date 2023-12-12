@@ -6,7 +6,7 @@ using UnityEngine;
 public class RtsActionPanel : MonoBehaviour
 {
     [SerializeField] private Transform panelParent;
-    List<PanelItem> panels = new();
+    List<ActionPanelItem> panels = new();
 
 
     public void UpdatePanels(List<RtsAction> actions)
@@ -21,7 +21,7 @@ public class RtsActionPanel : MonoBehaviour
         foreach (var action in actions)
         {
             GameObject panelGameObject = Instantiate(GameManager.Instance.Settings.uiPanelSettings.panelItemPrefab, panelParent);
-            PanelItem panel = panelGameObject.GetComponent<PanelItem>();
+            ActionPanelItem panel = panelGameObject.GetComponent<ActionPanelItem>();
 
             if (action is CreateUnitRTSAction)
             {
@@ -34,16 +34,17 @@ public class RtsActionPanel : MonoBehaviour
             Building origin = action.GetOrigin() as Building;
 
             panel.SetPanelItemInfo(
-                image: actionInfo.image, 
+                image: actionInfo.image,
                 buttonText: actionInfo.panelText,
-                textCost: actionInfo.cost.ToString()
+                textCost: actionInfo.cost.ToString(),
+                actionDelay: actionInfo.constructionTime
             );
 
-            var actionQueueItem = new ActionQueueItem(action, actionInfo.actionCooldownSeconds);
+            
 
             void AddActionQueueItem()
             {
-                origin.actionQueue.AddToActionQueue(actionQueueItem);
+                origin.actionQueue.AddToActionQueue(action);
             }
 
             panel.SetButtonInteraction(AddActionQueueItem);

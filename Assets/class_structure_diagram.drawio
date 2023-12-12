@@ -1,0 +1,192 @@
+<mxfile host="Electron" modified="2023-12-12T14:53:28.302Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/21.1.2 Chrome/106.0.5249.199 Electron/21.4.3 Safari/537.36" etag="k-b1qMz-Gld-cYjimzGV" version="21.1.2" type="device">
+  <diagram name="Page-1" id="2p92-f4sItSHTc-r8jIr">
+    <mxGraphModel dx="1747" dy="1001" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="LIGRE-CImiqbJ1U4bGld-38" value="Legend" style="whiteSpace=wrap;html=1;verticalAlign=top;" parent="1" vertex="1">
+          <mxGeometry x="-413" y="10" width="950" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="LIGRE-CImiqbJ1U4bGld-1" value="GameManager" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#0050ef;fontColor=#ffffff;strokeColor=#001DBC;" parent="1" vertex="1">
+          <mxGeometry x="480" y="440" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="LIGRE-CImiqbJ1U4bGld-34" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;endArrow=diamondThin;endFill=0;" parent="1" source="LIGRE-CImiqbJ1U4bGld-2" target="LIGRE-CImiqbJ1U4bGld-1" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="LIGRE-CImiqbJ1U4bGld-2" value="UIManager" style="whiteSpace=wrap;html=1;fillColor=#0050ef;fontColor=#ffffff;strokeColor=#001DBC;" parent="1" vertex="1">
+          <mxGeometry x="310" y="600" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="LIGRE-CImiqbJ1U4bGld-35" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;endArrow=diamondThin;endFill=0;" parent="1" source="LIGRE-CImiqbJ1U4bGld-3" target="LIGRE-CImiqbJ1U4bGld-2" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="130" y="700" />
+              <mxPoint x="370" y="700" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="LIGRE-CImiqbJ1U4bGld-45" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.75;entryY=1;entryDx=0;entryDy=0;endArrow=diamondThin;endFill=1;" parent="1" source="LIGRE-CImiqbJ1U4bGld-3" target="LIGRE-CImiqbJ1U4bGld-22" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="LIGRE-CImiqbJ1U4bGld-46" value="Uses a list of RTSActions to create &lt;br&gt;ActionPanelItems for each one" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="LIGRE-CImiqbJ1U4bGld-45" vertex="1" connectable="0">
+          <mxGeometry x="-0.0067" y="3" relative="1" as="geometry">
+            <mxPoint x="56" y="-3" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="LIGRE-CImiqbJ1U4bGld-3" value="RtsActionPanel" style="whiteSpace=wrap;html=1;fillColor=#0050ef;fontColor=#ffffff;strokeColor=#001DBC;" parent="1" vertex="1">
+          <mxGeometry x="70" y="740" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="LIGRE-CImiqbJ1U4bGld-36" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;endArrow=diamondThin;endFill=0;" parent="1" source="LIGRE-CImiqbJ1U4bGld-4" target="LIGRE-CImiqbJ1U4bGld-2" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="510" y="700" />
+              <mxPoint x="370" y="700" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="LIGRE-CImiqbJ1U4bGld-4" value="ActionQueuePanel" style="whiteSpace=wrap;html=1;fillColor=#0050ef;fontColor=#ffffff;strokeColor=#001DBC;" parent="1" vertex="1">
+          <mxGeometry x="450" y="740" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="LIGRE-CImiqbJ1U4bGld-33" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=diamondThin;endFill=0;" parent="1" source="LIGRE-CImiqbJ1U4bGld-5" target="LIGRE-CImiqbJ1U4bGld-1" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="LIGRE-CImiqbJ1U4bGld-47" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=blockThin;endFill=0;" parent="1" source="LIGRE-CImiqbJ1U4bGld-5" target="LIGRE-CImiqbJ1U4bGld-2" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="LIGRE-CImiqbJ1U4bGld-5" value="SelectionManager" style="whiteSpace=wrap;html=1;fillColor=#0050ef;fontColor=#ffffff;strokeColor=#001DBC;" parent="1" vertex="1">
+          <mxGeometry x="310" y="330" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="LIGRE-CImiqbJ1U4bGld-29" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=blockThin;endFill=0;" parent="1" source="LIGRE-CImiqbJ1U4bGld-6" target="LIGRE-CImiqbJ1U4bGld-5" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="LIGRE-CImiqbJ1U4bGld-6" value="SelectableCollection" style="whiteSpace=wrap;html=1;fillColor=#0050ef;fontColor=#ffffff;strokeColor=#001DBC;" parent="1" vertex="1">
+          <mxGeometry x="310" y="220" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="LIGRE-CImiqbJ1U4bGld-27" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;endArrow=blockThin;endFill=0;" parent="1" source="LIGRE-CImiqbJ1U4bGld-9" target="LIGRE-CImiqbJ1U4bGld-6" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="LIGRE-CImiqbJ1U4bGld-9" value="ISelectable, ISelectableMultiple" style="whiteSpace=wrap;html=1;verticalAlign=top;" parent="1" vertex="1">
+          <mxGeometry x="-160" y="140" width="160" height="220" as="geometry" />
+        </mxCell>
+        <mxCell id="LIGRE-CImiqbJ1U4bGld-7" value="Unit" style="whiteSpace=wrap;html=1;fillColor=#0050ef;fontColor=#ffffff;strokeColor=#001DBC;" parent="1" vertex="1">
+          <mxGeometry x="-140" y="180" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="LIGRE-CImiqbJ1U4bGld-8" value="Building" style="whiteSpace=wrap;html=1;fillColor=#0050ef;fontColor=#ffffff;strokeColor=#001DBC;" parent="1" vertex="1">
+          <mxGeometry x="-140" y="280" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="LIGRE-CImiqbJ1U4bGld-17" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;endArrow=blockThin;endFill=0;strokeWidth=1;" parent="1" source="LIGRE-CImiqbJ1U4bGld-10" target="LIGRE-CImiqbJ1U4bGld-7" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="LIGRE-CImiqbJ1U4bGld-10" value="BullDozer" style="whiteSpace=wrap;html=1;fillColor=#0050ef;fontColor=#ffffff;strokeColor=#001DBC;" parent="1" vertex="1">
+          <mxGeometry x="-400" y="150" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="LIGRE-CImiqbJ1U4bGld-16" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;endArrow=blockThin;endFill=0;strokeWidth=1;" parent="1" source="LIGRE-CImiqbJ1U4bGld-11" target="LIGRE-CImiqbJ1U4bGld-7" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="LIGRE-CImiqbJ1U4bGld-11" value="LightTank" style="whiteSpace=wrap;html=1;fillColor=#0050ef;fontColor=#ffffff;strokeColor=#001DBC;" parent="1" vertex="1">
+          <mxGeometry x="-400" y="230" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="LIGRE-CImiqbJ1U4bGld-15" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;endArrow=blockThin;endFill=0;strokeWidth=1;" parent="1" source="LIGRE-CImiqbJ1U4bGld-13" target="LIGRE-CImiqbJ1U4bGld-8" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="LIGRE-CImiqbJ1U4bGld-13" value="CommandCenter" style="whiteSpace=wrap;html=1;fillColor=#0050ef;fontColor=#ffffff;strokeColor=#001DBC;" parent="1" vertex="1">
+          <mxGeometry x="-400" y="310" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="LIGRE-CImiqbJ1U4bGld-19" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;endArrow=blockThin;endFill=0;strokeWidth=1;" parent="1" source="LIGRE-CImiqbJ1U4bGld-18" target="LIGRE-CImiqbJ1U4bGld-8" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="LIGRE-CImiqbJ1U4bGld-18" value="WarFactory" style="whiteSpace=wrap;html=1;fillColor=#0050ef;fontColor=#ffffff;strokeColor=#001DBC;" parent="1" vertex="1">
+          <mxGeometry x="-400" y="390" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="LIGRE-CImiqbJ1U4bGld-21" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;endArrow=diamondThin;endFill=0;strokeWidth=1;" parent="1" source="LIGRE-CImiqbJ1U4bGld-20" target="LIGRE-CImiqbJ1U4bGld-8" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="LIGRE-CImiqbJ1U4bGld-20" value="ActionQueue" style="whiteSpace=wrap;html=1;fillColor=#0050ef;fontColor=#ffffff;strokeColor=#001DBC;" parent="1" vertex="1">
+          <mxGeometry x="-140" y="400" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="LIGRE-CImiqbJ1U4bGld-25" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;endArrow=blockThin;endFill=0;" parent="1" source="LIGRE-CImiqbJ1U4bGld-22" target="LIGRE-CImiqbJ1U4bGld-23" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="LIGRE-CImiqbJ1U4bGld-22" value="RTSAction" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="-290" y="565" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="LIGRE-CImiqbJ1U4bGld-24" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;endArrow=diamondThin;endFill=0;" parent="1" source="LIGRE-CImiqbJ1U4bGld-23" target="LIGRE-CImiqbJ1U4bGld-20" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="LIGRE-CImiqbJ1U4bGld-52" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;endArrow=diamondThin;endFill=0;" parent="1" source="LIGRE-CImiqbJ1U4bGld-23" target="LIGRE-CImiqbJ1U4bGld-4" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="LIGRE-CImiqbJ1U4bGld-53" value="Uses a list of RTSQueueActions&lt;br&gt;to fill the ActionQueuePanel" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="LIGRE-CImiqbJ1U4bGld-52" vertex="1" connectable="0">
+          <mxGeometry x="-0.7984" y="-2" relative="1" as="geometry">
+            <mxPoint x="270" y="173" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="LIGRE-CImiqbJ1U4bGld-23" value="RTSQueueAction" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="-140" y="565" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="LIGRE-CImiqbJ1U4bGld-37" value="MonoBehaviour" style="whiteSpace=wrap;html=1;fillColor=#0050ef;fontColor=#ffffff;strokeColor=#001DBC;" parent="1" vertex="1">
+          <mxGeometry x="-143" y="50" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="LIGRE-CImiqbJ1U4bGld-41" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=blockThin;endFill=0;" parent="1" source="LIGRE-CImiqbJ1U4bGld-39" target="LIGRE-CImiqbJ1U4bGld-22" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="LIGRE-CImiqbJ1U4bGld-39" value="CreateUnitRTSAction" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="-470" y="510" width="170" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="LIGRE-CImiqbJ1U4bGld-42" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;endArrow=blockThin;endFill=0;" parent="1" source="LIGRE-CImiqbJ1U4bGld-40" target="LIGRE-CImiqbJ1U4bGld-22" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="LIGRE-CImiqbJ1U4bGld-40" value="ConstructBuildingRTSAction" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="-470" y="620" width="170" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="LIGRE-CImiqbJ1U4bGld-44" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;endArrow=diamondThin;endFill=0;" parent="1" source="LIGRE-CImiqbJ1U4bGld-43" target="LIGRE-CImiqbJ1U4bGld-3" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="LIGRE-CImiqbJ1U4bGld-43" value="ActionPanelitem" style="whiteSpace=wrap;html=1;fillColor=#0050ef;fontColor=#ffffff;strokeColor=#001DBC;" parent="1" vertex="1">
+          <mxGeometry x="70" y="860" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="LIGRE-CImiqbJ1U4bGld-49" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;endArrow=diamondThin;endFill=1;" parent="1" source="LIGRE-CImiqbJ1U4bGld-48" target="LIGRE-CImiqbJ1U4bGld-4" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="LIGRE-CImiqbJ1U4bGld-50" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.25;entryY=1;entryDx=0;entryDy=0;endArrow=diamondThin;endFill=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" parent="1" source="LIGRE-CImiqbJ1U4bGld-48" target="LIGRE-CImiqbJ1U4bGld-22" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="610" y="920" as="sourcePoint" />
+            <Array as="points">
+              <mxPoint x="510" y="940" />
+              <mxPoint x="-260" y="940" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="LIGRE-CImiqbJ1U4bGld-51" value="When an ActionQueuePanelItem is done it will call its RTSAction" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="LIGRE-CImiqbJ1U4bGld-50" vertex="1" connectable="0">
+          <mxGeometry x="0.2" y="1" relative="1" as="geometry">
+            <mxPoint x="63" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="LIGRE-CImiqbJ1U4bGld-48" value="ActionQueue&lt;br&gt;PanelItem" style="whiteSpace=wrap;html=1;fillColor=#0050ef;fontColor=#ffffff;strokeColor=#001DBC;" parent="1" vertex="1">
+          <mxGeometry x="450" y="860" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="LIGRE-CImiqbJ1U4bGld-58" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.25;exitDx=0;exitDy=0;entryX=0;entryY=0.25;entryDx=0;entryDy=0;endArrow=blockThin;endFill=0;" parent="1" source="LIGRE-CImiqbJ1U4bGld-56" target="LIGRE-CImiqbJ1U4bGld-57" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="LIGRE-CImiqbJ1U4bGld-59" value="Inheritance" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="LIGRE-CImiqbJ1U4bGld-58" vertex="1" connectable="0">
+          <mxGeometry x="-0.2483" y="-1" relative="1" as="geometry">
+            <mxPoint x="21" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="LIGRE-CImiqbJ1U4bGld-60" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;endArrow=diamondThin;endFill=1;" parent="1" source="LIGRE-CImiqbJ1U4bGld-56" target="LIGRE-CImiqbJ1U4bGld-57" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="LIGRE-CImiqbJ1U4bGld-61" value="Composition" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="LIGRE-CImiqbJ1U4bGld-60" vertex="1" connectable="0">
+          <mxGeometry x="-0.0841" y="1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="LIGRE-CImiqbJ1U4bGld-56" value="" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="147" y="20" width="20" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="LIGRE-CImiqbJ1U4bGld-57" value="" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="457" y="20" width="20" height="100" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

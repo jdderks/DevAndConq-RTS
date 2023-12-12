@@ -32,7 +32,7 @@ public class SelectableCollection : MonoBehaviour
                         selectedTable.Add(id, go.GetComponent<Unit>());
                     }
                 }
-                Debug.Log("Added " + id + " to selected dict (" + go.name + ")");
+                //Debug.Log("Added " + id + " to selected dict (" + go.name + ")");
             }
             else if (go.GetComponent<Building>() != null)
             {
@@ -45,7 +45,7 @@ public class SelectableCollection : MonoBehaviour
                         selectedTable.Add(id, go.GetComponent<Building>());
                     }
                 }
-                Debug.Log("Added " + id + " to selected dict (" + go.name + ")");
+                //Debug.Log("Added " + id + " to selected dict (" + go.name + ")");
             }
         }
         UpdateUnitUI();

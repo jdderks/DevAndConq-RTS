@@ -31,7 +31,7 @@ public class CreateUnitRTSAction : RtsBuildingAction
         this.spawnPointOrigin = building.unitSpawnPoint;
     }
 
-    //Create the unit
+
     public override void Activate()
     {
         Assert.IsNotNull(unitGameObject, "Use SetUnitValues to set the values before activating the RTSAction!");
