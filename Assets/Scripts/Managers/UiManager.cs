@@ -48,7 +48,14 @@ public class UiManager : MonoBehaviour
 
     public void UpdateActionQueuePanel(ActionQueue queue)
     {
-        List<ActionQueueItem> queueItems = queue.Actions;
+        if (queue == null) //Just make the queue UI empty
+        {
+
+        }
+        else //Fill the queue UI with corresponding icons and things
+        {
+            List<ActionQueueItem> queueItems = queue.Actions;
+        }
     }
 
 

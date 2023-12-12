@@ -22,11 +22,11 @@ public class RtsActionPanel : MonoBehaviour
         {
             GameObject panelGameObject = Instantiate(GameManager.Instance.Settings.uiPanelSettings.panelItemPrefab, panelParent);
             PanelItem panel = panelGameObject.GetComponent<PanelItem>();
+
             if (action is CreateUnitRTSAction)
             {
                 var CreateUnitAction = action as CreateUnitRTSAction;
             }
-
 
             PanelInfoScriptableObject actionInfo = action.GetPanelInfo();
 
@@ -39,7 +39,7 @@ public class RtsActionPanel : MonoBehaviour
                 textCost: actionInfo.cost.ToString()
             );
 
-            var actionQueueItem = new ActionQueueItem(action,actionInfo.actionCooldownSeconds);
+            var actionQueueItem = new ActionQueueItem(action, actionInfo.actionCooldownSeconds);
 
             void AddActionQueueItem()
             {

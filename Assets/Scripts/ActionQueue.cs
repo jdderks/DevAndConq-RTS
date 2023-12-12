@@ -25,6 +25,11 @@ public class ActionQueue : MonoBehaviour
         }
     }
 
+    public void SetActions()
+    {
+        Actions = new();
+    }
+
     private void StartProcessingQueue()
     {
         isProcessingQueue = true;

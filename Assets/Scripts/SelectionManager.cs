@@ -95,10 +95,34 @@ public class SelectionManager : MonoBehaviour
                     }
                     else //exclusive selected
                     {
+                        //if (building is CommandCenter)
+                        //{
+                        //    building = building as CommandCenter;
+                        //}
+                        //else if (buildingContext is WarFactory)
+                        //{
+
+                        //}
+
                         GameManager.Instance.unitManager.DeselectAll();
                         GameManager.Instance.unitManager.AddSelected(hit.transform.gameObject);//selectableCollection.addSelected(hit.transform.gameObject);
-                        GameManager.Instance.uiManager.UpdateRtsActionPanel(units: GameManager.Instance.unitManager.GetUnits(), building: GameManager.Instance.SelectableCollection.GetBuilding());
-                        GameManager.Instance.uiManager.UpdateActionQueuePanel(queue: GameManager.Instance.SelectableCollection.GetBuilding().actionQueue);
+                        
+                        var building = GameManager.Instance.SelectableCollection.GetBuilding();
+
+                        GameManager.Instance.uiManager.UpdateRtsActionPanel(
+                            units: GameManager.Instance.unitManager.GetUnits(), 
+                            building: building
+                            );
+
+                        if (building != null && building.actionQueue == null)
+                        {
+                            building.actionQueue = new();
+                            building.actionQueue.SetActions();
+                        }
+                        if(building != null)                       
+                            GameManager.Instance.uiManager.UpdateActionQueuePanel(building.actionQueue);
+                        else
+                            GameManager.Instance.uiManager.UpdateActionQueuePanel(null);
                     }
                 }
                 else //if we didnt hit something
@@ -230,12 +254,6 @@ public class SelectionManager : MonoBehaviour
                         Unit unit = units[i];
                         var task = new MoveUnitTask(unit, movementPoints[i]);
                         unit.StartTask(task);
-                        //if (GameManager.Instance.inputManager.GetKeepSelectedUnitsInput())
-                        //{
-                        //    task.Completed += () => {
-                        //        unit.StartTask(new GuardTask());
-                        //    };
-                        //}
                         Destroy(instantiatedObject, 0.4f);
                     }
                 }

@@ -4,8 +4,26 @@ using UnityEngine;
 
 public class ActionQueuePanel : MonoBehaviour
 {
-    private void UpdateActionQueuePanel()
+    [SerializeField] private Transform panelParent;
+    public List<QueuePanelItem> panelItems = new();
+
+    private void UpdateActionQueuePanel(List<ActionQueueItem> queueItems)
     {
+        foreach (var panel in panelItems)
+        {
+            //maybe remove click events later as well
+            Destroy(panel);
+        }
+        panelItems = new();
+
+        foreach (var item in queueItems)
+        {
+             var panelGameObject = Instantiate(GameManager.Instance.Settings.uiPanelSettings.queueItemPrefab, panelParent);
+            
+            
+
+        }
+
         //Remove all existing if there are any
 
         //Get action queue
