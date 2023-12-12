@@ -6,17 +6,20 @@ public class ActionQueuePanel : MonoBehaviour
 {
     [SerializeField] private Transform panelParent;
     public List<ActionQueuePanelItem> panelItems = new();
+    private bool panelIsActive = false;
+    private ActionQueue focussedActionQueue;
+    public bool PanelIsActive { get => panelIsActive; set => panelIsActive = value; }
 
-    public void SetActionQueueItems(ActionQueue queue)
+    public void SetActionQueue(ActionQueue queue)
     {
-        foreach (var panel in panelItems)
-        {
-            //maybe remove click events later as well
-            Destroy(panel.gameObject);
-        }
-        panelItems = new();
+        focussedActionQueue = queue;
+        InstantiateQueue();
+    }
 
-        foreach (var item in queue.Items)
+    private void InstantiateQueue()
+    {
+        panelIsActive = true;
+        foreach (var item in focussedActionQueue.Items)
         {
             GameObject panelGameObject = Instantiate(GameManager.Instance.Settings.uiPanelSettings.queueItemPrefab, panelParent);
             ActionQueuePanelItem queueItem = panelGameObject.GetComponent<ActionQueuePanelItem>();
@@ -24,12 +27,43 @@ public class ActionQueuePanel : MonoBehaviour
         }
     }
 
+    public void CloseActionQueueItems()
+    {
+        foreach (var panel in panelItems)
+        {
+            //maybe remove click events later as well
+            Destroy(panel.gameObject);
+        }
+        panelItems = new();
+        panelIsActive = false;
+    }
+
+    public void UpdateActionQueuePanel()
+    {
+        if (!panelIsActive) return; // Early return if the panel is not active
+
+        if (focussedActionQueue.Items.Count > 0)
+        {
+            var progress = focussedActionQueue.Items[0].RemainingTime / focussedActionQueue.Items[0].WaitForSeconds;
+
+            // Ensure the progress is clamped between 0 and 1
+            var clampedProgress = Mathf.Clamp01(progress);
+
+            // Invert the progress to fill from 0 to 1
+            var invertedProgress = 1f - clampedProgress;
+
+            Debug.Log(invertedProgress);
+            if (panelItems.Count > 0)
+            {
+                panelItems[0].frontImage.fillAmount = invertedProgress;
+            }
+        }
+    }
+
+
     private void Update()
     {
-        if (panelItems.Count > 0)
-        {
-            panelItems[0].frontImage.fillAmount = panelItems[0].RemainingTime / panelItems[0].WaitDurationSeconds;
-        }
+        UpdateActionQueuePanel();
     }
 
     //add thing to be updated in real time to keep the item fillamount up to date

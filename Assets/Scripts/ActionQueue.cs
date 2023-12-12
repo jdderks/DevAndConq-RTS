@@ -43,7 +43,7 @@ public class ActionQueue
         {
 
             currentAction.RemainingTime -= Time.deltaTime;
-            Debug.Log("Remaining Time" + currentAction.RemainingTime);
+            //Debug.Log("Remaining Time" + currentAction.RemainingTime);
         }
 
         if (currentAction.RemainingTime <= 0)

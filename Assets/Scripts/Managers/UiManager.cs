@@ -18,6 +18,15 @@ public class UiManager : MonoBehaviour
 
     //private TextMeshProUGUI InfoPanelText_UnitAmount;
 
+    private void Update()
+    {
+        //if (actionQueuePanel.PanelIsActive) 
+        //{
+        //    actionQueuePanel.UpdateActionQueuePanel();
+        //}
+
+    }
+
     public void UpdateRtsActionPanel(List<Unit> units = null, Building building = null)
     {
         var actions = new List<RtsAction>();
@@ -50,11 +59,12 @@ public class UiManager : MonoBehaviour
     public void OpenActionQueuePanel(ActionQueue queue)
     {
         actionQueuePanelGameObject.SetActive(true);
-        actionQueuePanel.SetActionQueueItems(queue);
+        actionQueuePanel.SetActionQueue(queue);
     }
 
     public void CloseActionQueuePanel()
     {
+        actionQueuePanel.CloseActionQueueItems();
         actionQueuePanelGameObject.SetActive(false);
     }
 
