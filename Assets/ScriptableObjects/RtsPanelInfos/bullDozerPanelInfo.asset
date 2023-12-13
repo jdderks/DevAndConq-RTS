@@ -14,5 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cost: 1000
   panelText: Construct Dozer
-  image: {fileID: 21300000, guid: 4b8e35c10a8d810478bb42d179fcd213, type: 3}
+  image: {fileID: 0}
   unit: 1
+  constructionTime: 15

@@ -13,8 +13,7 @@ public abstract class RtsAction
 
 public abstract class RtsBuildingAction : RtsAction
 {
-    float actionDuration = 5f;
-    ActionQueueItem queueItem;
+
 }
 
 public abstract class RtsUnitAction : RtsAction

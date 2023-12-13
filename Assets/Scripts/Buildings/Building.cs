@@ -5,8 +5,7 @@ using UnityEngine;
 public abstract class Building : MonoBehaviour, ISelectable
 {
     public List<RtsAction> rtsBuildingActions = new(); //These are empty RTS action slots
-    public List<RtsBuildingAction> actionQueue = new(); //This could be a Queue<> but I'd like items to be able to be removed from the center.
-
+    public ActionQueue actionQueue = new ActionQueue(); //This could be a Queue<> but I'd like items to be able to be removed from the center.
 
     [SerializeField] protected Transform selectableHighlightParent;
     
@@ -15,6 +14,14 @@ public abstract class Building : MonoBehaviour, ISelectable
     protected GameObject instantiatedSelectionObject;
 
     public Team ownedByTeam;
+
+    public void Update()
+    {
+        if (actionQueue != null)
+        {
+            actionQueue.Update();
+        }
+    }
 
     public abstract void Deselect();
     public abstract GameObject GetGameObject();

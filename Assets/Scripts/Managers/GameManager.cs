@@ -26,5 +26,5 @@ public class GameManager : MonoBehaviour
     [SerializeField] private SelectableCollection selectableCollection;
     public SelectableCollection SelectableCollection { get => selectableCollection; set => selectableCollection = value; }
 
-    public List<PanelItem> PanelItems = new();
+    public List<ActionPanelItem> PanelItems = new();
 }

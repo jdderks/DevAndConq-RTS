@@ -11,11 +11,23 @@ public class UiManager : MonoBehaviour
 {
     [SerializeField] private InfoPanel infoPanel;
     [SerializeField] private RtsActionPanel rtsActionPanel;
-
+    [SerializeField] private ActionQueuePanel actionQueuePanel;
+    [SerializeField] private GameObject actionQueuePanelGameObject;
 
     [SerializeField] private LanguageSets currentSelectedLanguage = LanguageSets.English;
 
+    public ActionQueuePanel ActionQueuePanel { get => actionQueuePanel; set => actionQueuePanel = value; }
+
     //private TextMeshProUGUI InfoPanelText_UnitAmount;
+
+    private void Update()
+    {
+        //if (actionQueuePanel.PanelIsActive) 
+        //{
+        //    actionQueuePanel.UpdateActionQueuePanel();
+        //}
+
+    }
 
     public void UpdateRtsActionPanel(List<Unit> units = null, Building building = null)
     {
@@ -46,6 +58,17 @@ public class UiManager : MonoBehaviour
         rtsActionPanel.UpdatePanels(actions);
     }
 
+    public void OpenActionQueuePanel(ActionQueue queue)
+    {
+        actionQueuePanelGameObject.SetActive(true);
+        ActionQueuePanel.TotalPanelReset(queue: queue);
+    }
+
+    public void CloseActionQueuePanel()
+    {
+        ActionQueuePanel.CloseActionQueueItems();
+        actionQueuePanelGameObject.SetActive(false);
+    }
 
     public void UpdateInfoPanelValues()
     {
