@@ -16,6 +16,8 @@ public class UiManager : MonoBehaviour
 
     [SerializeField] private LanguageSets currentSelectedLanguage = LanguageSets.English;
 
+    public ActionQueuePanel ActionQueuePanel { get => actionQueuePanel; set => actionQueuePanel = value; }
+
     //private TextMeshProUGUI InfoPanelText_UnitAmount;
 
     private void Update()
@@ -59,12 +61,12 @@ public class UiManager : MonoBehaviour
     public void OpenActionQueuePanel(ActionQueue queue)
     {
         actionQueuePanelGameObject.SetActive(true);
-        actionQueuePanel.SetActionQueue(queue);
+        ActionQueuePanel.TotalPanelReset(queue: queue);
     }
 
     public void CloseActionQueuePanel()
     {
-        actionQueuePanel.CloseActionQueueItems();
+        ActionQueuePanel.CloseActionQueueItems();
         actionQueuePanelGameObject.SetActive(false);
     }
 

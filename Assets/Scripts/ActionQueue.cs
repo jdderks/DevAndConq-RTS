@@ -7,7 +7,10 @@ public class ActionQueue
     private bool isPaused = false;
     private bool isProcessingQueue = false;
 
+    private bool isOutDated = false;
+
     public List<RtsQueueAction> Items { get => items; private set => items = value; }
+    public bool IsOutDated { get => isOutDated; set => isOutDated = value; }
 
     public void Update()
     {
@@ -34,6 +37,7 @@ public class ActionQueue
         isProcessingQueue = true;
         RtsQueueAction currentAction = items[0];
         currentAction.RemainingTime = currentAction.WaitForSeconds;
+        IsOutDated = true;
     }
 
     private void ProcessQueue()
@@ -41,15 +45,13 @@ public class ActionQueue
         RtsQueueAction currentAction = items[0];
         if (!isPaused)
         {
-
             currentAction.RemainingTime -= Time.deltaTime;
-            //Debug.Log("Remaining Time" + currentAction.RemainingTime);
         }
 
         if (currentAction.RemainingTime <= 0)
         {
             currentAction.Action.Activate();
-            items.RemoveAt(0);
+            RemoveFromQueue(0);
             isProcessingQueue = false;
         }
     }
@@ -59,7 +61,7 @@ public class ActionQueue
         if (items.Count < 8)
         {
             items.Add(new RtsQueueAction(action, action.GetPanelInfo().constructionTime));
-
+            IsOutDated = true;
         }
     }
 
@@ -73,6 +75,7 @@ public class ActionQueue
             }
             items.RemoveAt(i);
         }
+        IsOutDated = true;
     }
 
     public void PauseResumeQueue(bool pause)

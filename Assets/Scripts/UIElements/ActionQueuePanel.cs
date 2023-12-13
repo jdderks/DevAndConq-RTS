@@ -10,6 +10,15 @@ public class ActionQueuePanel : MonoBehaviour
     private ActionQueue focussedActionQueue;
     public bool PanelIsActive { get => panelIsActive; set => panelIsActive = value; }
 
+    public void TotalPanelReset(ActionQueue queue)
+    {
+        if (queue == null)
+            queue = focussedActionQueue;
+
+        CloseActionQueueItems();
+        SetActionQueue(queue);
+    }
+
     public void SetActionQueue(ActionQueue queue)
     {
         focussedActionQueue = queue;
@@ -21,10 +30,15 @@ public class ActionQueuePanel : MonoBehaviour
         panelIsActive = true;
         foreach (var item in focussedActionQueue.Items)
         {
-            GameObject panelGameObject = Instantiate(GameManager.Instance.Settings.uiPanelSettings.queueItemPrefab, panelParent);
-            ActionQueuePanelItem queueItem = panelGameObject.GetComponent<ActionQueuePanelItem>();
-            panelItems.Add(queueItem);
+            AddNewQueuePanelItem();
         }
+    }
+
+    private void AddNewQueuePanelItem()
+    {
+        GameObject panelGameObject = Instantiate(GameManager.Instance.Settings.uiPanelSettings.queueItemPrefab, panelParent);
+        ActionQueuePanelItem queueItem = panelGameObject.GetComponent<ActionQueuePanelItem>();
+        panelItems.Add(queueItem);
     }
 
     public void CloseActionQueueItems()
@@ -38,19 +52,20 @@ public class ActionQueuePanel : MonoBehaviour
         panelIsActive = false;
     }
 
-    public void UpdateActionQueuePanel()
+    private void Update()
     {
-        if (!panelIsActive) return; // Early return if the panel is not active
+        UpdatePanel();
+    }
+
+    public void UpdatePanel()
+    {
+        if (!panelIsActive) return;
 
         if (focussedActionQueue.Items.Count > 0)
         {
-            var progress = focussedActionQueue.Items[0].RemainingTime / focussedActionQueue.Items[0].WaitForSeconds;
-
-            // Ensure the progress is clamped between 0 and 1
-            var clampedProgress = Mathf.Clamp01(progress);
-
-            // Invert the progress to fill from 0 to 1
-            var invertedProgress = 1f - clampedProgress;
+            float progress = focussedActionQueue.Items[0].RemainingTime / focussedActionQueue.Items[0].WaitForSeconds;
+            float clampedProgress = Mathf.Clamp01(progress);
+            float invertedProgress = 1f - clampedProgress;
 
             Debug.Log(invertedProgress);
             if (panelItems.Count > 0)
@@ -58,13 +73,11 @@ public class ActionQueuePanel : MonoBehaviour
                 panelItems[0].frontImage.fillAmount = invertedProgress;
             }
         }
+
+        if (focussedActionQueue.IsOutDated)
+        {
+            TotalPanelReset(queue: focussedActionQueue);
+            focussedActionQueue.IsOutDated = false;
+        }
     }
-
-
-    private void Update()
-    {
-        UpdateActionQueuePanel();
-    }
-
-    //add thing to be updated in real time to keep the item fillamount up to date
 }

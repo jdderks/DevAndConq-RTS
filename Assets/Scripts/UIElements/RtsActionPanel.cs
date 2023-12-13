@@ -45,6 +45,7 @@ public class RtsActionPanel : MonoBehaviour
             void AddActionQueueItem()
             {
                 origin.actionQueue.AddToActionQueue(action);
+                //GameManager.Instance.uiManager.ActionQueuePanel.InstantiateQueue();
             }
 
             panel.SetButtonInteraction(AddActionQueueItem);
