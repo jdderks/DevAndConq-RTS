@@ -31,6 +31,8 @@ public class Unit : MonoBehaviour, ISelectableMultiple, IDamageable
 
     [SerializeField] private TeamScriptableObject ownedByTeam;
 
+    private List<RtsAction> unitRtsActions = new();
+
     private List<RtsUnitAction> _rtsActions = new(8); //Emtpy RTS unit slots, maximum of 8
 
     public List<RtsUnitAction> RtsActions
@@ -126,5 +128,10 @@ public class Unit : MonoBehaviour, ISelectableMultiple, IDamageable
     public virtual void Die()
     {
         return;
+    }
+
+    public List<RtsAction> GetActions()
+    {
+        return unitRtsActions;
     }
 }

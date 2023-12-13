@@ -67,7 +67,6 @@ public class ActionQueuePanel : MonoBehaviour
             float clampedProgress = Mathf.Clamp01(progress);
             float invertedProgress = 1f - clampedProgress;
 
-            Debug.Log(invertedProgress);
             if (panelItems.Count > 0)
             {
                 panelItems[0].frontImage.fillAmount = invertedProgress;

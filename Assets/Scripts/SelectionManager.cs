@@ -70,10 +70,6 @@ public class SelectionManager : MonoBehaviour
             if (!EventSystem.current.IsPointerOverGameObject())
                 marqueePosition1 = Input.mousePosition;
 
-
-
-
-
         //2. while left mouse button held
         if (GameManager.Instance.inputManager.GetMouseToSelectInput()) //TODO: Make InputManager 
             if (!EventSystem.current.IsPointerOverGameObject())
@@ -95,34 +91,29 @@ public class SelectionManager : MonoBehaviour
                     }
                     else //exclusive selected
                     {
-                        //if (building is CommandCenter)
-                        //{
-                        //    building = building as CommandCenter;
-                        //}
-                        //else if (buildingContext is WarFactory)
-                        //{
-
-                        //}
 
                         GameManager.Instance.unitManager.DeselectAll();
                         GameManager.Instance.unitManager.AddSelected(hit.transform.gameObject);//selectableCollection.addSelected(hit.transform.gameObject);
                         
-                        var building = GameManager.Instance.SelectableCollection.GetBuilding();
+                        ISelectable singleSelectable = GameManager.Instance.SelectableCollection.GetSingleSelectable();
 
-                        GameManager.Instance.uiManager.UpdateRtsActionPanel(
-                            units: GameManager.Instance.unitManager.GetUnits(), 
-                            building: building
-                            );
+                        GameManager.Instance.uiManager.UpdateRtsActionPanel(singleSelectable);
 
-                        if (building != null && building.actionQueue == null)
+                        if (singleSelectable is Building building)
                         {
-                            building.actionQueue = new();
-                            building.actionQueue.SetActions();
-                        }
-                        if(building != null)                       
+                            if (building.actionQueue == null)
+                            {
+                                building.actionQueue = new();
+                                building.actionQueue.SetActions();
+                            }
+
                             GameManager.Instance.uiManager.OpenActionQueuePanel(building.actionQueue);
+                        }
                         else
+                        {
                             GameManager.Instance.uiManager.CloseActionQueuePanel();
+                        }
+
                     }
                 }
                 else //if we didnt hit something

@@ -25,5 +25,10 @@ public abstract class Building : MonoBehaviour, ISelectable
 
     public abstract void Deselect();
     public abstract GameObject GetGameObject();
-    public abstract void Select();    
+    public abstract void Select();
+
+    public List<RtsAction> GetActions()
+    {
+        return rtsBuildingActions;
+    }
 }

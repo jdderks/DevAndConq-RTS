@@ -18,8 +18,8 @@ public class CommandCenter : Building
         constructDozerAction.PanelInfo = GameManager.Instance.Settings.rtsActionSettings.bullDozerPanelInfo;
         constructLightTankAction.PanelInfo = GameManager.Instance.Settings.rtsActionSettings.lightTankPanelInfo;
         
-        rtsBuildingActions.Add(constructDozerAction);
-        rtsBuildingActions.Add(constructLightTankAction);
+        GetActions().Add(constructDozerAction);
+        GetActions().Add(constructLightTankAction);
 
         constructDozerAction.SetUnitValues(
             unit: UnitToSpawn.Bulldozer,

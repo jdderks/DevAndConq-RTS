@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ConstructionDozer : Unit
 {
-
+    ConstructBuildingRTSAction constructBuildingAction = new();
 
 
     public override void Die()
