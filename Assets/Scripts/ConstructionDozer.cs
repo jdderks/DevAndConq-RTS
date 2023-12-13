@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ConstructionDozer : Unit
 {
+    private List<RtsAction> bulldozerActions = new();
     ConstructBuildingRTSAction constructBuildingAction = new();
 
 
@@ -30,5 +31,10 @@ public class ConstructionDozer : Unit
     public override float TakeDamage()
     {
         return base.TakeDamage();
+    }
+
+    public override List<RtsAction> GetActions()
+    {
+        return bulldozerActions;
     }
 }

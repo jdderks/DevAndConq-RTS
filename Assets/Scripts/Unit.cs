@@ -14,7 +14,7 @@ public enum UnitType
     VTOL = 4         //For aircraft that can hover and land and take off vertically
 }
 
-public class Unit : MonoBehaviour, ISelectableMultiple, IDamageable
+public class Unit : MonoBehaviour, ISelectable, IDamageable
 {
     [Header("Unit related")]
     [SerializeField] float thresholdDistance = 0.1f;
@@ -130,7 +130,7 @@ public class Unit : MonoBehaviour, ISelectableMultiple, IDamageable
         return;
     }
 
-    public List<RtsAction> GetActions()
+    public virtual List<RtsAction> GetActions()
     {
         return unitRtsActions;
     }

@@ -22,6 +22,7 @@ public class GameManager : MonoBehaviour
     public MovementManager movementManager;
     public InputManager inputManager;
     public UiManager uiManager;
+    public BuildingManager buildingManager;
 
     [SerializeField] private SelectableCollection selectableCollection;
     public SelectableCollection SelectableCollection { get => selectableCollection; set => selectableCollection = value; }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ConstructBuildingRTSAction : RtsAction
 {
-    private GameObject buildingToConstruct;
+    private GameObject buildingPrefab;
 
     public override void Activate()
     {

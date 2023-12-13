@@ -106,7 +106,6 @@ public class SelectionManager : MonoBehaviour
                                 building.actionQueue = new();
                                 building.actionQueue.SetActions();
                             }
-
                             GameManager.Instance.uiManager.OpenActionQueuePanel(building.actionQueue);
                         }
                         else
