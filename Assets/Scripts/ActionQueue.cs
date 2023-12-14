@@ -60,7 +60,7 @@ public class ActionQueue
     {
         if (items.Count < 8)
         {
-            items.Add(new RtsQueueAction(action, action.GetPanelInfo().constructionTime));
+            items.Add(new RtsQueueAction(action, action.GetPanelInfo().actionDelay));
             IsOutDated = true;
         }
     }

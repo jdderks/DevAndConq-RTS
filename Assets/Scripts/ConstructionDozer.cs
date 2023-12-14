@@ -5,8 +5,15 @@ using UnityEngine;
 public class ConstructionDozer : Unit
 {
     private List<RtsAction> bulldozerActions = new();
-    ConstructBuildingRTSAction constructBuildingAction = new();
+    ConstructBuildingRTSAction constructWarFactoryAction = new();
 
+    
+
+    private void Start()
+    {
+        //constructBuildingAction.PanelInfo = 
+        bulldozerActions.Add(constructWarFactoryAction);
+    }
 
     public override void Die()
     {

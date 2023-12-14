@@ -7,7 +7,7 @@ using UnityEngine;
 
 public class MainGameSettings : ScriptableObject
 {
-    public ModelSettings modelSettings;
+    //public ModelSettings modelSettings;
     public RtsActionSettings rtsActionSettings;
     public uiPanelSettings uiPanelSettings;
 }

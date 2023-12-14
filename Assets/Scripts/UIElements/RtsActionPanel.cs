@@ -37,7 +37,7 @@ public class RtsActionPanel : MonoBehaviour
                 image: actionInfo.image,
                 buttonText: actionInfo.panelText,
                 textCost: actionInfo.cost.ToString(),
-                actionDelay: actionInfo.constructionTime
+                actionDelay: actionInfo.actionDelay
             );
 
             

@@ -13,22 +13,23 @@ public class CommandCenter : Building
     
     private void Start()
     {
-        
+        var dozerUnitInfo = GameManager.Instance.Settings.rtsActionSettings.bullDozerPanelInfo;
+        var lightTankUnitInfo = GameManager.Instance.Settings.rtsActionSettings.lightTankPanelInfo;
 
-        constructDozerAction.PanelInfo = GameManager.Instance.Settings.rtsActionSettings.bullDozerPanelInfo;
-        constructLightTankAction.PanelInfo = GameManager.Instance.Settings.rtsActionSettings.lightTankPanelInfo;
+        constructDozerAction.PanelInfo = dozerUnitInfo;
+        constructLightTankAction.PanelInfo = lightTankUnitInfo;
         
         GetActions().Add(constructDozerAction);
         GetActions().Add(constructLightTankAction);
 
         constructDozerAction.SetUnitValues(
-            unit: UnitToSpawn.Bulldozer,
-            building: this,
+            unitObject: dozerUnitInfo.actionPrefab,
+            originBuilding: this,
             team: ownedByTeam);
 
         constructLightTankAction.SetUnitValues(
-            unit: UnitToSpawn.LightTank,
-            building: this,
+            unitObject: lightTankUnitInfo.actionPrefab,
+            originBuilding: this,
             team: ownedByTeam);
     }
 
@@ -42,7 +43,7 @@ public class CommandCenter : Building
     {
         Assert.IsNotNull(selectableHighlightParent, "Parent object not set in prefab.");
         instantiatedSelectionObject = Instantiate(
-            GameManager.Instance.Settings.modelSettings.unitSelectionHighlightGameObject,
+            GameManager.Instance.selectionManager.SelectionPrefab,
             selectableHighlightParent
             );
 

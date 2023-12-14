@@ -15,5 +15,7 @@ MonoBehaviour:
   cost: 1000
   panelText: Construct Dozer
   image: {fileID: 0}
-  unit: 1
-  constructionTime: 15
+  actionType: 1
+  actionPrefab: {fileID: 882591618825355416, guid: 2e60c02deba0d4c40be63a193aa75b09,
+    type: 3}
+  actionDelay: 7.5

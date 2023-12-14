@@ -9,7 +9,7 @@ using UnityEngine.EventSystems;
 using static UnitSelectionHelper;
 using static UnityEngine.Rendering.DebugUI.MessageBox;
 
-//Made following: https://youtu.be/OL1QgwaDsqo by Seabass under the open-source MIT License
+//CREDIT: Made following: https://youtu.be/OL1QgwaDsqo by Seabass under the open-source MIT License
 /// <summary>
 /// This script is responsable for all the unit-selection and building selection.
 /// The script may need to split up into multiple other scripts in the future to adhere to the single-responsibility prinsiple
@@ -27,6 +27,10 @@ public class SelectionManager : MonoBehaviour
 {
     [SerializeField] private Camera cam;
     [SerializeField] private bool debugMouseState = true;
+
+    [SerializeField] private GameObject selectionPrefab;
+    [SerializeField] private GameObject unitMovementPrefab;
+    public GameObject SelectionPrefab { get => selectionPrefab; set => selectionPrefab = value; }
 
     RaycastHit hit;
     bool dragSelect;
@@ -54,6 +58,7 @@ public class SelectionManager : MonoBehaviour
     //the vertices of our meshcollider
     Vector3[] verts;
     Vector3[] vecs;
+
 
     // Start is called before the first frame update
     void Start()
@@ -224,7 +229,7 @@ public class SelectionManager : MonoBehaviour
                 List<Vector3> movementPoints = PointGenerator.GeneratePointsInLine(lineSelectionPosition1, lineSelectionPosition2, units.Count).ToList();
                 for (int i = 0; i < units.Count; i++)
                 {
-                    var instantiatedObject = Instantiate(GameManager.Instance.Settings.modelSettings.terrainInteractionObject, movementPoints[i], Quaternion.identity);
+                    var instantiatedObject = Instantiate(unitMovementPrefab, movementPoints[i], Quaternion.identity);
                     Unit unit = units[i];
                     unit.StartTask(new MoveUnitTask(unit, movementPoints[i]));
                     Destroy(instantiatedObject, 0.4f);
@@ -240,7 +245,7 @@ public class SelectionManager : MonoBehaviour
 
                     for (int i = 0; i < units.Count; i++)
                     {
-                        var instantiatedObject = Instantiate(GameManager.Instance.Settings.modelSettings.terrainInteractionObject, movementPoints[i], Quaternion.identity);
+                        var instantiatedObject = Instantiate(unitMovementPrefab, movementPoints[i], Quaternion.identity);
                         Unit unit = units[i];
                         var task = new MoveUnitTask(unit, movementPoints[i]);
                         unit.StartTask(task);

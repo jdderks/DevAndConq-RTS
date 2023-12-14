@@ -6,6 +6,9 @@ public class ConstructBuildingRTSAction : RtsAction
 {
     private GameObject buildingPrefab;
 
+    private PanelInfoScriptableObject panelInfo; //The info that can be displayed
+    public PanelInfoScriptableObject PanelInfo { get => panelInfo; set => panelInfo = value; }
+
     public override void Activate()
     {
         throw new System.NotImplementedException();
