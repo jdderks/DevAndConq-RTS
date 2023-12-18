@@ -38,7 +38,11 @@ public class BuildingManager : MonoBehaviour
                 {
                     if (hit.collider.CompareTag("Terrain"))
                     {
-                        Instantiate(buildingToPlace, hit.point, Quaternion.identity);
+                        var buildingGameObject = Instantiate(buildingToPlace, hit.point, Quaternion.identity);
+                        var building = buildingGameObject.GetComponent<Building>();
+                        
+                        building.ConstructionPercentage = 0;
+
                         isBuilding = false;
                         originUnit = null;
                         buildingToPlace = null;

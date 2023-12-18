@@ -8,12 +8,18 @@ public abstract class Building : MonoBehaviour, ISelectable
     public ActionQueue actionQueue = new ActionQueue(); //This could be a Queue<> but I'd like items to be able to be removed from the center.
 
     [SerializeField] protected Transform selectableHighlightParent;
-    
+
+    private float constructionPercentage = 100f;
+    private float constructionDurationInSeconds = 20f;
+
     public Transform unitSpawnPoint; //The place units will spawn from
 
     protected GameObject instantiatedSelectionObject;
 
     public Team ownedByTeam;
+
+    public float ConstructionPercentage { get => constructionPercentage; set => constructionPercentage = value; }
+    public float ConstructionDurationInSeconds { get => constructionDurationInSeconds; set => constructionDurationInSeconds = value; }
 
     public void Update()
     {
