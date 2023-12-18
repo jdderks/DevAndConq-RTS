@@ -9,4 +9,6 @@ public interface ISelectable
     public GameObject GetGameObject();
 
     public List<RtsAction> GetActions();
+
+    public ActionQueue GetActionQueue();
 }

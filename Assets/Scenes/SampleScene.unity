@@ -170,7 +170,7 @@ GameObject:
   - component: {fileID: 70103841}
   m_Layer: 8
   m_Name: Terrain
-  m_TagString: Untagged
+  m_TagString: Terrain
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -506,21 +506,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4932796389901929149, guid: faef5b01627610f49bd6925e12f03b38,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 4.11
-      objectReference: {fileID: 0}
-    - target: {fileID: 4932796389901929149, guid: faef5b01627610f49bd6925e12f03b38,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 5.53
-      objectReference: {fileID: 0}
-    - target: {fileID: 5112606933372525163, guid: faef5b01627610f49bd6925e12f03b38,
-        type: 3}
-      propertyPath: selectableHighlightParent
-      value: 
-      objectReference: {fileID: 1166054893}
     - target: {fileID: 6041605619507586267, guid: faef5b01627610f49bd6925e12f03b38,
         type: 3}
       propertyPath: m_Name
@@ -529,11 +514,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 6041605619507586267, guid: faef5b01627610f49bd6925e12f03b38,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 489221192}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: faef5b01627610f49bd6925e12f03b38, type: 3}
 --- !u!1 &208433317
 GameObject:
@@ -1089,33 +1070,50 @@ MonoBehaviour:
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
   m_SoftShadowQuality: 1
---- !u!1 &489221189 stripped
+--- !u!1 &427967729
 GameObject:
-  m_CorrespondingSourceObject: {fileID: 6041605619507586267, guid: faef5b01627610f49bd6925e12f03b38,
-    type: 3}
-  m_PrefabInstance: {fileID: 176155141}
-  m_PrefabAsset: {fileID: 0}
---- !u!65 &489221192
-BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 489221189}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 427967730}
+  - component: {fileID: 427967731}
+  m_Layer: 0
+  m_Name: BuildingManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &427967730
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 427967729}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2024898263}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &427967731
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 427967729}
   m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 13.7, y: 10.46, z: 12.3}
-  m_Center: {x: 3.6, y: 0, z: -0.95}
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d87d537744332d0488264d5fa34afe7d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &498789286
 GameObject:
   m_ObjectHideFlags: 0
@@ -1292,6 +1290,12 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8033680055266323415, guid: 2e60c02deba0d4c40be63a193aa75b09,
+        type: 3}
+      propertyPath: constructWarFactoryPanelInfo
+      value: 
+      objectReference: {fileID: 11400000, guid: ad1d768cad7bbb64bb0ab74fcd9b6917,
+        type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1927,12 +1931,6 @@ MonoBehaviour:
   actionQueuePanel: {fileID: 355153335}
   actionQueuePanelGameObject: {fileID: 355153331}
   currentSelectedLanguage: 0
---- !u!4 &1166054893 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4932796389901929149, guid: faef5b01627610f49bd6925e12f03b38,
-    type: 3}
-  m_PrefabInstance: {fileID: 176155141}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1282458548 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7337393460853754355, guid: 2e60c02deba0d4c40be63a193aa75b09,
@@ -2719,6 +2717,7 @@ Transform:
   - {fileID: 506134503}
   - {fileID: 208433318}
   - {fileID: 1815329434}
+  - {fileID: 427967730}
   - {fileID: 1145611811}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2752,7 +2751,7 @@ MonoBehaviour:
   movementManager: {fileID: 506134504}
   inputManager: {fileID: 208433319}
   uiManager: {fileID: 1145611812}
-  buildingManager: {fileID: 0}
+  buildingManager: {fileID: 427967731}
   selectableCollection: {fileID: 2024898265}
   PanelItems: []
 --- !u!1 &2070476215

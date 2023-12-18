@@ -7,11 +7,12 @@ public class ConstructionDozer : Unit
     private List<RtsAction> bulldozerActions = new();
     ConstructBuildingRTSAction constructWarFactoryAction = new();
 
-    
+    [Header("Construction dozer related"),SerializeField] private PanelInfoScriptableObject constructWarFactoryPanelInfo;
 
     private void Start()
     {
-        //constructBuildingAction.PanelInfo = 
+        constructWarFactoryAction.SetActionValues(this);
+        constructWarFactoryAction.PanelInfo = constructWarFactoryPanelInfo;//GameManager.Instance.Settings.rtsActionSettings.constructWarFactoryPanelInfo; 
         bulldozerActions.Add(constructWarFactoryAction);
     }
 

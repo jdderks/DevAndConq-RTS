@@ -406,7 +406,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1509757796723374169}
-  - component: {fileID: 5112606933372525163}
+  - component: {fileID: 3372705885448389953}
+  - component: {fileID: 664566930645919150}
   m_Layer: 0
   m_Name: WarFactory
   m_TagString: Untagged
@@ -433,7 +434,7 @@ Transform:
   - {fileID: 8312614883363445547}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5112606933372525163
+--- !u!114 &3372705885448389953
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -442,11 +443,33 @@ MonoBehaviour:
   m_GameObject: {fileID: 6041605619507586267}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3c67eea61a988304985dde9e81b24893, type: 3}
+  m_Script: {fileID: 11500000, guid: ca6c5b16f81576a4ba68eca79fabf0e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   selectableHighlightParent: {fileID: 4932796389901929149}
   unitSpawnPoint: {fileID: 8312614883363445547}
+  lightTankUnitInfo: {fileID: 11400000, guid: 3232f129903b8b6429f391beeb2d50c2, type: 2}
+--- !u!65 &664566930645919150
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6041605619507586267}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 13.7, y: 10.46, z: 12.3}
+  m_Center: {x: 3.6, y: 0, z: -0.95}
 --- !u!1 &7841125433454724765
 GameObject:
   m_ObjectHideFlags: 0

@@ -7,32 +7,22 @@ using UnityEngine;
 public class CommandCenter : Building
 {
     CreateUnitRTSAction constructDozerAction = new CreateUnitRTSAction();
-    CreateUnitRTSAction constructLightTankAction = new CreateUnitRTSAction();
 
+    [SerializeField] private PanelInfoScriptableObject dozerUnitInfo;// = GameManager.Instance.Settings.rtsActionSettings.bullDozerPanelInfo;
     //ActionQueue ActionQueue = new();
-    
+
     private void Start()
     {
-        var dozerUnitInfo = GameManager.Instance.Settings.rtsActionSettings.bullDozerPanelInfo;
-        var lightTankUnitInfo = GameManager.Instance.Settings.rtsActionSettings.lightTankPanelInfo;
-
         constructDozerAction.PanelInfo = dozerUnitInfo;
-        constructLightTankAction.PanelInfo = lightTankUnitInfo;
-        
+
         GetActions().Add(constructDozerAction);
-        GetActions().Add(constructLightTankAction);
 
         constructDozerAction.SetUnitValues(
             unitObject: dozerUnitInfo.actionPrefab,
             originBuilding: this,
             team: ownedByTeam);
 
-        constructLightTankAction.SetUnitValues(
-            unitObject: lightTankUnitInfo.actionPrefab,
-            originBuilding: this,
-            team: ownedByTeam);
     }
-
 
     public override GameObject GetGameObject()
     {
@@ -59,5 +49,4 @@ public class CommandCenter : Building
     {
         Destroy(instantiatedSelectionObject);
     }
-
 }

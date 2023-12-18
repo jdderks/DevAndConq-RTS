@@ -134,4 +134,10 @@ public class Unit : MonoBehaviour, ISelectable, IDamageable
     {
         return unitRtsActions;
     }
+
+    public virtual ActionQueue GetActionQueue()
+    {
+        Debug.LogError("Base units don't have an action queue by default! This void can be overridden.");
+        return null;
+    }
 }

@@ -31,4 +31,9 @@ public abstract class Building : MonoBehaviour, ISelectable
     {
         return rtsBuildingActions;
     }
+
+    public ActionQueue GetActionQueue()
+    {
+        return actionQueue;
+    }
 }

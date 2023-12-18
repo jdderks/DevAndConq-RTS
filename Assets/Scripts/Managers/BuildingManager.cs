@@ -4,6 +4,55 @@ using UnityEngine;
 
 public class BuildingManager : MonoBehaviour
 {
+    private Unit originUnit;
+    private GameObject buildingToPlace;
+
+    private bool isBuilding;
+
+    public void EnterBuildingPlacementMode(Unit originUnit, GameObject buildingToPlace)
+    {
+        this.originUnit = originUnit;
+        this.buildingToPlace = buildingToPlace;
+
+        isBuilding = true;
+    }
+
+    public void Update()
+    {
+        if (isBuilding)
+        {
+            ConstructBuilding();
+        }
+    }
+
+    public void ConstructBuilding()
+    {
+        if (isBuilding)
+        {
+            if (Input.GetMouseButtonDown(0)) // Left mouse button to place object
+            {
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                RaycastHit hit;
+
+                if (Physics.Raycast(ray, out hit))
+                {
+                    if (hit.collider.CompareTag("Terrain"))
+                    {
+                        Instantiate(buildingToPlace, hit.point, Quaternion.identity);
+                        isBuilding = false;
+                        originUnit = null;
+                        buildingToPlace = null;
+                    }
+                }
+            }
+        }
+    }
+
+
+
+
+
+
     //This class puts the player into a "constructing" state where they can place buildings
 
     //This state is triggered through the "ConstructBuildingRTSAction"

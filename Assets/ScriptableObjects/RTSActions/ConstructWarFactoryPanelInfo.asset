@@ -16,5 +16,6 @@ MonoBehaviour:
   panelText: Construct War Factory
   image: {fileID: 0}
   actionType: 2
-  actionPrefab: {fileID: 0}
+  actionPrefab: {fileID: 6041605619507586267, guid: da78e9d5949420947b417f77ad2d1cd6,
+    type: 3}
   actionDelay: 0

@@ -9,6 +9,8 @@ public abstract class RtsAction
     public abstract ISelectable GetOrigin();
 
     public abstract PanelInfoScriptableObject GetPanelInfo();
+
+    public abstract RTSActionType GetActionType();
 }
 
 public abstract class RtsBuildingAction : RtsAction

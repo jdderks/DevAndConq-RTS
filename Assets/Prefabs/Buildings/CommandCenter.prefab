@@ -513,6 +513,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1509757796723374169}
   - component: {fileID: 5112606933372525163}
+  - component: {fileID: 3686088194171416761}
   m_Layer: 0
   m_Name: CommandCenter
   m_TagString: Untagged
@@ -553,6 +554,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   selectableHighlightParent: {fileID: 4932796389901929149}
   unitSpawnPoint: {fileID: 8312614883363445547}
+  dozerUnitInfo: {fileID: 11400000, guid: 51e284193633f73418a3bab9a20c1266, type: 2}
+  lightTankUnitInfo: {fileID: 11400000, guid: 3232f129903b8b6429f391beeb2d50c2, type: 2}
+--- !u!65 &3686088194171416761
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6041605619507586267}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 13.7, y: 10.46, z: 12.3}
+  m_Center: {x: 3.6, y: 0, z: -0.95}
 --- !u!1 &7841125433454724765
 GameObject:
   m_ObjectHideFlags: 0
@@ -609,7 +633,7 @@ Transform:
   m_GameObject: {fileID: 8196803555779213448}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 4.11, y: 5.53, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

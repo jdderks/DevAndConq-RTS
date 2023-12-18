@@ -55,4 +55,9 @@ public class CreateUnitRTSAction : RtsBuildingAction
     {
         return panelInfo;
     }
+
+    public override RTSActionType GetActionType()
+    {
+        return PanelInfo.actionType;
+    }
 }
