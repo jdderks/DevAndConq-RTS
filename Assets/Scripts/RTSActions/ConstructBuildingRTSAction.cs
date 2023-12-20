@@ -30,7 +30,7 @@ public class ConstructBuildingRTSAction : RtsAction
 
     public override PanelInfoScriptableObject GetPanelInfo()
     {
-        Assert.IsNotNull(PanelInfo, "the panelInfo of this action has not been set yet!") ;
+        Assert.IsNotNull(PanelInfo, "the panelInfo of this action has not been set yet!");
         return PanelInfo;
     }
 

@@ -92,31 +92,15 @@ public class SelectionManager : MonoBehaviour
                 {
                     if (Input.GetKey(KeyCode.LeftShift)) //inclusive select
                     {
-                        GameManager.Instance.unitManager.AddSelected(hit.transform.gameObject);//selectableCollection.addSelected(hit.transform.gameObject);
+                        GameManager.Instance.unitManager.AddSelected(hit.transform.gameObject);
                     }
                     else //exclusive selected
                     {
 
                         GameManager.Instance.unitManager.DeselectAll();
-                        GameManager.Instance.unitManager.AddSelected(hit.transform.gameObject);//selectableCollection.addSelected(hit.transform.gameObject);
+                        GameManager.Instance.unitManager.AddSelected(hit.transform.gameObject);
                         
-                        ISelectable singleSelectable = GameManager.Instance.SelectableCollection.GetSingleSelectable();
-
-                        GameManager.Instance.uiManager.UpdateRtsActionPanel(singleSelectable);
-
-                        if (singleSelectable is Building building)
-                        {
-                            if (building.actionQueue == null)
-                            {
-                                building.actionQueue = new();
-                                building.actionQueue.SetActions();
-                            }
-                            GameManager.Instance.uiManager.OpenActionQueuePanel(building.actionQueue);
-                        }
-                        else
-                        {
-                            GameManager.Instance.uiManager.CloseActionQueuePanel();
-                        }
+                        UpdatePanelWhenOneSelected();
 
                     }
                 }
@@ -167,6 +151,8 @@ public class SelectionManager : MonoBehaviour
                 }
 
                 Destroy(selectionBox, 0.02f);
+
+
 
             }//end marquee select
 
@@ -259,6 +245,26 @@ public class SelectionManager : MonoBehaviour
         #endregion
     }
 
+    private static void UpdatePanelWhenOneSelected()
+    {
+        ISelectable singleSelectable = GameManager.Instance.SelectableCollection.GetSingleSelectable();
+        GameManager.Instance.uiManager.UpdateRtsActionPanel(singleSelectable);
+
+        if (singleSelectable is Building building)
+        {
+            if (building.actionQueue == null)
+            {
+                building.actionQueue = new();
+                building.actionQueue.SetActions();
+            }
+            GameManager.Instance.uiManager.OpenActionQueuePanel(building.actionQueue);
+        }
+        else
+        {
+            GameManager.Instance.uiManager.CloseActionQueuePanel();
+        }
+    }
+
     private void OnGUI()
     {
         if (dragSelect == true)
@@ -349,6 +355,7 @@ public class SelectionManager : MonoBehaviour
         if (other.gameObject.GetComponent<Unit>())
         {
             GameManager.Instance.unitManager.AddSelected(other.gameObject);
+            UpdatePanelWhenOneSelected();
         }
     }
 }

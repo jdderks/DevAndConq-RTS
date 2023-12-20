@@ -44,7 +44,6 @@ public class SelectableCollection : MonoBehaviour
                         selectedTable.Add(id, go.GetComponent<Building>());
                     }
                 }
-                //Debug.Log("Added " + id + " to selected dict (" + go.name + ")");
             }
         }
         UpdateUnitUI();
