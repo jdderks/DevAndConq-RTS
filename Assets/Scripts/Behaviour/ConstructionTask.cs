@@ -2,22 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ConstructionTask : SequenceTask
+public class ConstructionTask : UnitTask
 {
     Building targetBuilding;
-    
+    public ConstructionTask(Unit agent, Building targetBuilding)
+    {
+        this.agent = agent;
+        this.targetBuilding = targetBuilding;
+    }
+
     public override void OnBegin()
     {
-        //Distance check from building, only do this task if unit is close enough to the building.
-
-        if (Vector3.Distance(agent.gameObject.transform.position, targetBuilding.gameObject.transform.position) < 10f)
-        {
-
-        }
-        else
-        {
-            Cancel();
-        }
+        
     }
 
     public override void OnCancel()
