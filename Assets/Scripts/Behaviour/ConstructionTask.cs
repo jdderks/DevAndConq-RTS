@@ -8,7 +8,16 @@ public class ConstructionTask : SequenceTask
     
     public override void OnBegin()
     {
-        throw new System.NotImplementedException();
+        //Distance check from building, only do this task if unit is close enough to the building.
+
+        if (Vector3.Distance(agent.gameObject.transform.position, targetBuilding.gameObject.transform.position) < 10f)
+        {
+
+        }
+        else
+        {
+            Cancel();
+        }
     }
 
     public override void OnCancel()

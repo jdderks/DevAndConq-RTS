@@ -96,12 +96,10 @@ public class SelectionManager : MonoBehaviour
                     }
                     else //exclusive selected
                     {
-
                         GameManager.Instance.unitManager.DeselectAll();
                         GameManager.Instance.unitManager.AddSelected(hit.transform.gameObject);
                         
                         UpdatePanelWhenOneSelected();
-
                     }
                 }
                 else //if we didnt hit something

@@ -47,7 +47,7 @@ public class SequenceTask : UnitTask
         }
         else
         {
-            OnComplete();
+            Complete();
         }
     }
 
