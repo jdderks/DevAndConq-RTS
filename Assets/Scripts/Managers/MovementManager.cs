@@ -25,7 +25,7 @@ public class MovementManager : MonoBehaviour
     //Custom update method which can be enabled/disabled
     public void OnUpdate()
     {
-        HandleMovement();
+        //HandleMovement();
     }
 
     public void HandleMovement()
@@ -35,7 +35,7 @@ public class MovementManager : MonoBehaviour
             if (unit.CurrentTask is MoveUnitTask)
             {
                 MoveUnitTask task = unit.CurrentTask as MoveUnitTask;
-                if (unit.IsMoving) task.Move();
+                //if (unit.IsMoving) task.Move();
             }
         }
     }

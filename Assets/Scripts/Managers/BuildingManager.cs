@@ -1,6 +1,7 @@
 using NUnit.Framework;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 //This class was written with some help from this tutorial, I really only skimmed through it but it felt right to still credit it: https://www.youtube.com/watch?v=YuGabUUSqlE
@@ -30,7 +31,9 @@ public class BuildingManager : MonoBehaviour
 
     public void EnterBuildingPlacementMode(Unit originUnit, GameObject buildingToPlace)
     {
-        this.originUnit = originUnit;
+        if (originUnit != null)
+            this.originUnit = originUnit;
+
         this.buildingToPlace = buildingToPlace;
 
         ghostObject = Instantiate(ghostObjectPrefab, posToPlace, Quaternion.identity);
@@ -67,13 +70,11 @@ public class BuildingManager : MonoBehaviour
 
                         building.SetAsConstructing();// = 0;
 
-                        var sequenceConstructionTask = new SequenceTask();
 
-                        MoveUnitTask moveTask = new(originUnit, buildingGameObject.transform.position + new Vector3(3,0,0));
+                        MoveUnitTask moveTask = new(originUnit, building.unitSpawnPoint.position);
                         ConstructionTask constructionTask = new(originUnit, building);
 
-                        sequenceConstructionTask.AddTask(moveTask);
-                        sequenceConstructionTask.AddTask(constructionTask);
+                        var sequenceConstructionTask = new SequenceTask(originUnit, moveTask, constructionTask);
 
                         originUnit.StartTask(sequenceConstructionTask);
 

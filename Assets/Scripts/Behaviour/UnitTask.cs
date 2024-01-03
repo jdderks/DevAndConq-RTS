@@ -29,7 +29,7 @@ public abstract class UnitTask
 
     public abstract void OnBegin();
 
-    public abstract void OnCancel();
+    public abstract void OnCancelled();
 
     public abstract void OnComplete();
 
@@ -40,30 +40,28 @@ public abstract class UnitTask
     public void Begin()
     {
         this.TaskState = TaskState.Active;
-        if (Begun == null)
-        {
-            Begun += OnBegin;
-            Begun.Invoke();
-        }
+
+        OnBegin();//Begun += OnBegin;
+        if (taskState == TaskState.Active)
+            Begun?.Invoke();
+
     }
 
     public void Cancel()
     {
         this.TaskState = TaskState.Cancelled;
-        if (Canceled == null)
-        {
-            Canceled += OnCancel;
-            Canceled.Invoke();
-        }
+
+        OnCancelled();
+        Canceled?.Invoke();
+
     }
 
     public void Complete()
     {
         this.TaskState = TaskState.Completed;
-        if (Completed == null)
-        {
-            Completed += OnComplete;
-            Completed.Invoke();
-        }
+
+        OnComplete();
+        Completed?.Invoke();
+
     }
 }

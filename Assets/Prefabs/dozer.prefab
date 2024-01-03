@@ -215,7 +215,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df3ab29e1742ae439b9c7e2b6823b50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  thresholdDistance: 0.1
+  thresholdDistance: 2.5
   downwardForce: 9.81
   unitSpeed: 5
   taskDebugInfo: 1

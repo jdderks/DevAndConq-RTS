@@ -1,3 +1,4 @@
+using NaughtyAttributes;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -21,7 +22,6 @@ public abstract class Building : MonoBehaviour, ISelectable
     protected GameObject instantiatedSelectionObject;
 
     public Team ownedByTeam;
-
 
     public float ConstructionPercentage { get => constructionPercentage; set => constructionPercentage = value; }
     public float ConstructionDurationInSeconds { get => constructionDurationInSeconds; set => constructionDurationInSeconds = value; }
@@ -48,6 +48,7 @@ public abstract class Building : MonoBehaviour, ISelectable
         return actionQueue;
     }
 
+    [Button("Set as constructing")]
     public void SetAsConstructing()
     {
         ConstructionPercentage = 0;
@@ -72,6 +73,7 @@ public abstract class Building : MonoBehaviour, ISelectable
 
     }
 
+    [Button("Finish Construction")]
     public void FinishConstruction()
     {
         visualObjects.SetActive(true);

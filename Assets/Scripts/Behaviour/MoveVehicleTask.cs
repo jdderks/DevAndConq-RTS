@@ -29,9 +29,9 @@ public class MoveVehicleTask : MoveUnitTask
         base.OnBegin();
     }
 
-    public override void OnCancel()
+    public override void OnCancelled()
     {
-        base.OnCancel();
+        base.OnCancelled();
     }
 
     public override void OnComplete()

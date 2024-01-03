@@ -13,7 +13,7 @@ public class AttackVehicleTask : UnitTask
         throw new System.NotImplementedException();
     }
 
-    public override void OnCancel()
+    public override void OnCancelled()
     {
         throw new System.NotImplementedException();
     }

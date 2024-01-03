@@ -1,5 +1,6 @@
 using NaughtyAttributes;
 using NUnit.Framework;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,10 +18,12 @@ public enum UnitType
 public class Unit : MonoBehaviour, ISelectable, IDamageable
 {
     [Header("Unit related")]
-    [SerializeField] float thresholdDistance = 0.1f;
+    [SerializeField] float thresholdDistance = 2.5f;
     [SerializeField] private float downwardForce = 9.81f; //Controls gravity
 
     [SerializeField] private float unitSpeed = 5f;
+
+    [SerializeField, ReadOnly] private Action movingSuccess;
 
     [SerializeField] private bool taskDebugInfo = true;
 
@@ -51,6 +54,7 @@ public class Unit : MonoBehaviour, ISelectable, IDamageable
     public bool TaskDebugInfo { get => taskDebugInfo; set => taskDebugInfo = value; }
     public float UnitSpeed { get => unitSpeed; set => unitSpeed = value; }
     public NavMeshAgent Agent { get => agent; set => agent = value; }
+    public Action MovingSuccess { get => movingSuccess; set => movingSuccess = value; }
 
     private void Start()
     {
@@ -92,11 +96,29 @@ public class Unit : MonoBehaviour, ISelectable, IDamageable
         CurrentTask = task;
         task.Begin();
     }
-
     private void UpdateMovement()
     {
-
+        if (agent.remainingDistance <= thresholdDistance)
+        {
+            var dist = Vector3.Distance(agent.transform.position, agent.destination);
+            if (dist <= thresholdDistance)
+            {
+                if (CurrentTask is MoveUnitTask)
+                {
+                    CurrentTask.Complete();
+                }
+                else if (CurrentTask is SequenceTask)
+                {
+                    SequenceTask seqTask = CurrentTask as SequenceTask;
+                    MoveUnitTask moveTask = seqTask.GetCurrentTask() as MoveUnitTask;
+                    if (moveTask != null)
+                        moveTask.Complete();
+                }
+            }
+        }
     }
+
+
 
     private void Update()
     {

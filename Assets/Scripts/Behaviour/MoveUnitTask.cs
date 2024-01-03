@@ -27,47 +27,17 @@ public class MoveUnitTask : UnitTask
         //CalculatePath(destination);
         Debug.Log(agent);
         Debug.Log(agent.Agent);
+        agent.IsMoving = true;
         agent.Agent.SetDestination(destination);
     }
     public override void OnComplete()
     {
+        Debug.Log("Finished moving!");
         agent.IsMoving = false;
     }
 
-    public override void OnCancel()
+    public override void OnCancelled()
     {
         agent.IsMoving = false;
-    }
-
-    /// <summary>
-    /// This is the movement logic, called in an update loop.
-    /// </summary>
-    public void Move()
-    {
-        if (agent.Agent.remainingDistance < 1)
-        {
-            Complete();
-        }
-    }
-
-
-    private void RotateToWaypoint(Vector3 wayPoint, float rotationSpeed)
-    {
-        Vector3 directionToTarget = (wayPoint - agent.transform.position).normalized;
-
-        // Create a rotation that points the forward direction towards the target
-        Quaternion targetRotation = Quaternion.LookRotation(directionToTarget, agent.transform.up);
-
-        // Smoothly interpolate towards the target rotation
-        agent.transform.rotation = Quaternion.Slerp(agent.transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
-    
-    
-    }
-
-    private void CalculatePath(Vector3 target)
-    {
-        destination = target;
-        NavMesh.CalculatePath(agent.transform.position, destination, NavMesh.AllAreas, Path);
-
     }
 }
