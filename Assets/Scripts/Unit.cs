@@ -34,6 +34,8 @@ public class Unit : MonoBehaviour, ISelectable, IDamageable
 
     [SerializeField] private TeamScriptableObject ownedByTeam;
 
+    [SerializeField] private float constructionMultiplier = 1;
+
     private List<RtsAction> unitRtsActions = new();
 
     private List<RtsUnitAction> _rtsActions = new(8); //Emtpy RTS unit slots, maximum of 8
@@ -55,6 +57,7 @@ public class Unit : MonoBehaviour, ISelectable, IDamageable
     public float UnitSpeed { get => unitSpeed; set => unitSpeed = value; }
     public NavMeshAgent Agent { get => agent; set => agent = value; }
     public Action MovingSuccess { get => movingSuccess; set => movingSuccess = value; }
+    public float ConstructionMultiplier { get => constructionMultiplier; set => constructionMultiplier = value; }
 
     private void Start()
     {

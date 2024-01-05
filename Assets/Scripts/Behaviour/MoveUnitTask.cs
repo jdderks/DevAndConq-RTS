@@ -8,7 +8,6 @@ public class MoveUnitTask : UnitTask
 {
     protected Vector3 destination;
     private NavMeshPath path;
-    private int currentCornerIndex = 0;
 
     public NavMeshPath Path { get => path; set => path = value; }
 
@@ -24,15 +23,13 @@ public class MoveUnitTask : UnitTask
 
     public override void OnBegin()
     {
-        //CalculatePath(destination);
-        Debug.Log(agent);
-        Debug.Log(agent.Agent);
         agent.IsMoving = true;
         agent.Agent.SetDestination(destination);
     }
+
     public override void OnComplete()
     {
-        Debug.Log("Finished moving!");
+        Debug.Log(agent + " finished moving!");
         agent.IsMoving = false;
     }
 

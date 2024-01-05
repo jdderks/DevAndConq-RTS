@@ -20,9 +20,7 @@ public class ConstructBuildingRTSAction : RtsAction
 
     public override void Activate()
     {
-        //SequenceTask constructBuildingSequenceTask = new();
-        //constructBuildingSequenceTask.AddTask(new MoveUnitTask(unit, buildingPrefab.transform.position));
-        throw new System.NotImplementedException();
+        
     }
 
     public override ISelectable GetOrigin()

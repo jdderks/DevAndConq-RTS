@@ -1,3 +1,5 @@
+using NUnit.Framework;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,24 +7,30 @@ using UnityEngine;
 public class ConstructionTask : UnitTask
 {
     Building targetBuilding;
+    Unit unit;
+
     public ConstructionTask(Unit agent, Building targetBuilding)
     {
-        this.agent = agent;
+        this.unit = agent;
         this.targetBuilding = targetBuilding;
     }
 
     public override void OnBegin()
     {
-        
+        targetBuilding.StartConstruction(unit, 1);
     }
 
     public override void OnCancelled()
     {
-        throw new System.NotImplementedException();
+        targetBuilding.StopConstruction();
     }
 
     public override void OnComplete()
     {
-        throw new System.NotImplementedException();
+    }
+
+    public void Finish()
+    {
+        Complete();
     }
 }

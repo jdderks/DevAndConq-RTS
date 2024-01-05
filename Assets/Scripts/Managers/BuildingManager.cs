@@ -68,7 +68,7 @@ public class BuildingManager : MonoBehaviour
                         GameObject buildingGameObject = Instantiate(buildingToPlace, hit.point, Quaternion.identity);
                         Building building = buildingGameObject.GetComponent<Building>();
 
-                        building.SetAsConstructing();// = 0;
+                        building.ResetConstruction();// = 0;
 
 
                         MoveUnitTask moveTask = new(originUnit, building.unitSpawnPoint.position);
