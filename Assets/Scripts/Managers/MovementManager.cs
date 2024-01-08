@@ -18,27 +18,9 @@ public class MovementManager : MonoBehaviour
 
     private void Update()
     {
-        OnUpdate();
+        
     }
 
-
-    //Custom update method which can be enabled/disabled
-    public void OnUpdate()
-    {
-        //HandleMovement();
-    }
-
-    public void HandleMovement()
-    {
-        foreach (Unit unit in unitManager.Units)
-        {
-            if (unit.CurrentTask is MoveUnitTask)
-            {
-                MoveUnitTask task = unit.CurrentTask as MoveUnitTask;
-                //if (unit.IsMoving) task.Move();
-            }
-        }
-    }
     /// <summary>
     /// Draw agent movement gizmo'ze
     /// </summary>

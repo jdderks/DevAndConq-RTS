@@ -211,8 +211,13 @@ public class SelectionManager : MonoBehaviour
                 }
 
                 List<Vector3> movementPoints = PointGenerator.GeneratePointsInLine(lineSelectionPosition1, lineSelectionPosition2, units.Count).ToList();
+
                 for (int i = 0; i < units.Count; i++)
                 {
+                    if (units.Count == 0 || )
+                    {
+
+                    }
                     var instantiatedObject = Instantiate(unitMovementPrefab, movementPoints[i], Quaternion.identity);
                     Unit unit = units[i];
                     unit.StartTask(new MoveUnitTask(unit, movementPoints[i]));
@@ -225,22 +230,27 @@ public class SelectionManager : MonoBehaviour
             {
                 if (lineInput == false)
                 {
-                    List<Vector3> movementPoints = PointGenerator.GenerateSunflowerPoints(hit.point, numberOfPoints: units.Count, radius: units.Count * 0.5f);
-
-                    for (int i = 0; i < units.Count; i++)
-                    {
-                        var instantiatedObject = Instantiate(unitMovementPrefab, movementPoints[i], Quaternion.identity);
-                        Unit unit = units[i];
-                        var task = new MoveUnitTask(unit, movementPoints[i]);
-                        unit.StartTask(task);
-                        Destroy(instantiatedObject, 0.4f);
-                    }
+                    GiveCommandToUnits(units);
                 }
             }
             lineInput = false;
         }
 
         #endregion
+    }
+
+    private void GiveCommandToUnits(List<Unit> units)
+    {
+        List<Vector3> movementPoints = PointGenerator.GenerateSunflowerPoints(hit.point, numberOfPoints: units.Count, radius: units.Count * 0.5f);
+
+        for (int i = 0; i < units.Count; i++)
+        {
+            var instantiatedObject = Instantiate(unitMovementPrefab, movementPoints[i], Quaternion.identity);
+            Unit unit = units[i];
+            var task = new MoveUnitTask(unit, movementPoints[i]);
+            unit.StartTask(task);
+            Destroy(instantiatedObject, 0.4f);
+        }
     }
 
     private static void UpdatePanelWhenOneSelected()
@@ -355,5 +365,21 @@ public class SelectionManager : MonoBehaviour
             GameManager.Instance.unitManager.AddSelected(other.gameObject);
             UpdatePanelWhenOneSelected();
         }
+    }
+
+
+    public GameObject IsBuildingNearby(Vector3 positionToCheck)
+    {
+        GameObject[] buildings = GameObject.FindGameObjectsWithTag("Building");
+
+        foreach (GameObject building in buildings)
+        {
+            float distance = Vector3.Distance(positionToCheck, building.transform.position);
+            if (distance <= 5)
+            {
+                return building;
+            }
+        }
+        return null;
     }
 }

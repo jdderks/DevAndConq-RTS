@@ -29,6 +29,8 @@ public class BuildingManager : MonoBehaviour
 
     Vector3 posToPlace = Vector3.zero;
 
+    List<Building> allBuildings = new();
+
     public void EnterBuildingPlacementMode(Unit originUnit, GameObject buildingToPlace)
     {
         if (originUnit != null)

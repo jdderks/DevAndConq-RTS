@@ -3,6 +3,7 @@ using NUnit.Framework;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -32,9 +33,10 @@ public class Unit : MonoBehaviour, ISelectable, IDamageable
 
     [SerializeField] private NavMeshAgent agent;
 
-    [SerializeField] private TeamScriptableObject ownedByTeam;
+    [SerializeField] private Team ownedByTeam;
 
     [SerializeField] private float constructionMultiplier = 1;
+    [SerializeField] private float detectionRadius = 20;
 
     private List<RtsAction> unitRtsActions = new();
 
@@ -121,6 +123,27 @@ public class Unit : MonoBehaviour, ISelectable, IDamageable
         }
     }
 
+
+    public List<Unit> GetUnitsInDetectionRadius()
+    {
+        Collider[] colliders = Physics.OverlapSphere(transform.position, detectionRadius);
+
+        foreach (Collider collider in colliders)
+        {
+            if (collider.GetComponent<Unit>() is Unit unit)
+            {
+                if (GameManager.Instance.teamManager.GetEnemyTeams(ownedByTeam).Any())
+                {
+
+                }
+            }
+        }
+
+
+
+
+        return null;
+    }
 
 
     private void Update()

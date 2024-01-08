@@ -18,7 +18,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &3822030245728826100
 Transform:
   m_ObjectHideFlags: 0
@@ -301,7 +301,7 @@ GameObject:
   - component: {fileID: 664566930645919150}
   m_Layer: 0
   m_Name: WarFactory
-  m_TagString: Untagged
+  m_TagString: Building
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -341,7 +341,7 @@ MonoBehaviour:
   selectableHighlightParent: {fileID: 4932796389901929149}
   visualObjects: {fileID: 2649686088798477773}
   constructionPlatform: {fileID: 940535181809686030}
-  interactable: 1
+  interactable: 0
   constructionPercentageText: {fileID: 8081147086776855001}
   unitSpawnPoint: {fileID: 8312614883363445547}
   lightTankUnitInfo: {fileID: 11400000, guid: 3232f129903b8b6429f391beeb2d50c2, type: 2}
@@ -643,7 +643,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: dfe699c6e52dfe043ad199a9394a894b,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -8,4 +8,10 @@ public class TeamManager : MonoBehaviour
     public List<TeamScriptableObject> availableTeams = new();
 
     public List<Team> teams = new();
+
+
+    public List<Team> GetEnemyTeams(Team enemiesOfTeam)
+    {
+        return enemiesOfTeam.enemies;
+    }
 }
