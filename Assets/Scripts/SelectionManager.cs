@@ -98,7 +98,7 @@ public class SelectionManager : MonoBehaviour
                     {
                         GameManager.Instance.unitManager.DeselectAll();
                         GameManager.Instance.unitManager.AddSelected(hit.transform.gameObject);
-                        
+
                         UpdatePanelWhenOneSelected();
                     }
                 }

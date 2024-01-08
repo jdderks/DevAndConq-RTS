@@ -32,7 +32,18 @@ public class UnitManager : MonoBehaviour
 
     public void AddSelected(GameObject go)
     {
-        GameManager.Instance.SelectableCollection.AddSelected(go);
+        var building = go.GetComponent<Building>();
+        if (building != null)
+        {
+            if (building.Interactable)
+            {
+                GameManager.Instance.SelectableCollection.AddSelected(go);
+            }
+        }
+        else
+        {
+            GameManager.Instance.SelectableCollection.AddSelected(go);
+        }
     }
 
     public void DeselectAll()

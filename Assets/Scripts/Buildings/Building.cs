@@ -1,6 +1,8 @@
 using NaughtyAttributes;
 using System.Collections;
 using System.Collections.Generic;
+using System.Net;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -24,6 +26,8 @@ public abstract class Building : MonoBehaviour, ISelectable
     [SerializeField] private GameObject visualObjects;
     [SerializeField] private GameObject constructionPlatform;
     [SerializeField] private bool interactable = false;
+    [SerializeField] TextMeshProUGUI constructionPercentageText;
+
 
     private Unit unitBeingConstructedBy = null;
 
@@ -71,14 +75,14 @@ public abstract class Building : MonoBehaviour, ISelectable
 
     public void Construct()
     {
-        if (constructionPercentage < 100)
+        if (constructionPercentage < 100f)
         {
             float increment = (Time.deltaTime / constructionDurationInSeconds) * unitBeingConstructedBy.ConstructionMultiplier * 100f;
             constructionPercentage += increment;
             constructionPercentage = Mathf.Clamp(constructionPercentage, 0f, 100f);
-            Debug.Log("Count: " + constructionPercentage);
+            constructionPercentageText.text = ConstructionPercentage.ToString("N0") + "%";
         }
-        if (constructionPercentage >= 100)
+        if (constructionPercentage >= 100f)
         {
             FinishConstruction();
         }
@@ -92,6 +96,7 @@ public abstract class Building : MonoBehaviour, ISelectable
     [Button("Set as constructing")]
     public void ResetConstruction()
     {
+        Interactable = false;
         ConstructionPercentage = 0;
         visualObjects.SetActive(false);
         constructionPlatform.SetActive(true);
@@ -101,13 +106,20 @@ public abstract class Building : MonoBehaviour, ISelectable
     [Button("Finish Construction")]
     public void FinishConstruction()
     {
+        Interactable = true;
         visualObjects.SetActive(true);
-        constructionState = ConstructionState.FinishedConstruction;
         constructionPlatform.SetActive(false);
-        if (unitBeingConstructedBy.CurrentTask is ConstructionTask)
+        constructionState = ConstructionState.FinishedConstruction;
+        if (unitBeingConstructedBy == null) return;
+        if (unitBeingConstructedBy.CurrentTask is ConstructionTask constructionTask)
         {
-            var constructionTask = unitBeingConstructedBy.CurrentTask as ConstructionTask;
             constructionTask.Finish();
         }
+        else if (unitBeingConstructedBy.CurrentTask is SequenceTask seqTask && seqTask.GetCurrentTask() is ConstructionTask)
+        {
+            ConstructionTask constrTask = seqTask.GetCurrentTask() as ConstructionTask;
+            constrTask.Finish();
+        }
+
     }
 }

@@ -35,6 +35,8 @@ public class BuildingManager : MonoBehaviour
             this.originUnit = originUnit;
 
         this.buildingToPlace = buildingToPlace;
+        var building = buildingToPlace.GetComponent<Building>();
+        building.ResetConstruction();
 
         ghostObject = Instantiate(ghostObjectPrefab, posToPlace, Quaternion.identity);
 
@@ -74,7 +76,9 @@ public class BuildingManager : MonoBehaviour
                         MoveUnitTask moveTask = new(originUnit, building.unitSpawnPoint.position);
                         ConstructionTask constructionTask = new(originUnit, building);
 
+                        //Move and then contstruct the building
                         var sequenceConstructionTask = new SequenceTask(originUnit, moveTask, constructionTask);
+                        
 
                         originUnit.StartTask(sequenceConstructionTask);
 

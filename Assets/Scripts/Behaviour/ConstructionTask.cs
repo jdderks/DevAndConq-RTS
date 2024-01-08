@@ -8,16 +8,26 @@ public class ConstructionTask : UnitTask
 {
     Building targetBuilding;
     Unit unit;
+    bool ignoreDistance = false;
 
-    public ConstructionTask(Unit agent, Building targetBuilding)
+    public ConstructionTask(Unit agent, Building targetBuilding, bool ignoreDistance = false)
     {
         this.unit = agent;
         this.targetBuilding = targetBuilding;
+        this.ignoreDistance = ignoreDistance;
     }
 
     public override void OnBegin()
     {
-        targetBuilding.StartConstruction(unit, 1);
+        if (ignoreDistance || Vector3.Distance(unit.transform.position, targetBuilding.transform.position) < 10)
+            targetBuilding.StartConstruction(unit, 1);
+        else
+        {
+            Complete();
+            Debug.Log("No construction due to distance");
+        }
+
+
     }
 
     public override void OnCancelled()
