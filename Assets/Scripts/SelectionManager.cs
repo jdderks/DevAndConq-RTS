@@ -9,7 +9,7 @@ using UnityEngine.EventSystems;
 using static UnitSelectionHelper;
 using static UnityEngine.Rendering.DebugUI.MessageBox;
 
-//Made following: https://youtu.be/OL1QgwaDsqo by Seabass under the open-source MIT License
+//CREDIT: Made following: https://youtu.be/OL1QgwaDsqo by Seabass under the open-source MIT License
 /// <summary>
 /// This script is responsable for all the unit-selection and building selection.
 /// The script may need to split up into multiple other scripts in the future to adhere to the single-responsibility prinsiple
@@ -27,6 +27,10 @@ public class SelectionManager : MonoBehaviour
 {
     [SerializeField] private Camera cam;
     [SerializeField] private bool debugMouseState = true;
+
+    [SerializeField] private GameObject selectionPrefab;
+    [SerializeField] private GameObject unitMovementPrefab;
+    public GameObject SelectionPrefab { get => selectionPrefab; set => selectionPrefab = value; }
 
     RaycastHit hit;
     bool dragSelect;
@@ -55,6 +59,7 @@ public class SelectionManager : MonoBehaviour
     Vector3[] verts;
     Vector3[] vecs;
 
+
     // Start is called before the first frame update
     void Start()
     {
@@ -69,10 +74,6 @@ public class SelectionManager : MonoBehaviour
         if (GameManager.Instance.inputManager.GetMouseToSelectInputDown())
             if (!EventSystem.current.IsPointerOverGameObject())
                 marqueePosition1 = Input.mousePosition;
-
-
-
-
 
         //2. while left mouse button held
         if (GameManager.Instance.inputManager.GetMouseToSelectInput()) //TODO: Make InputManager 
@@ -91,38 +92,14 @@ public class SelectionManager : MonoBehaviour
                 {
                     if (Input.GetKey(KeyCode.LeftShift)) //inclusive select
                     {
-                        GameManager.Instance.unitManager.AddSelected(hit.transform.gameObject);//selectableCollection.addSelected(hit.transform.gameObject);
+                        GameManager.Instance.unitManager.AddSelected(hit.transform.gameObject);
                     }
                     else //exclusive selected
                     {
-                        //if (building is CommandCenter)
-                        //{
-                        //    building = building as CommandCenter;
-                        //}
-                        //else if (buildingContext is WarFactory)
-                        //{
-
-                        //}
-
                         GameManager.Instance.unitManager.DeselectAll();
-                        GameManager.Instance.unitManager.AddSelected(hit.transform.gameObject);//selectableCollection.addSelected(hit.transform.gameObject);
-                        
-                        var building = GameManager.Instance.SelectableCollection.GetBuilding();
+                        GameManager.Instance.unitManager.AddSelected(hit.transform.gameObject);
 
-                        GameManager.Instance.uiManager.UpdateRtsActionPanel(
-                            units: GameManager.Instance.unitManager.GetUnits(), 
-                            building: building
-                            );
-
-                        if (building != null && building.actionQueue == null)
-                        {
-                            building.actionQueue = new();
-                            building.actionQueue.SetActions();
-                        }
-                        if(building != null)                       
-                            GameManager.Instance.uiManager.OpenActionQueuePanel(building.actionQueue);
-                        else
-                            GameManager.Instance.uiManager.CloseActionQueuePanel();
+                        UpdatePanelWhenOneSelected();
                     }
                 }
                 else //if we didnt hit something
@@ -172,6 +149,8 @@ public class SelectionManager : MonoBehaviour
                 }
 
                 Destroy(selectionBox, 0.02f);
+
+
 
             }//end marquee select
 
@@ -234,7 +213,7 @@ public class SelectionManager : MonoBehaviour
                 List<Vector3> movementPoints = PointGenerator.GeneratePointsInLine(lineSelectionPosition1, lineSelectionPosition2, units.Count).ToList();
                 for (int i = 0; i < units.Count; i++)
                 {
-                    var instantiatedObject = Instantiate(GameManager.Instance.Settings.modelSettings.terrainInteractionObject, movementPoints[i], Quaternion.identity);
+                    var instantiatedObject = Instantiate(unitMovementPrefab, movementPoints[i], Quaternion.identity);
                     Unit unit = units[i];
                     unit.StartTask(new MoveUnitTask(unit, movementPoints[i]));
                     Destroy(instantiatedObject, 0.4f);
@@ -250,7 +229,7 @@ public class SelectionManager : MonoBehaviour
 
                     for (int i = 0; i < units.Count; i++)
                     {
-                        var instantiatedObject = Instantiate(GameManager.Instance.Settings.modelSettings.terrainInteractionObject, movementPoints[i], Quaternion.identity);
+                        var instantiatedObject = Instantiate(unitMovementPrefab, movementPoints[i], Quaternion.identity);
                         Unit unit = units[i];
                         var task = new MoveUnitTask(unit, movementPoints[i]);
                         unit.StartTask(task);
@@ -262,6 +241,26 @@ public class SelectionManager : MonoBehaviour
         }
 
         #endregion
+    }
+
+    private static void UpdatePanelWhenOneSelected()
+    {
+        ISelectable singleSelectable = GameManager.Instance.SelectableCollection.GetSingleSelectable();
+        GameManager.Instance.uiManager.UpdateRtsActionPanel(singleSelectable);
+
+        if (singleSelectable is Building building)
+        {
+            if (building.actionQueue == null)
+            {
+                building.actionQueue = new();
+                building.actionQueue.SetActions();
+            }
+            GameManager.Instance.uiManager.OpenActionQueuePanel(building.actionQueue);
+        }
+        else
+        {
+            GameManager.Instance.uiManager.CloseActionQueuePanel();
+        }
     }
 
     private void OnGUI()
@@ -354,6 +353,7 @@ public class SelectionManager : MonoBehaviour
         if (other.gameObject.GetComponent<Unit>())
         {
             GameManager.Instance.unitManager.AddSelected(other.gameObject);
+            UpdatePanelWhenOneSelected();
         }
     }
 }

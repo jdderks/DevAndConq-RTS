@@ -9,4 +9,7 @@ public class RtsActionSettings : ScriptableObject
 {
     public PanelInfoScriptableObject bullDozerPanelInfo;
     public PanelInfoScriptableObject lightTankPanelInfo;
+
+    public PanelInfoScriptableObject constructCommandCenterPanelInfo;
+    public PanelInfoScriptableObject constructWarFactoryPanelInfo;
 }

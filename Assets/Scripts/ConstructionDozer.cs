@@ -4,8 +4,17 @@ using UnityEngine;
 
 public class ConstructionDozer : Unit
 {
+    private List<RtsAction> bulldozerActions = new();
+    ConstructBuildingRTSAction constructWarFactoryAction = new();
 
+    [Header("Construction dozer related"),SerializeField] private PanelInfoScriptableObject constructWarFactoryPanelInfo;
 
+    private void Start()
+    {
+        constructWarFactoryAction.SetActionValues(this);
+        constructWarFactoryAction.PanelInfo = constructWarFactoryPanelInfo;//GameManager.Instance.Settings.rtsActionSettings.constructWarFactoryPanelInfo; 
+        bulldozerActions.Add(constructWarFactoryAction);
+    }
 
     public override void Die()
     {
@@ -30,5 +39,10 @@ public class ConstructionDozer : Unit
     public override float TakeDamage()
     {
         return base.TakeDamage();
+    }
+
+    public override List<RtsAction> GetActions()
+    {
+        return bulldozerActions;
     }
 }

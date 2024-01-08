@@ -7,31 +7,22 @@ using UnityEngine;
 public class CommandCenter : Building
 {
     CreateUnitRTSAction constructDozerAction = new CreateUnitRTSAction();
-    CreateUnitRTSAction constructLightTankAction = new CreateUnitRTSAction();
 
+    [SerializeField] private PanelInfoScriptableObject dozerUnitInfo;// = GameManager.Instance.Settings.rtsActionSettings.bullDozerPanelInfo;
     //ActionQueue ActionQueue = new();
-    
+
     private void Start()
     {
-        
+        constructDozerAction.PanelInfo = dozerUnitInfo;
 
-        constructDozerAction.PanelInfo = GameManager.Instance.Settings.rtsActionSettings.bullDozerPanelInfo;
-        constructLightTankAction.PanelInfo = GameManager.Instance.Settings.rtsActionSettings.lightTankPanelInfo;
-        
-        rtsBuildingActions.Add(constructDozerAction);
-        rtsBuildingActions.Add(constructLightTankAction);
+        GetActions().Add(constructDozerAction);
 
         constructDozerAction.SetUnitValues(
-            unit: UnitToSpawn.Bulldozer,
-            building: this,
+            unitObject: dozerUnitInfo.actionPrefab,
+            originBuilding: this,
             team: ownedByTeam);
 
-        constructLightTankAction.SetUnitValues(
-            unit: UnitToSpawn.LightTank,
-            building: this,
-            team: ownedByTeam);
     }
-
 
     public override GameObject GetGameObject()
     {
@@ -42,7 +33,7 @@ public class CommandCenter : Building
     {
         Assert.IsNotNull(selectableHighlightParent, "Parent object not set in prefab.");
         instantiatedSelectionObject = Instantiate(
-            GameManager.Instance.Settings.modelSettings.unitSelectionHighlightGameObject,
+            GameManager.Instance.selectionManager.SelectionPrefab,
             selectableHighlightParent
             );
 
@@ -58,5 +49,4 @@ public class CommandCenter : Building
     {
         Destroy(instantiatedSelectionObject);
     }
-
 }

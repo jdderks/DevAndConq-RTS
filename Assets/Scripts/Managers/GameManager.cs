@@ -18,10 +18,11 @@ public class GameManager : MonoBehaviour
     [Space]
     [Header("Managers")]
     public UnitManager unitManager;
-    public SelectionManager unitSelection;
+    public SelectionManager selectionManager;
     public MovementManager movementManager;
     public InputManager inputManager;
     public UiManager uiManager;
+    public BuildingManager buildingManager;
 
     [SerializeField] private SelectableCollection selectableCollection;
     public SelectableCollection SelectableCollection { get => selectableCollection; set => selectableCollection = value; }

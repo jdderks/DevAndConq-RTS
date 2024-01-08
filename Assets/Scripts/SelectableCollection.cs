@@ -32,7 +32,6 @@ public class SelectableCollection : MonoBehaviour
                         selectedTable.Add(id, go.GetComponent<Unit>());
                     }
                 }
-                //Debug.Log("Added " + id + " to selected dict (" + go.name + ")");
             }
             else if (go.GetComponent<Building>() != null)
             {
@@ -45,7 +44,6 @@ public class SelectableCollection : MonoBehaviour
                         selectedTable.Add(id, go.GetComponent<Building>());
                     }
                 }
-                //Debug.Log("Added " + id + " to selected dict (" + go.name + ")");
             }
         }
         UpdateUnitUI();
@@ -98,18 +96,20 @@ public class SelectableCollection : MonoBehaviour
         GameManager.Instance.uiManager.UpdateInfoPanelValues();
     }
 
-    internal Building GetBuilding()
+    internal ISelectable GetSingleSelectable()
     {
-        var buildings = selectedTable.Values
-            .Select(item => item.GetGameObject().GetComponent<Building>())
+        List<ISelectable> selectables = selectedTable.Values
+            .Select(item => item.GetGameObject().GetComponent<ISelectable>())
             .Where(unit => unit != null)
             .ToList();
 
-        switch (buildings.Count)
+        if (selectables.Count == 1)
         {
-            case 0: return null;
-            case 1: return buildings[0];
-            default: Debug.LogError("There can't be more than one building selected since it's not ISelectableMultiple"); return null;
+            return selectables[0];
+        }
+        else
+        {
+            return null;
         }
     }
 }

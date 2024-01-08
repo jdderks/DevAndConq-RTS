@@ -22,41 +22,21 @@ public class UiManager : MonoBehaviour
 
     private void Update()
     {
-        //if (actionQueuePanel.PanelIsActive) 
-        //{
-        //    actionQueuePanel.UpdateActionQueuePanel();
-        //}
-
+        
     }
 
-    public void UpdateRtsActionPanel(List<Unit> units = null, Building building = null)
+    public void UpdateRtsActionPanel(ISelectable selectable)
     {
         var actions = new List<RtsAction>();
 
-        if (building != null)
+        if (selectable != null)
         {
-            actions.AddRange(building.rtsBuildingActions);
-        }
-
-        if (units != null && units.Count > 0)
-        {
-            if (building != null)
-            {
-                actions = actions.Intersect(units[0].RtsActions).ToList();
-            }
-            else
-            {
-                actions.AddRange(units[0].RtsActions);
-            }
-
-            for (int i = 1; i < units.Count; i++)
-            {
-                actions = actions.Intersect(units[i].RtsActions).ToList();
-            }
+            actions.AddRange(selectable.GetActions());
         }
 
         rtsActionPanel.UpdatePanels(actions);
     }
+
 
     public void OpenActionQueuePanel(ActionQueue queue)
     {

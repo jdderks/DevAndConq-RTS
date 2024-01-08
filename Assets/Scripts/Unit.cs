@@ -1,5 +1,6 @@
 using NaughtyAttributes;
 using NUnit.Framework;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,13 +15,15 @@ public enum UnitType
     VTOL = 4         //For aircraft that can hover and land and take off vertically
 }
 
-public class Unit : MonoBehaviour, ISelectableMultiple, IDamageable
+public class Unit : MonoBehaviour, ISelectable, IDamageable
 {
     [Header("Unit related")]
-    [SerializeField] float thresholdDistance = 0.1f;
+    [SerializeField] float thresholdDistance = 2.5f;
     [SerializeField] private float downwardForce = 9.81f; //Controls gravity
 
     [SerializeField] private float unitSpeed = 5f;
+
+    [SerializeField, ReadOnly] private Action movingSuccess;
 
     [SerializeField] private bool taskDebugInfo = true;
 
@@ -30,6 +33,10 @@ public class Unit : MonoBehaviour, ISelectableMultiple, IDamageable
     [SerializeField] private NavMeshAgent agent;
 
     [SerializeField] private TeamScriptableObject ownedByTeam;
+
+    [SerializeField] private float constructionMultiplier = 1;
+
+    private List<RtsAction> unitRtsActions = new();
 
     private List<RtsUnitAction> _rtsActions = new(8); //Emtpy RTS unit slots, maximum of 8
 
@@ -49,6 +56,8 @@ public class Unit : MonoBehaviour, ISelectableMultiple, IDamageable
     public bool TaskDebugInfo { get => taskDebugInfo; set => taskDebugInfo = value; }
     public float UnitSpeed { get => unitSpeed; set => unitSpeed = value; }
     public NavMeshAgent Agent { get => agent; set => agent = value; }
+    public Action MovingSuccess { get => movingSuccess; set => movingSuccess = value; }
+    public float ConstructionMultiplier { get => constructionMultiplier; set => constructionMultiplier = value; }
 
     private void Start()
     {
@@ -71,7 +80,7 @@ public class Unit : MonoBehaviour, ISelectableMultiple, IDamageable
     public void Select()
     {
         Assert.IsNotNull(selectableHighlightParent, "Parent object not set in prefab.");
-        _instantiatedObject = Instantiate(GameManager.Instance.Settings.modelSettings.unitSelectionHighlightGameObject, selectableHighlightParent);
+        _instantiatedObject = Instantiate(GameManager.Instance.selectionManager.SelectionPrefab, selectableHighlightParent);
     }
 
     public void Deselect()
@@ -90,11 +99,29 @@ public class Unit : MonoBehaviour, ISelectableMultiple, IDamageable
         CurrentTask = task;
         task.Begin();
     }
-
     private void UpdateMovement()
     {
-
+        if (agent.remainingDistance <= thresholdDistance)
+        {
+            var dist = Vector3.Distance(agent.transform.position, agent.destination);
+            if (dist <= thresholdDistance)
+            {
+                if (CurrentTask is MoveUnitTask)
+                {
+                    CurrentTask.Complete();
+                }
+                else if (CurrentTask is SequenceTask)
+                {
+                    SequenceTask seqTask = CurrentTask as SequenceTask;
+                    MoveUnitTask moveTask = seqTask.GetCurrentTask() as MoveUnitTask;
+                    if (moveTask != null)
+                        moveTask.Complete();
+                }
+            }
+        }
     }
+
+
 
     private void Update()
     {
@@ -126,5 +153,16 @@ public class Unit : MonoBehaviour, ISelectableMultiple, IDamageable
     public virtual void Die()
     {
         return;
+    }
+
+    public virtual List<RtsAction> GetActions()
+    {
+        return unitRtsActions;
+    }
+
+    public virtual ActionQueue GetActionQueue()
+    {
+        Debug.LogError("Base units don't have an action queue by default! This void can be overridden.");
+        return null;
     }
 }

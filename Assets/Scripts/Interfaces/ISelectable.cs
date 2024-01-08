@@ -7,4 +7,8 @@ public interface ISelectable
     public void Select();
     public void Deselect();
     public GameObject GetGameObject();
+
+    public List<RtsAction> GetActions();
+
+    public ActionQueue GetActionQueue();
 }

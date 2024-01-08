@@ -3,19 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-public enum UnitToSpawn
-{
-    None = 0,
-    Bulldozer = 1,
-    LightTank = 2,
-    HeavyTank = 3
-}
+//public enum UnitToSpawn
+//{
+//    None = 0,
+//    Bulldozer = 1,
+//    LightTank = 2,
+//    HeavyTank = 3
+//}
 
 public class CreateUnitRTSAction : RtsBuildingAction
 {
     public Building building; //Origin building
-
-    public UnitToSpawn unitToInstantiate;
 
     private GameObject unitGameObject; //The unit gameobject that can be instantiated
     private PanelInfoScriptableObject panelInfo; //The info that can be displayed
@@ -24,11 +22,11 @@ public class CreateUnitRTSAction : RtsBuildingAction
 
     public PanelInfoScriptableObject PanelInfo { get => panelInfo; set => panelInfo = value; }
 
-    public void SetUnitValues(UnitToSpawn unit, Building building, Team team)
+    public void SetUnitValues(GameObject unitObject, Building originBuilding, Team team)
     {
-        this.unitGameObject = GameManager.Instance.Settings.modelSettings.GetUnitByEnum(unit);
-        this.building = building;
-        this.spawnPointOrigin = building.unitSpawnPoint;
+        this.unitGameObject = unitObject;
+        this.building = originBuilding;
+        this.spawnPointOrigin = originBuilding.unitSpawnPoint;
     }
 
 
@@ -56,5 +54,10 @@ public class CreateUnitRTSAction : RtsBuildingAction
     public override PanelInfoScriptableObject GetPanelInfo()
     {
         return panelInfo;
+    }
+
+    public override RTSActionType GetActionType()
+    {
+        return PanelInfo.actionType;
     }
 }

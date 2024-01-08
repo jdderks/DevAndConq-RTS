@@ -1,6 +1,7 @@
 using NUnit.Framework;
 using System.Collections;
 using System.Collections.Generic;
+using System.Net.NetworkInformation;
 using UnityEngine;
 
 public class RtsActionPanel : MonoBehaviour
@@ -31,21 +32,36 @@ public class RtsActionPanel : MonoBehaviour
             PanelInfoScriptableObject actionInfo = action.GetPanelInfo();
 
             panels.Add(panel);
-            Building origin = action.GetOrigin() as Building;
+
+            ISelectable origin = action.GetOrigin(); // = action.GetOrigin() as Building;
 
             panel.SetPanelItemInfo(
                 image: actionInfo.image,
                 buttonText: actionInfo.panelText,
                 textCost: actionInfo.cost.ToString(),
-                actionDelay: actionInfo.constructionTime
+                actionDelay: actionInfo.actionDelay
             );
-
-            
 
             void AddActionQueueItem()
             {
-                origin.actionQueue.AddToActionQueue(action);
-                //GameManager.Instance.uiManager.ActionQueuePanel.InstantiateQueue();
+                switch (action.GetActionType())
+                {
+                    case RTSActionType.None:
+                        break;
+                    case RTSActionType.SpawnUnit:
+                        Assert.IsNotNull(origin.GetActionQueue(), "Origin doesn't have an action queue set!");
+                        origin.GetActionQueue().AddToActionQueue(action);
+                        break;
+                    case RTSActionType.BuildStructure:
+                        Debug.Log("Origin: " + origin);
+                        Debug.Log("Prefab:" + actionInfo.actionPrefab);
+                        GameManager.Instance.buildingManager.EnterBuildingPlacementMode(origin as Unit, actionInfo.actionPrefab);
+                        break;
+                    case RTSActionType.Upgrade:
+                        break;
+                    default:
+                        break;
+                }
             }
 
             panel.SetButtonInteraction(AddActionQueueItem);

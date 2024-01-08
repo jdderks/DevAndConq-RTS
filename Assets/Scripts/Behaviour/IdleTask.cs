@@ -19,7 +19,7 @@ public class IdleTask : UnitTask
         agent.PlayIdleAnimation();
     }
 
-    public override void OnCancel()
+    public override void OnCancelled()
     {
         //throw new System.NotImplementedException();
         agent.StopIdleAnimation();
