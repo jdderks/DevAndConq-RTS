@@ -170,7 +170,7 @@ GameObject:
   - component: {fileID: 70103841}
   m_Layer: 8
   m_Name: Terrain
-  m_TagString: Terrain
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -325,7 +325,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60e9cfe63bb339249b599be12a5d9b8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  availableTeams: []
+  teamCurrentlyControlling: {fileID: 11400000, guid: 46f4233646afc7f44a03bcaa2190b8be,
+    type: 2}
+  teams:
+  - teamName: Blue team
+    teamID: 1
+    teamObject: {fileID: 11400000, guid: d9cf410b1e62f8741969cb0691dabf51, type: 2}
+    enemies: 00000000
+  - teamName: Red Team
+    teamID: 2
+    teamObject: {fileID: 11400000, guid: 46f4233646afc7f44a03bcaa2190b8be, type: 2}
+    enemies: 01000000
 --- !u!1001 &176155141
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -342,7 +352,7 @@ PrefabInstance:
     - target: {fileID: 1509757796723374169, guid: faef5b01627610f49bd6925e12f03b38,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.07
       objectReference: {fileID: 0}
     - target: {fileID: 1509757796723374169, guid: faef5b01627610f49bd6925e12f03b38,
         type: 3}
@@ -384,6 +394,12 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5112606933372525163, guid: faef5b01627610f49bd6925e12f03b38,
+        type: 3}
+      propertyPath: ownedByTeam
+      value: 
+      objectReference: {fileID: 11400000, guid: d9cf410b1e62f8741969cb0691dabf51,
+        type: 2}
     - target: {fileID: 6041605619507586267, guid: faef5b01627610f49bd6925e12f03b38,
         type: 3}
       propertyPath: m_Name
@@ -992,6 +1008,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d87d537744332d0488264d5fa34afe7d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  terrainLayerMask:
+    serializedVersion: 2
+    m_Bits: 256
   ghostObjectPrefab: {fileID: 5364096790360491767, guid: e68db9d6ffc6edd4983542eb2692fdbb,
     type: 3}
 --- !u!1 &498789286
@@ -2550,6 +2569,7 @@ MonoBehaviour:
   inputManager: {fileID: 208433319}
   uiManager: {fileID: 1145611812}
   buildingManager: {fileID: 427967731}
+  teamManager: {fileID: 80605192}
   selectableCollection: {fileID: 2024898265}
   PanelItems: []
 --- !u!1 &2070476215

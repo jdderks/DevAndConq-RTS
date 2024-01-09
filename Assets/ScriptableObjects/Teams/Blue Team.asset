@@ -12,7 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e90ac59ffb6f714409031320356334a5, type: 3}
   m_Name: Blue Team
   m_EditorClassIdentifier: 
-  teamID: 0
-  teamName: Blue Team
-  isPlayerControlled: 0
-  teamColour: {r: 0, g: 0.15303993, b: 1, a: 0}
+  teamColour: 1
+  colour: {r: 0, g: 0.16084719, b: 1, a: 0}

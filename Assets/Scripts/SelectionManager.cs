@@ -214,10 +214,6 @@ public class SelectionManager : MonoBehaviour
 
                 for (int i = 0; i < units.Count; i++)
                 {
-                    if (units.Count == 0 || )
-                    {
-
-                    }
                     var instantiatedObject = Instantiate(unitMovementPrefab, movementPoints[i], Quaternion.identity);
                     Unit unit = units[i];
                     unit.StartTask(new MoveUnitTask(unit, movementPoints[i]));

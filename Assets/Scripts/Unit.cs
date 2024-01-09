@@ -4,8 +4,10 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Profiling;
 
 public enum UnitType
 {
@@ -16,8 +18,14 @@ public enum UnitType
     VTOL = 4         //For aircraft that can hover and land and take off vertically
 }
 
-public class Unit : MonoBehaviour, ISelectable, IDamageable
+public class Unit : MonoBehaviour, ISelectable, IDamageable, IAIControllable
 {
+    //private and not meant to be shown in inspector
+    private float timer = 0f;
+    private float timerInterval = 1f;
+
+
+    //Shown in inspector
     [Header("Unit related")]
     [SerializeField] float thresholdDistance = 2.5f;
     [SerializeField] private float downwardForce = 9.81f; //Controls gravity
@@ -73,10 +81,30 @@ public class Unit : MonoBehaviour, ISelectable, IDamageable
             }
         }
     }
-
-    public void SetTeam(TeamScriptableObject team)
+    private void Update()
     {
-        ownedByTeam = team;
+        #region AI Update Timing
+        // Increment the timer by the deltaTime
+        timer += Time.deltaTime;
+
+        // Check if the timer exceeds or equals the interval
+        if (timer >= timerInterval)
+        {
+            // Call the method
+            AIUpdate();
+
+            // Reduce the timer to the excess time beyond the interval
+            timer -= timerInterval;
+        }
+        #endregion
+
+
+        if (IsMoving == true) UpdateMovement();
+    }
+
+    public void SetTeam(TeamByColour teamByColour)
+    {
+        ownedByTeam = GameManager.Instance.teamManager.GetTeamByColour(teamByColour);
     }
 
     public void Select()
@@ -127,30 +155,21 @@ public class Unit : MonoBehaviour, ISelectable, IDamageable
     public List<Unit> GetUnitsInDetectionRadius()
     {
         Collider[] colliders = Physics.OverlapSphere(transform.position, detectionRadius);
-
+        var unitList = new List<Unit>();
         foreach (Collider collider in colliders)
         {
             if (collider.GetComponent<Unit>() is Unit unit)
             {
-                if (GameManager.Instance.teamManager.GetEnemyTeams(ownedByTeam).Any())
+                if (GameManager.Instance.teamManager.GetEnemyTeams(ownedByTeam).Contains(unit.ownedByTeam))
                 {
-
+                    unitList.Add(unit);
                 }
             }
         }
-
-
-
-
-        return null;
+        return unitList;
     }
 
 
-    private void Update()
-    {
-        //FallToGround();
-        if (IsMoving == true) UpdateMovement();
-    }
 
     /// <summary>
     /// Virtual so specific types of units can have their own idle animations, the base unit has no idle or attack
@@ -188,4 +207,25 @@ public class Unit : MonoBehaviour, ISelectable, IDamageable
         Debug.LogError("Base units don't have an action queue by default! This void can be overridden.");
         return null;
     }
+
+    //This is only ran a couple times a second for optimisation
+    public void AIUpdate()
+    {
+        List<Unit> enemyUnitsInProximity = GetUnitsInDetectionRadius();
+        if (enemyUnitsInProximity.Count == 0)
+        {
+            return; // No units in proximity
+        }
+
+        Profiler.BeginSample("Unit close by calculation");
+        Unit closestUnit = enemyUnitsInProximity.OrderBy(u => Vector3.Distance(transform.position, u.transform.position)).FirstOrDefault();
+        Debug.Log(closestUnit.ToString());
+        Profiler.EndSample();
+    }
+
+    public void SetAIController()
+    {
+        throw new NotImplementedException();
+    }
+
 }

@@ -16,12 +16,14 @@ public enum ConstructionState
 
 public abstract class Building : MonoBehaviour, ISelectable
 {
+    [HorizontalLine, Header("Team: "), SerializeField] public TeamAppearanceScriptableObject ownedByTeam;
+
     public List<RtsAction> rtsBuildingActions = new(); //These are empty RTS action slots
     public ActionQueue actionQueue = new ActionQueue(); //This could be a Queue<> but I'd like items to be able to be removed from the center.
 
     private ConstructionState constructionState = ConstructionState.None;
 
-    [SerializeField] protected Transform selectableHighlightParent;
+    [HorizontalLine, SerializeField] protected Transform selectableHighlightParent;
 
     [SerializeField] private GameObject visualObjects;
     [SerializeField] private GameObject constructionPlatform;
@@ -38,7 +40,6 @@ public abstract class Building : MonoBehaviour, ISelectable
 
     protected GameObject instantiatedSelectionObject;
 
-    public Team ownedByTeam;
 
     public float ConstructionPercentage { get => constructionPercentage; set => constructionPercentage = value; }
     public float ConstructionDurationInSeconds { get => constructionDurationInSeconds; set => constructionDurationInSeconds = value; }

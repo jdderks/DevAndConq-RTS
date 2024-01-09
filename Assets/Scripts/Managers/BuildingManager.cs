@@ -19,6 +19,8 @@ using UnityEngine;
 
 public class BuildingManager : MonoBehaviour
 {
+    [SerializeField] private LayerMask terrainLayerMask;
+
     private Unit originUnit;
     private GameObject buildingToPlace;
 
@@ -57,40 +59,33 @@ public class BuildingManager : MonoBehaviour
     {
         if (isBuilding)
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-
-            if (Physics.Raycast(ray, out hit))
+            if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit hit, Mathf.Infinity, terrainLayerMask))
             {
-                if (hit.collider.CompareTag("Terrain"))
+                posToPlace = hit.point;
+                ghostObject.transform.position = posToPlace;
+
+                if (Input.GetMouseButtonDown(0)) // Left mouse button to place object
                 {
-                    posToPlace = hit.point;
-                    ghostObject.transform.position = posToPlace;
+                    GameObject buildingGameObject = Instantiate(buildingToPlace, hit.point, Quaternion.identity);
+                    Building building = buildingGameObject.GetComponent<Building>();
 
-                    if (Input.GetMouseButtonDown(0)) // Left mouse button to place object
-                    {
-                        GameObject buildingGameObject = Instantiate(buildingToPlace, hit.point, Quaternion.identity);
-                        Building building = buildingGameObject.GetComponent<Building>();
+                    building.ResetConstruction();// = 0;
 
-                        building.ResetConstruction();// = 0;
+                    MoveUnitTask moveTask = new(originUnit, building.unitSpawnPoint.position);
+                    ConstructionTask constructionTask = new(originUnit, building);
 
+                    // Move and then construct the building
+                    var sequenceConstructionTask = new SequenceTask(originUnit, moveTask, constructionTask);
 
-                        MoveUnitTask moveTask = new(originUnit, building.unitSpawnPoint.position);
-                        ConstructionTask constructionTask = new(originUnit, building);
+                    originUnit.StartTask(sequenceConstructionTask);
 
-                        //Move and then contstruct the building
-                        var sequenceConstructionTask = new SequenceTask(originUnit, moveTask, constructionTask);
-                        
-
-                        originUnit.StartTask(sequenceConstructionTask);
-
-                        Destroy(ghostObject);
-                        isBuilding = false;
-                        originUnit = null;
-                        buildingToPlace = null;
-                    }
+                    Destroy(ghostObject);
+                    isBuilding = false;
+                    originUnit = null;
+                    buildingToPlace = null;
                 }
             }
+
         }
     }
 

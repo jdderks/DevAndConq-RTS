@@ -1,12 +1,13 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
+[Serializable]
 public class Team
 {
-    public TeamScriptableObject teamStyle;
-
-    public List<Team> allies;
-    public List<Team> enemies;
-
-    public bool playerControlled = true;
+    public string teamName;
+    public int teamID;
+    public TeamAppearanceScriptableObject teamObject;
+    //public List<TeamByColour> allies;
+    public List<TeamByColour> enemies;
 }
