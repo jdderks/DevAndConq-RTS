@@ -50,13 +50,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   thresholdDistance: 2.5
-  downwardForce: 9.81
   unitSpeed: 13
   taskDebugInfo: 1
+  visualObjects:
+  - {fileID: 8578257538571992222}
+  - {fileID: 8807246614074115892}
   selectableHighlightParent: {fileID: 7414280817557565439}
   unitType: 1
   agent: {fileID: 1612675931448646361}
-  ownedByTeam: {fileID: 0}
+  ownedByTeam:
+    teamTagName: 
+    teamID: 0
+    teamByColour: 0
+    colour: {r: 0, g: 0, b: 0, a: 0}
+    enemies: 
+  constructionMultiplier: 1
+  detectionRadius: 20
   teamIndicatorObject: {fileID: 0}
   turret: {fileID: 8807246614074115892}
   idleTurretRotationRange: 30
@@ -278,6 +287,12 @@ PrefabInstance:
 --- !u!4 &5615563602055386308 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: b88d1bdb24c2d324e969b8dc695b6a76,
+    type: 3}
+  m_PrefabInstance: {fileID: 5360625143504876335}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &8578257538571992222 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4425019604439715761, guid: b88d1bdb24c2d324e969b8dc695b6a76,
     type: 3}
   m_PrefabInstance: {fileID: 5360625143504876335}
   m_PrefabAsset: {fileID: 0}

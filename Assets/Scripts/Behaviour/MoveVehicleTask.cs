@@ -12,7 +12,7 @@ public class MoveVehicleTask : MoveUnitTask
     [SerializeField] public float easingThreshold = 5f;
 
     private NavMeshPath path;
-    private int currentWaypoint = 0;
+    //private int currentWaypoint = 0;
     private Rigidbody rb;
 
     private Vector3 direction;

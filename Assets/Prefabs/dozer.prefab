@@ -216,17 +216,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   thresholdDistance: 2.5
-  downwardForce: 9.81
   unitSpeed: 5
   taskDebugInfo: 1
-  visualObject: {fileID: 5306591777888603716}
+  visualObjects:
+  - {fileID: 5306591777888603716}
   selectableHighlightParent: {fileID: 7414280817557565439}
   unitType: 0
   agent: {fileID: 1612675931448646361}
   ownedByTeam:
     teamTagName: 
     teamID: 0
-    teamObject: {fileID: 0}
+    teamByColour: 0
+    colour: {r: 0, g: 0, b: 0, a: 0}
     enemies: 
   constructionMultiplier: 1
   detectionRadius: 20

@@ -27,7 +27,7 @@ public abstract class Building : MonoBehaviour, ISelectable, ITeamable
 
     [HorizontalLine, SerializeField] protected Transform selectableHighlightParent;
 
-    [SerializeField] private GameObject visualObject;
+    [SerializeField] protected GameObject visualObject;
     [SerializeField] private GameObject constructionPlatform;
     [SerializeField] private bool interactable = false;
     [SerializeField] TextMeshProUGUI constructionPercentageText;
@@ -65,12 +65,12 @@ public abstract class Building : MonoBehaviour, ISelectable, ITeamable
         return rtsBuildingActions;
     }
 
-    public void SetTeam(TeamByColour teamByColour)
+    public virtual void SetTeam(TeamByColour teamByColour)
     {
-        ownedByTeam = GameManager.Instance.teamManager.GetTeamByColour(teamByColour);
-        Renderer renderer = visualObject.GetComponentInChildren<Renderer>();
-        Material teamColourMaterial = renderer.materials[1];
-        teamColourMaterial.color = ownedByTeam.colour;
+        //ownedByTeam = GameManager.Instance.teamManager.GetTeamByColour(teamByColour);
+        //Renderer renderer = visualObject.GetComponentInChildren<Renderer>();
+        //Material teamColourMaterial = renderer.materials[1];
+        //teamColourMaterial.color = ownedByTeam.colour;
     }
 
     public ActionQueue GetActionQueue()

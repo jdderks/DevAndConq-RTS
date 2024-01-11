@@ -39,9 +39,9 @@ public class BuildingManager : MonoBehaviour
             this.originUnit = originUnit;
 
         this.buildingToPlace = buildingToPlace;
-        var building = buildingToPlace.GetComponent<Building>();
+        Building building = buildingToPlace.GetComponent<Building>();
         building.ResetConstruction();
-
+        building.SetTeam(originUnit.OwnedByTeam.teamByColour);
         ghostObject = Instantiate(ghostObjectPrefab, posToPlace, Quaternion.identity);
 
         isBuilding = true;

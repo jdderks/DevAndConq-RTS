@@ -338,9 +338,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca6c5b16f81576a4ba68eca79fabf0e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ownedByTeam: {fileID: 0}
+  teamByColour: 0
+  ownedByTeam:
+    teamTagName: Blue Team
+    teamID: 1
+    teamByColour: 1
+    colour: {r: 0, g: 0.04493475, b: 1, a: 0}
+    enemies: 00000000
   selectableHighlightParent: {fileID: 4932796389901929149}
-  visualObjects: {fileID: 2649686088798477773}
+  visualObject: {fileID: 2649686088798477773}
   constructionPlatform: {fileID: 940535181809686030}
   interactable: 0
   constructionPercentageText: {fileID: 8081147086776855001}

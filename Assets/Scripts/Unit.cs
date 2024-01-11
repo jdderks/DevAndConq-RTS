@@ -27,7 +27,7 @@ public class Unit : MonoBehaviour, ISelectable, IDamageable, IAIControllable, IT
     //Shown in inspector
     [Header("Unit related")]
     [SerializeField] float thresholdDistance = 2.5f;
-    [SerializeField] private float downwardForce = 9.81f; //Controls gravity
+    //[SerializeField] private float downwardForce = 9.81f; //Controls gravity
 
     [SerializeField] private float unitSpeed = 5f;
 
@@ -35,7 +35,7 @@ public class Unit : MonoBehaviour, ISelectable, IDamageable, IAIControllable, IT
 
     [SerializeField] private bool taskDebugInfo = true;
 
-    [SerializeField] private GameObject visualObject;
+    [SerializeField] private GameObject[] visualObjects;
 
     [SerializeField] private Transform selectableHighlightParent;
     [SerializeField] private UnitType unitType;
@@ -69,6 +69,7 @@ public class Unit : MonoBehaviour, ISelectable, IDamageable, IAIControllable, IT
     public NavMeshAgent Agent { get => agent; set => agent = value; }
     public Action MovingSuccess { get => movingSuccess; set => movingSuccess = value; }
     public float ConstructionMultiplier { get => constructionMultiplier; set => constructionMultiplier = value; }
+    public Team OwnedByTeam { get => ownedByTeam; set => ownedByTeam = value; }
 
     private void Start()
     {
@@ -105,11 +106,19 @@ public class Unit : MonoBehaviour, ISelectable, IDamageable, IAIControllable, IT
 
     public void SetTeam(TeamByColour teamByColour)
     {
-        ownedByTeam = GameManager.Instance.teamManager.GetTeamByColour(teamByColour);
-        Renderer renderer = visualObject.GetComponent<Renderer>();
-        Material teamColourMaterial = renderer.materials[0];
-        teamColourMaterial.color = ownedByTeam.colour;
-        tag = ownedByTeam.teamTagName;
+        OwnedByTeam = GameManager.Instance.teamManager.GetTeamByColour(teamByColour);
+        foreach (var item in visualObjects)
+        {
+            Renderer renderer = item.GetComponent<Renderer>();
+            foreach (var material in renderer.sharedMaterials)
+            {
+                if (material.name != "Team_color") break;
+                material.color = OwnedByTeam.colour;
+            }
+
+        }
+
+        tag = OwnedByTeam.teamTagName;
     }
 
     public void Select()
@@ -162,7 +171,7 @@ public class Unit : MonoBehaviour, ISelectable, IDamageable, IAIControllable, IT
         var gameObjects = new List<GameObject>();
         foreach (Collider collider in colliders)
         {
-            if (collider.gameObject.layer == LayerMask.NameToLayer("Building") || 
+            if (collider.gameObject.layer == LayerMask.NameToLayer("Building") ||
                 collider.gameObject.layer == LayerMask.NameToLayer("Unit"))
             {
                 if (collider.gameObject == gameObject) continue;
@@ -237,7 +246,7 @@ public class Unit : MonoBehaviour, ISelectable, IDamageable, IAIControllable, IT
         var teamManager = GameManager.Instance.teamManager;
         List<GameObject> teamableObjectsInProximity = GetTeamableObjectsInProximity();
 
-        List<TeamByColour> enemyTeams = teamManager.GetEnemyTeams(ownedByTeam);
+        List<TeamByColour> enemyTeams = teamManager.GetEnemyTeams(OwnedByTeam);
 
         var enemyTags = new List<string>();
         foreach (var enemyTeam in enemyTeams)

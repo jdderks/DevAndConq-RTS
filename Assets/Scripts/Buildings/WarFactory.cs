@@ -39,4 +39,12 @@ public class WarFactory : Building
             selectableHighlightParent
             );
     }
+
+    public override void SetTeam(TeamByColour teamByColour)
+    {
+        ownedByTeam = GameManager.Instance.teamManager.GetTeamByColour(teamByColour);
+        Renderer renderer = visualObject.GetComponent<Renderer>();
+        Material teamColourMaterial = renderer.sharedMaterials[1];
+        teamColourMaterial.color = ownedByTeam.colour;
+    }
 }

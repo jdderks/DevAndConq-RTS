@@ -49,4 +49,12 @@ public class CommandCenter : Building
     {
         Destroy(instantiatedSelectionObject);
     }
+
+    public override void SetTeam(TeamByColour teamByColour)
+    {
+        ownedByTeam = GameManager.Instance.teamManager.GetTeamByColour(teamByColour);
+        Renderer renderer = visualObject.GetComponentInChildren<Renderer>();
+        Material teamColourMaterial = renderer.materials[1];
+        teamColourMaterial.color = ownedByTeam.colour;
+    }
 }

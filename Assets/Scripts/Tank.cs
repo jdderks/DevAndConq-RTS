@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class Tank : Unit
 {
-    private Quaternion originRotation = Quaternion.Euler(0,0,0);
+    private Quaternion originRotation = Quaternion.Euler(-90,0,0);
     private Quaternion initialRotation;
     private Quaternion targetRotation;
     private Coroutine idleCoroutine = null;
-    private Coroutine resetRotationCoroutine = null;
+    //private Coroutine resetRotationCoroutine = null;
 
     
     [SerializeField, Header("Tank related")] private GameObject teamIndicatorObject;
