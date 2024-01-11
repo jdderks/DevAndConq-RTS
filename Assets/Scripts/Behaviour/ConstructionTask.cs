@@ -19,7 +19,7 @@ public class ConstructionTask : UnitTask
 
     public override void OnBegin()
     {
-        if (ignoreDistance || Vector3.Distance(unit.transform.position, targetBuilding.transform.position) < 10)
+        if (ignoreDistance || Vector3.Distance(unit.transform.position, targetBuilding.transform.position) < 15)
             targetBuilding.StartConstruction(unit, 1);
         else
         {
@@ -37,6 +37,7 @@ public class ConstructionTask : UnitTask
 
     public override void OnComplete()
     {
+        //targetBuilding.SetTeam(unit.OwnedByTeam.teamByColour);
     }
 
     public void Finish()

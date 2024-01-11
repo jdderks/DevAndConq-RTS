@@ -8,7 +8,8 @@ public class Team
     public string teamTagName;
     public int teamID;
     public TeamByColour teamByColour;
-    public Color colour;
+    //public Color colour;
     //public List<TeamByColour> allies;
     public List<TeamByColour> enemies;
+    public Material teamMaterial;
 }

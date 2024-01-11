@@ -54,7 +54,8 @@ public class CommandCenter : Building
     {
         ownedByTeam = GameManager.Instance.teamManager.GetTeamByColour(teamByColour);
         Renderer renderer = visualObject.GetComponentInChildren<Renderer>();
-        Material teamColourMaterial = renderer.materials[1];
-        teamColourMaterial.color = ownedByTeam.colour;
+        var mats = renderer.materials;
+        mats[1] = ownedByTeam.teamMaterial;
+        renderer.materials = mats;
     }
 }

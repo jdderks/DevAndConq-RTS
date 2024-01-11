@@ -37,11 +37,11 @@ public class BuildingManager : MonoBehaviour
     {
         if (originUnit != null)
             this.originUnit = originUnit;
+        Debug.Log(originUnit.OwnedByTeam.teamByColour);
 
         this.buildingToPlace = buildingToPlace;
         Building building = buildingToPlace.GetComponent<Building>();
         building.ResetConstruction();
-        building.SetTeam(originUnit.OwnedByTeam.teamByColour);
         ghostObject = Instantiate(ghostObjectPrefab, posToPlace, Quaternion.identity);
 
         isBuilding = true;
@@ -69,6 +69,7 @@ public class BuildingManager : MonoBehaviour
                     GameObject buildingGameObject = Instantiate(buildingToPlace, hit.point, Quaternion.identity);
                     Building building = buildingGameObject.GetComponent<Building>();
 
+                    building.SetTeam(originUnit.OwnedByTeam.teamByColour);
                     building.ResetConstruction();// = 0;
 
                     MoveUnitTask moveTask = new(originUnit, building.unitSpawnPoint.position);

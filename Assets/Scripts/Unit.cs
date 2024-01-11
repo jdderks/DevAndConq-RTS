@@ -35,7 +35,7 @@ public class Unit : MonoBehaviour, ISelectable, IDamageable, IAIControllable, IT
 
     [SerializeField] private bool taskDebugInfo = true;
 
-    [SerializeField] private GameObject[] visualObjects;
+    [SerializeField] protected GameObject[] visualObjects;
 
     [SerializeField] private Transform selectableHighlightParent;
     [SerializeField] private UnitType unitType;
@@ -104,22 +104,28 @@ public class Unit : MonoBehaviour, ISelectable, IDamageable, IAIControllable, IT
         if (IsMoving == true) UpdateMovement();
     }
 
-    public void SetTeam(TeamByColour teamByColour)
+    public virtual void SetTeam(TeamByColour teamByColour)
     {
         OwnedByTeam = GameManager.Instance.teamManager.GetTeamByColour(teamByColour);
-        foreach (var item in visualObjects)
+
+        for (int i = 0; i < visualObjects.Length; i++)
         {
+            GameObject item = visualObjects[i];
             Renderer renderer = item.GetComponent<Renderer>();
-            foreach (var material in renderer.sharedMaterials)
+            var mats = renderer.materials;
+            for (int j = 0; j < mats.Length; j++)
             {
-                if (material.name != "Team_color") break;
-                material.color = OwnedByTeam.colour;
+                if (mats[j].name.Contains("Team_color"))
+                    mats[j] = OwnedByTeam.teamMaterial;
             }
 
+            //mats[1] = OwnedByTeam.teamMaterial;
+            renderer.materials = mats;
         }
 
         tag = OwnedByTeam.teamTagName;
     }
+
 
     public void Select()
     {

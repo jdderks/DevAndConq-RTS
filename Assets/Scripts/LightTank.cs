@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Tank : Unit
+public class LightTank : Unit
 {
     private Quaternion originRotation = Quaternion.Euler(-90,0,0);
     private Quaternion initialRotation;

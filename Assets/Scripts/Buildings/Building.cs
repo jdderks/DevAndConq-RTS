@@ -19,7 +19,6 @@ public abstract class Building : MonoBehaviour, ISelectable, ITeamable
 {
     public TeamByColour teamByColour;
     [ReadOnly, HorizontalLine, Header("Team: "), SerializeField] public Team ownedByTeam;
-
     public List<RtsAction> rtsBuildingActions = new(); //These are empty RTS action slots
     public ActionQueue actionQueue = new ActionQueue(); //This could be a Queue<> but I'd like items to be able to be removed from the center.
 
@@ -27,6 +26,7 @@ public abstract class Building : MonoBehaviour, ISelectable, ITeamable
 
     [HorizontalLine, SerializeField] protected Transform selectableHighlightParent;
 
+    [SerializeField] protected bool isInstantiated = false;
     [SerializeField] protected GameObject visualObject;
     [SerializeField] private GameObject constructionPlatform;
     [SerializeField] private bool interactable = false;
@@ -36,7 +36,7 @@ public abstract class Building : MonoBehaviour, ISelectable, ITeamable
     private Unit unitBeingConstructedBy = null;
 
     private float constructionPercentage = 100f; //assuming building is already constructed
-    private float constructionDurationInSeconds = 20f;
+    [SerializeField] private float constructionDurationInSeconds = 20f;
 
     public Transform unitSpawnPoint; //The place units will spawn from
 
@@ -67,7 +67,7 @@ public abstract class Building : MonoBehaviour, ISelectable, ITeamable
 
     public virtual void SetTeam(TeamByColour teamByColour)
     {
-        //ownedByTeam = GameManager.Instance.teamManager.GetTeamByColour(teamByColour);
+        ownedByTeam = GameManager.Instance.teamManager.GetTeamByColour(teamByColour);
         //Renderer renderer = visualObject.GetComponentInChildren<Renderer>();
         //Material teamColourMaterial = renderer.materials[1];
         //teamColourMaterial.color = ownedByTeam.colour;

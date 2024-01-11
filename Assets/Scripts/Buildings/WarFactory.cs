@@ -9,9 +9,11 @@ public class WarFactory : Building
 
     [SerializeField] private PanelInfoScriptableObject lightTankUnitInfo;// = GameManager.Instance.Settings.rtsActionSettings.lightTankPanelInfo;
 
+
     // Start is called before the first frame update
     void Start()
     {
+        if (!isInstantiated) SetTeam(teamByColour);
         constructLightTankAction.PanelInfo = lightTankUnitInfo;
         GetActions().Add(constructLightTankAction);
 
@@ -43,8 +45,29 @@ public class WarFactory : Building
     public override void SetTeam(TeamByColour teamByColour)
     {
         ownedByTeam = GameManager.Instance.teamManager.GetTeamByColour(teamByColour);
-        Renderer renderer = visualObject.GetComponent<Renderer>();
-        Material teamColourMaterial = renderer.sharedMaterials[1];
-        teamColourMaterial.color = ownedByTeam.colour;
+
+        GameObject item = visualObject;
+        Renderer renderer = item.GetComponent<Renderer>();
+        var mats = renderer.materials;
+        for (int j = 0; j < mats.Length; j++)
+        {
+            if (mats[j].name.Contains("Team_color"))
+                mats[j] = ownedByTeam.teamMaterial;
+        }
+
+        //mats[1] = OwnedByTeam.teamMaterial;
+        renderer.materials = mats;
+
+
+
+        //Renderer renderer = visualObject.GetComponent<Renderer>();
+        //var mats = renderer.materials;
+        //mats[1] = ownedByTeam.teamMaterial;
+        //renderer.materials = mats;
+        //foreach (var item in renderer.materials)
+        //{
+        //    Debug.Log(item);
+        //}
+        //renderer.materials[1] = ownedByTeam.teamMaterial;
     }
 }

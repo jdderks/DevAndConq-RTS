@@ -335,19 +335,19 @@ MonoBehaviour:
     teamTagName: 
     teamID: 0
     teamByColour: 0
-    colour: {r: 0, g: 0, b: 0, a: 0}
     enemies: 
+    teamMaterial: {fileID: 0}
   teams:
   - teamTagName: Blue Team
     teamID: 1
     teamByColour: 1
-    colour: {r: 0, g: 0.04493475, b: 1, a: 0}
     enemies: 00000000
+    teamMaterial: {fileID: 2100000, guid: 2dc41636249715949bc6b2cc9bd9164a, type: 2}
   - teamTagName: Red Team
     teamID: 2
     teamByColour: 0
-    colour: {r: 1, g: 0, b: 0, a: 0}
     enemies: 01000000
+    teamMaterial: {fileID: 2100000, guid: a528ef67cb3b5d74dadedcf2c24be837, type: 2}
 --- !u!1001 &176155141
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1664,6 +1664,79 @@ MonoBehaviour:
   m_Spacing: {x: 2, y: 2}
   m_Constraint: 0
   m_ConstraintCount: 2
+--- !u!1001 &1060130857
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1509757796723374169, guid: da78e9d5949420947b417f77ad2d1cd6,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 27.819038
+      objectReference: {fileID: 0}
+    - target: {fileID: 1509757796723374169, guid: da78e9d5949420947b417f77ad2d1cd6,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.0000047683716
+      objectReference: {fileID: 0}
+    - target: {fileID: 1509757796723374169, guid: da78e9d5949420947b417f77ad2d1cd6,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 2.0650368
+      objectReference: {fileID: 0}
+    - target: {fileID: 1509757796723374169, guid: da78e9d5949420947b417f77ad2d1cd6,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1509757796723374169, guid: da78e9d5949420947b417f77ad2d1cd6,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1509757796723374169, guid: da78e9d5949420947b417f77ad2d1cd6,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1509757796723374169, guid: da78e9d5949420947b417f77ad2d1cd6,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1509757796723374169, guid: da78e9d5949420947b417f77ad2d1cd6,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1509757796723374169, guid: da78e9d5949420947b417f77ad2d1cd6,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1509757796723374169, guid: da78e9d5949420947b417f77ad2d1cd6,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3372705885448389953, guid: da78e9d5949420947b417f77ad2d1cd6,
+        type: 3}
+      propertyPath: isInstantiated
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6041605619507586267, guid: da78e9d5949420947b417f77ad2d1cd6,
+        type: 3}
+      propertyPath: m_Name
+      value: WarFactory
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: da78e9d5949420947b417f77ad2d1cd6, type: 3}
 --- !u!1 &1145611807
 GameObject:
   m_ObjectHideFlags: 0
@@ -2935,3 +3008,4 @@ SceneRoots:
   - {fileID: 70103844}
   - {fileID: 176155141}
   - {fileID: 1454967162}
+  - {fileID: 1060130857}
