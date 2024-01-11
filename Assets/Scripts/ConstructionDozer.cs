@@ -21,10 +21,6 @@ public class ConstructionDozer : Unit
         base.Die();
     }
 
-    public override void Hit()
-    {
-        base.Hit();
-    }
 
     public override void PlayIdleAnimation()
     {
@@ -36,9 +32,9 @@ public class ConstructionDozer : Unit
         base.StopIdleAnimation();
     }
 
-    public override float TakeDamage()
+    public override void TakeDamage(float amount)
     {
-        return base.TakeDamage();
+        base.TakeDamage(amount);
     }
 
     public override List<RtsAction> GetActions()

@@ -8,7 +8,7 @@ public class IdleTask : UnitTask
 
     public IdleTask(Unit agent)
     {
-        this.agent = agent;
+        this.unit = agent;
     }
 
     public override void OnBegin()
@@ -16,18 +16,18 @@ public class IdleTask : UnitTask
         //Assert.IsNotNull(agent.IdleAnimation, "you have to assign an idle animation to the unit!");
         //if (agent.IdleAnimation != null)
         //    agent.IdleAnimation.Play();
-        agent.PlayIdleAnimation();
+        unit.PlayIdleAnimation();
     }
 
     public override void OnCancelled()
     {
         //throw new System.NotImplementedException();
-        agent.StopIdleAnimation();
+        unit.StopIdleAnimation();
     }
 
     public override void OnComplete()
     {
-        agent.StopIdleAnimation();
+        unit.StopIdleAnimation();
         //throw new System.NotImplementedException();
     }
 }

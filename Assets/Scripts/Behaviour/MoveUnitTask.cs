@@ -14,7 +14,7 @@ public class MoveUnitTask : UnitTask
     public MoveUnitTask(Unit agent, Vector3 destination)
     {
         priority = TaskPriority.Priority;
-        this.agent = agent;
+        this.unit = agent;
         this.destination = destination;
 
         agent.IsMoving = true;
@@ -23,18 +23,18 @@ public class MoveUnitTask : UnitTask
 
     public override void OnBegin()
     {
-        agent.IsMoving = true;
-        agent.Agent.SetDestination(destination);
+        unit.IsMoving = true;
+        unit.Agent.SetDestination(destination);
     }
 
     public override void OnComplete()
     {
-        Debug.Log(agent + " finished moving!");
-        agent.IsMoving = false;
+        Debug.Log(unit + " finished moving!");
+        unit.IsMoving = false;
     }
 
     public override void OnCancelled()
     {
-        agent.IsMoving = false;
+        unit.IsMoving = false;
     }
 }

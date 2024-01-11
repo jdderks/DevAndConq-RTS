@@ -7,7 +7,6 @@ using UnityEngine;
 public class ConstructionTask : UnitTask
 {
     Building targetBuilding;
-    Unit unit;
     bool ignoreDistance = false;
 
     public ConstructionTask(Unit agent, Building targetBuilding, bool ignoreDistance = false)

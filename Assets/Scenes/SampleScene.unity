@@ -331,6 +331,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60e9cfe63bb339249b599be12a5d9b8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debugMode: 0
   teamCurrentlyControlling:
     teamTagName: 
     teamID: 0
@@ -486,6 +487,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cb26c8fb65e3d940a3a528ec70e655a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debugMode: 0
   mouseInputToSelect: 0
   mouseInputToMoveCamera: 1
   keyToOrbitCameraWihoutMouse: 308
@@ -1040,6 +1042,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d87d537744332d0488264d5fa34afe7d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debugMode: 0
   terrainLayerMask:
     serializedVersion: 2
     m_Bits: 256
@@ -1157,6 +1160,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b59b74697e977624299473a314955847, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debugMode: 0
   unitManager: {fileID: 1706050629}
 --- !u!1 &653581848
 GameObject:
@@ -1672,6 +1676,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 940535181809686030, guid: da78e9d5949420947b417f77ad2d1cd6,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1509757796723374169, guid: da78e9d5949420947b417f77ad2d1cd6,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1721,6 +1730,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2649686088798477773, guid: da78e9d5949420947b417f77ad2d1cd6,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3372705885448389953, guid: da78e9d5949420947b417f77ad2d1cd6,
+        type: 3}
+      propertyPath: interactable
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3372705885448389953, guid: da78e9d5949420947b417f77ad2d1cd6,
         type: 3}
@@ -1854,6 +1873,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 189eaa2f10858954394e7a897c7a3f7d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debugMode: 0
   infoPanel: {fileID: 2070476219}
   rtsActionPanel: {fileID: 1522709767}
   actionQueuePanel: {fileID: 355153335}
@@ -2445,6 +2465,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d89becfaffd3cd440bf27b47fac3f60b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debugMode: 0
   cam: {fileID: 330585545}
   debugMouseState: 0
   selectionPrefab: {fileID: 5018503143670621054, guid: 1207f58a6800a5e4bbaf401d5756ea80,
@@ -2496,37 +2517,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67c2f00f78a95504a9dab15974f5425d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &1815329433
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1815329434}
-  m_Layer: 0
-  m_Name: DebugManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1815329434
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1815329433}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 2024898263}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  debugMode: 0
 --- !u!1 &1845227238
 GameObject:
   m_ObjectHideFlags: 0
@@ -2733,7 +2724,6 @@ Transform:
   - {fileID: 1612632355}
   - {fileID: 506134503}
   - {fileID: 208433318}
-  - {fileID: 1815329434}
   - {fileID: 427967730}
   - {fileID: 1145611811}
   m_Father: {fileID: 0}

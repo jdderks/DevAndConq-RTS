@@ -12,7 +12,7 @@ public enum TeamByColour
     White = 2
 }
 
-public class TeamManager : MonoBehaviour
+public class TeamManager : Manager
 {
     [ReadOnly, SerializeField] private Team teamCurrentlyControlling;
 

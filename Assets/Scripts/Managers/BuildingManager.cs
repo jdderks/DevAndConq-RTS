@@ -17,7 +17,7 @@ using UnityEngine;
 
 
 
-public class BuildingManager : MonoBehaviour
+public class BuildingManager : Manager
 {
     [SerializeField] private LayerMask terrainLayerMask;
 
@@ -37,7 +37,7 @@ public class BuildingManager : MonoBehaviour
     {
         if (originUnit != null)
             this.originUnit = originUnit;
-        Debug.Log(originUnit.OwnedByTeam.teamByColour);
+        //Debug.Log(originUnit.OwnedByTeam.teamByColour);
 
         this.buildingToPlace = buildingToPlace;
         Building building = buildingToPlace.GetComponent<Building>();

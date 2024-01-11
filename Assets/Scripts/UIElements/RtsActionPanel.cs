@@ -53,8 +53,8 @@ public class RtsActionPanel : MonoBehaviour
                         origin.GetActionQueue().AddToActionQueue(action);
                         break;
                     case RTSActionType.BuildStructure:
-                        Debug.Log("Origin: " + origin);
-                        Debug.Log("Prefab:" + actionInfo.actionPrefab);
+                        //Debug.Log("Origin: " + origin);
+                        //Debug.Log("Prefab:" + actionInfo.actionPrefab);
                         GameManager.Instance.buildingManager.EnterBuildingPlacementMode(origin as Unit, actionInfo.actionPrefab);
                         break;
                     case RTSActionType.Upgrade:

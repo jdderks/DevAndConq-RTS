@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class UnitManager : MonoBehaviour
+public class UnitManager : Manager
 {
     private List<Unit> units = new List<Unit>();
 

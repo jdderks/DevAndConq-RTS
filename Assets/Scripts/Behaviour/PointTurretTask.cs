@@ -2,15 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class VehicleAttackTask : UnitTask
+public class PointTurretTask : UnitTask
 {
+    GameObject turret;
+    Vector3 desiredRotation;
 
-    IDamageable targetDamageable;
-
+    public PointTurretTask(GameObject turret, Vector3 desiredRotation)
+    {
+        this.turret = turret;
+        this.desiredRotation = desiredRotation;
+    }
 
     public override void OnBegin()
     {
-        throw new System.NotImplementedException();
+        if (!turret)
+            Cancel();
+        
+        
     }
 
     public override void OnCancelled()

@@ -23,7 +23,7 @@ public enum CursorInputState
 }
 
 
-public class SelectionManager : MonoBehaviour
+public class SelectionManager : Manager
 {
     [SerializeField] private Camera cam;
     [SerializeField] private bool debugMouseState = true;

@@ -7,7 +7,7 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class UiManager : MonoBehaviour
+public class UiManager : Manager
 {
     [SerializeField] private InfoPanel infoPanel;
     [SerializeField] private RtsActionPanel rtsActionPanel;

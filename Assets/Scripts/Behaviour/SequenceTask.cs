@@ -9,7 +9,7 @@ public class SequenceTask : UnitTask
 
     public SequenceTask(Unit agent, params UnitTask[] tasks)
     {
-        this.agent = agent;
+        this.unit = agent;
         subtasks.AddRange(tasks);
         priority = TaskPriority.Priority;
     }

@@ -4,81 +4,34 @@ using UnityEngine;
 
 public class LightTank : Unit
 {
-    private Quaternion originRotation = Quaternion.Euler(-90,0,0);
-    private Quaternion initialRotation;
-    private Quaternion targetRotation;
-    private Coroutine idleCoroutine = null;
-    //private Coroutine resetRotationCoroutine = null;
 
-    
-    [SerializeField, Header("Tank related")] private GameObject teamIndicatorObject;
-    [SerializeField] private GameObject turret;
-    [SerializeField] private float idleTurretRotationRange = 30f;
-    [SerializeField] private float turretRotationSpeed = 5f;
+    //private Coroutine resetRotationCoroutine = null;
+    [SerializeField] private Turret turret;
+    [SerializeField] private bool turretActiveWhileDriving = true;
+
+    //[SerializeField] private GameObject turret;
 
     void Start()
     {
         GameManager.Instance.unitManager.RegisterUnit(this);
-        initialRotation = turret.transform.rotation;
     }
 
-    public override void PlayIdleAnimation()
+    public override void AIUpdate()
     {
-        idleCoroutine = StartCoroutine(IdleTurretRotation());
-    }
-
-    public override void RangedAttack(Vector3 position, Unit targetUnit = null)
-    {
-        base.RangedAttack(position);
-    }
-
-    public override void RangedAttack(Unit unit, Unit targetUnit = null)
-    {
-        base.RangedAttack(unit.transform.position);
-    }
-
-    public override void StopIdleAnimation()
-    {
-        StopCoroutine(idleCoroutine);
-        idleCoroutine = StartCoroutine(IdleTurretRotation(true));
-        turret.transform.rotation = initialRotation;
-    }
-
-    public IEnumerator IdleTurretRotation(bool resetRotation = false)
-    {
-        while (true)
+        var enemies = GetEnemiesInProximity();
+        foreach (var enemy in enemies)
         {
-            if (!resetRotation)
-            {
-                targetRotation = Quaternion.Euler(
-                    turret.transform.localEulerAngles.x,
-                    turret.transform.localEulerAngles.y + Random.Range(-idleTurretRotationRange, idleTurretRotationRange),
-                    turret.transform.localEulerAngles.z
-                );
-            }
-            else
-            {
-                targetRotation = originRotation;
-            }
-
-            float elapsedTime = 0f;
-            while (elapsedTime < 1f)
-            {
-                turret.transform.localRotation = Quaternion.Slerp(initialRotation, targetRotation, elapsedTime);
-                elapsedTime += Time.deltaTime * turretRotationSpeed;
-                yield return null;
-            }
-            if (!resetRotation)
-            {
-                yield return new WaitForSeconds(Random.Range(1, 5));
-                initialRotation = turret.transform.localRotation;
-                targetRotation = default;
-            }
-            else
-            {
-                yield break;
-            }
+            Debug.Log(enemy.GetGameObject());
         }
+        if (enemies.Count > 0)
+            if (enemies[0] is IDamageable damageable)
+            {
+                turret.Attack(damageable);
+            }
     }
 
+    public override void TakeDamage(float amount)
+    {
+        base.TakeDamage(amount);
+    }
 }

@@ -15,7 +15,7 @@ public enum ConstructionState
     FinishedConstruction = 2
 }
 
-public abstract class Building : MonoBehaviour, ISelectable, ITeamable
+public abstract class Building : MonoBehaviour, ISelectable, ITeamable, IDamageable
 {
     public TeamByColour teamByColour;
     [ReadOnly, HorizontalLine, Header("Team: "), SerializeField] public Team ownedByTeam;
@@ -132,5 +132,15 @@ public abstract class Building : MonoBehaviour, ISelectable, ITeamable
             constrTask.Finish();
         }
 
+    }
+
+    public void TakeDamage(float amount)
+    {
+        
+    }
+
+    public void Die()
+    {
+        
     }
 }

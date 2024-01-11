@@ -5,7 +5,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class MovementManager : MonoBehaviour
+public class MovementManager : Manager
 {
     [SerializeField] private UnitManager unitManager;
 

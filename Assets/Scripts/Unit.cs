@@ -29,7 +29,10 @@ public class Unit : MonoBehaviour, ISelectable, IDamageable, IAIControllable, IT
     [SerializeField] float thresholdDistance = 2.5f;
     //[SerializeField] private float downwardForce = 9.81f; //Controls gravity
 
+    [SerializeField] private float health = 100f;
+
     [SerializeField] private float unitSpeed = 5f;
+    [SerializeField] private float attackRange = 25f;
 
     [SerializeField, ReadOnly] private Action movingSuccess;
 
@@ -70,6 +73,8 @@ public class Unit : MonoBehaviour, ISelectable, IDamageable, IAIControllable, IT
     public Action MovingSuccess { get => movingSuccess; set => movingSuccess = value; }
     public float ConstructionMultiplier { get => constructionMultiplier; set => constructionMultiplier = value; }
     public Team OwnedByTeam { get => ownedByTeam; set => ownedByTeam = value; }
+    public float Health { get => health; set => health = value; }
+    public float AttackRange { get => attackRange; set => attackRange = value; }
 
     private void Start()
     {
@@ -140,8 +145,10 @@ public class Unit : MonoBehaviour, ISelectable, IDamageable, IAIControllable, IT
 
     public GameObject GetGameObject()
     {
+        Debug.Log(this);
         return gameObject;
     }
+
 
     public void StartTask(UnitTask task)
     {
@@ -186,8 +193,6 @@ public class Unit : MonoBehaviour, ISelectable, IDamageable, IAIControllable, IT
             }
         }
         return gameObjects;
-        //Debug.Log("Amount of units nearby: " + unitList.Count);
-        //return unitList;
     }
 
 
@@ -198,9 +203,7 @@ public class Unit : MonoBehaviour, ISelectable, IDamageable, IAIControllable, IT
     public virtual void PlayIdleAnimation() { }
     public virtual void StopIdleAnimation() { }
     public virtual void MeleeAttack() { }
-    public virtual void RangedAttack(Vector3 position, Unit targetUnit = null) { }
-    public virtual void RangedAttack(Unit unit, Unit targetUnit = null) { }
-    public virtual void Hit() { }
+    public virtual void RangedAttack(Unit unit, IDamageable targetUnit = null) { }
 
     [ExecuteInEditMode]
     private void OnDrawGizmos()
@@ -211,14 +214,18 @@ public class Unit : MonoBehaviour, ISelectable, IDamageable, IAIControllable, IT
         Gizmos.DrawWireSphere(transform.position, detectionRadius);
     }
 
-    public virtual float TakeDamage()
+    public virtual void TakeDamage(float amount)
     {
-        return 0f;
+        Health -= amount;
+        if (Health < 0)
+        {
+            Die();
+        }
     }
 
     public virtual void Die()
     {
-        return;
+        Destroy(gameObject);
     }
 
     public virtual List<RtsAction> GetActions()
@@ -235,11 +242,7 @@ public class Unit : MonoBehaviour, ISelectable, IDamageable, IAIControllable, IT
     //This is only ran a couple times a second for optimisation
     public virtual void AIUpdate()
     {
-        var enemies = GetEnemiesInProximity();
-        foreach (var enemy in enemies)
-        {
-            Debug.Log(enemy.GetGameObject());
-        }
+
 
         //Profiler.BeginSample("Unit close by calculation");
         //Unit closestUnit = enemyUnitsInProximity.OrderBy(u => Vector3.Distance(transform.position, u.transform.position)).FirstOrDefault();
@@ -247,7 +250,7 @@ public class Unit : MonoBehaviour, ISelectable, IDamageable, IAIControllable, IT
         //Profiler.EndSample();
     }
 
-    private List<ITeamable> GetEnemiesInProximity()
+    protected List<ITeamable> GetEnemiesInProximity()
     {
         var teamManager = GameManager.Instance.teamManager;
         List<GameObject> teamableObjectsInProximity = GetTeamableObjectsInProximity();

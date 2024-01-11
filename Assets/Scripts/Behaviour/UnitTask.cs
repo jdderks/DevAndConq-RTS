@@ -19,7 +19,7 @@ public enum TaskPriority
 
 public abstract class UnitTask
 {
-    protected Unit agent;
+    protected Unit unit;
 
     public TaskPriority priority;
 
