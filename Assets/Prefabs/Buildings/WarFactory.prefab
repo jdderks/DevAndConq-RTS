@@ -338,6 +338,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca6c5b16f81576a4ba68eca79fabf0e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ownedByTeam: {fileID: 0}
   selectableHighlightParent: {fileID: 4932796389901929149}
   visualObjects: {fileID: 2649686088798477773}
   constructionPlatform: {fileID: 940535181809686030}

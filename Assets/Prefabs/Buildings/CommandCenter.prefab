@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1797510729497389387}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Visual
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -42,7 +42,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5257856818522418645}
   - component: {fileID: 1687161568290935247}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: PathfindingCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -91,9 +91,9 @@ GameObject:
   - component: {fileID: 1509757796723374169}
   - component: {fileID: 5112606933372525163}
   - component: {fileID: 3686088194171416761}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: CommandCenter
-  m_TagString: Building
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -130,6 +130,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c67eea61a988304985dde9e81b24893, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ownedByTeam: {fileID: 11400000, guid: d9cf410b1e62f8741969cb0691dabf51, type: 2}
   selectableHighlightParent: {fileID: 4932796389901929149}
   visualObjects: {fileID: 79868756870634226}
   constructionPlatform: {fileID: 8717631847118694767}
@@ -167,7 +168,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8312614883363445547}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: UnitSpawnPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -198,7 +199,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4932796389901929149}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: SelectionParent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -232,7 +233,7 @@ GameObject:
   - component: {fileID: 858210444911161321}
   - component: {fileID: 3321519852611182077}
   - component: {fileID: 9017917464138675853}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: ConstructionCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -334,7 +335,7 @@ GameObject:
   - component: {fileID: 4198056639679698803}
   - component: {fileID: 4771133990193578377}
   - component: {fileID: 5502900882503766597}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: ConstructionPlatform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -439,7 +440,7 @@ GameObject:
   - component: {fileID: 7408014830891466487}
   - component: {fileID: 1111035942097335926}
   - component: {fileID: 1678434743651455065}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -639,6 +640,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: commandcenterv3
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: f03044957d4aad04ab251062eb05a188,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

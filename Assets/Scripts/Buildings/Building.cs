@@ -1,6 +1,7 @@
 using NaughtyAttributes;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using TMPro;
 using Unity.VisualScripting;
@@ -14,9 +15,10 @@ public enum ConstructionState
     FinishedConstruction = 2
 }
 
-public abstract class Building : MonoBehaviour, ISelectable
+public abstract class Building : MonoBehaviour, ISelectable, ITeamable
 {
-    [HorizontalLine, Header("Team: "), SerializeField] public TeamAppearanceScriptableObject ownedByTeam;
+    public TeamByColour teamByColour;
+    [ReadOnly, HorizontalLine, Header("Team: "), SerializeField] public Team ownedByTeam;
 
     public List<RtsAction> rtsBuildingActions = new(); //These are empty RTS action slots
     public ActionQueue actionQueue = new ActionQueue(); //This could be a Queue<> but I'd like items to be able to be removed from the center.
@@ -25,7 +27,7 @@ public abstract class Building : MonoBehaviour, ISelectable
 
     [HorizontalLine, SerializeField] protected Transform selectableHighlightParent;
 
-    [SerializeField] private GameObject visualObjects;
+    [SerializeField] private GameObject visualObject;
     [SerializeField] private GameObject constructionPlatform;
     [SerializeField] private bool interactable = false;
     [SerializeField] TextMeshProUGUI constructionPercentageText;
@@ -61,6 +63,14 @@ public abstract class Building : MonoBehaviour, ISelectable
     public List<RtsAction> GetActions()
     {
         return rtsBuildingActions;
+    }
+
+    public void SetTeam(TeamByColour teamByColour)
+    {
+        ownedByTeam = GameManager.Instance.teamManager.GetTeamByColour(teamByColour);
+        Renderer renderer = visualObject.GetComponentInChildren<Renderer>();
+        Material teamColourMaterial = renderer.materials[1];
+        teamColourMaterial.color = ownedByTeam.colour;
     }
 
     public ActionQueue GetActionQueue()
@@ -99,7 +109,7 @@ public abstract class Building : MonoBehaviour, ISelectable
     {
         Interactable = false;
         ConstructionPercentage = 0;
-        visualObjects.SetActive(false);
+        visualObject.SetActive(false);
         constructionPlatform.SetActive(true);
         constructionState = ConstructionState.ConstructionPaused;
     }
@@ -108,7 +118,7 @@ public abstract class Building : MonoBehaviour, ISelectable
     public void FinishConstruction()
     {
         Interactable = true;
-        visualObjects.SetActive(true);
+        visualObject.SetActive(true);
         constructionPlatform.SetActive(false);
         constructionState = ConstructionState.FinishedConstruction;
         if (unitBeingConstructedBy == null) return;

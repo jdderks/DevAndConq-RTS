@@ -219,10 +219,17 @@ MonoBehaviour:
   downwardForce: 9.81
   unitSpeed: 5
   taskDebugInfo: 1
+  visualObject: {fileID: 5306591777888603716}
   selectableHighlightParent: {fileID: 7414280817557565439}
   unitType: 0
   agent: {fileID: 1612675931448646361}
-  ownedByTeam: {fileID: 0}
+  ownedByTeam:
+    teamTagName: 
+    teamID: 0
+    teamObject: {fileID: 0}
+    enemies: 
+  constructionMultiplier: 1
+  detectionRadius: 20
   constructWarFactoryPanelInfo: {fileID: 11400000, guid: ad1d768cad7bbb64bb0ab74fcd9b6917,
     type: 2}
 --- !u!195 &1612675931448646361
@@ -540,6 +547,12 @@ PrefabInstance:
 --- !u!4 &2525313042930770396 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: ad0f790b460b6ac469aa19efebaba7e9,
+    type: 3}
+  m_PrefabInstance: {fileID: 2630400872801224247}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &5306591777888603716 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -1358465638372292493, guid: ad0f790b460b6ac469aa19efebaba7e9,
     type: 3}
   m_PrefabInstance: {fileID: 2630400872801224247}
   m_PrefabAsset: {fileID: 0}

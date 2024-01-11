@@ -1,13 +1,12 @@
 using NaughtyAttributes;
 using NUnit.Framework;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Profiling;
+using UnityEngine.UIElements;
 
 public enum UnitType
 {
@@ -18,7 +17,7 @@ public enum UnitType
     VTOL = 4         //For aircraft that can hover and land and take off vertically
 }
 
-public class Unit : MonoBehaviour, ISelectable, IDamageable, IAIControllable
+public class Unit : MonoBehaviour, ISelectable, IDamageable, IAIControllable, ITeamable
 {
     //private and not meant to be shown in inspector
     private float timer = 0f;
@@ -35,6 +34,8 @@ public class Unit : MonoBehaviour, ISelectable, IDamageable, IAIControllable
     [SerializeField, ReadOnly] private Action movingSuccess;
 
     [SerializeField] private bool taskDebugInfo = true;
+
+    [SerializeField] private GameObject visualObject;
 
     [SerializeField] private Transform selectableHighlightParent;
     [SerializeField] private UnitType unitType;
@@ -105,6 +106,10 @@ public class Unit : MonoBehaviour, ISelectable, IDamageable, IAIControllable
     public void SetTeam(TeamByColour teamByColour)
     {
         ownedByTeam = GameManager.Instance.teamManager.GetTeamByColour(teamByColour);
+        Renderer renderer = visualObject.GetComponent<Renderer>();
+        Material teamColourMaterial = renderer.materials[0];
+        teamColourMaterial.color = ownedByTeam.colour;
+        tag = ownedByTeam.teamTagName;
     }
 
     public void Select()
@@ -151,22 +156,23 @@ public class Unit : MonoBehaviour, ISelectable, IDamageable, IAIControllable
         }
     }
 
-
-    public List<Unit> GetUnitsInDetectionRadius()
+    public List<GameObject> GetTeamableObjectsInProximity()
     {
         Collider[] colliders = Physics.OverlapSphere(transform.position, detectionRadius);
-        var unitList = new List<Unit>();
+        var gameObjects = new List<GameObject>();
         foreach (Collider collider in colliders)
         {
-            if (collider.GetComponent<Unit>() is Unit unit)
+            if (collider.gameObject.layer == LayerMask.NameToLayer("Building") || 
+                collider.gameObject.layer == LayerMask.NameToLayer("Unit"))
             {
-                if (GameManager.Instance.teamManager.GetEnemyTeams(ownedByTeam).Contains(unit.ownedByTeam))
-                {
-                    unitList.Add(unit);
-                }
+                if (collider.gameObject == gameObject) continue;
+
+                gameObjects.Add(collider.gameObject);
             }
         }
-        return unitList;
+        return gameObjects;
+        //Debug.Log("Amount of units nearby: " + unitList.Count);
+        //return unitList;
     }
 
 
@@ -185,6 +191,9 @@ public class Unit : MonoBehaviour, ISelectable, IDamageable, IAIControllable
     private void OnDrawGizmos()
     {
         Debug.DrawRay(transform.position, -transform.up * thresholdDistance, Color.red);
+
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, detectionRadius);
     }
 
     public virtual float TakeDamage()
@@ -209,23 +218,51 @@ public class Unit : MonoBehaviour, ISelectable, IDamageable, IAIControllable
     }
 
     //This is only ran a couple times a second for optimisation
-    public void AIUpdate()
+    public virtual void AIUpdate()
     {
-        List<Unit> enemyUnitsInProximity = GetUnitsInDetectionRadius();
-        if (enemyUnitsInProximity.Count == 0)
+        var enemies = GetEnemiesInProximity();
+        foreach (var enemy in enemies)
         {
-            return; // No units in proximity
+            Debug.Log(enemy.GetGameObject());
         }
 
-        Profiler.BeginSample("Unit close by calculation");
-        Unit closestUnit = enemyUnitsInProximity.OrderBy(u => Vector3.Distance(transform.position, u.transform.position)).FirstOrDefault();
-        Debug.Log(closestUnit.ToString());
-        Profiler.EndSample();
+        //Profiler.BeginSample("Unit close by calculation");
+        //Unit closestUnit = enemyUnitsInProximity.OrderBy(u => Vector3.Distance(transform.position, u.transform.position)).FirstOrDefault();
+        //Debug.Log(closestUnit.ToString());
+        //Profiler.EndSample();
+    }
+
+    private List<ITeamable> GetEnemiesInProximity()
+    {
+        var teamManager = GameManager.Instance.teamManager;
+        List<GameObject> teamableObjectsInProximity = GetTeamableObjectsInProximity();
+
+        List<TeamByColour> enemyTeams = teamManager.GetEnemyTeams(ownedByTeam);
+
+        var enemyTags = new List<string>();
+        foreach (var enemyTeam in enemyTeams)
+        {
+            Team team = teamManager.GetTeamByColour(enemyTeam);
+            enemyTags.Add(team.teamTagName);
+        }
+
+        List<ITeamable> enemyObjects = new List<ITeamable>();
+        foreach (var obj in teamableObjectsInProximity)
+        {
+            if (enemyTags.Contains(obj.tag))
+            {
+                enemyObjects.Add(obj.GetComponent<ITeamable>());
+            }
+        }
+
+        return enemyObjects;
     }
 
     public void SetAIController()
     {
         throw new NotImplementedException();
     }
+
+
 
 }

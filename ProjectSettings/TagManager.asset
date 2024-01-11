@@ -4,8 +4,10 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Terrain
   - Building
+  - Blue Team
+  - Red Team
+  - No Team
   layers:
   - Default
   - TransparentFX
@@ -14,7 +16,7 @@ TagManager:
   - Water
   - UI
   - Unit
-  - 
+  - Building
   - Ground
   - 
   - 

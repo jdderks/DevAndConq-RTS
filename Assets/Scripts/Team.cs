@@ -5,9 +5,10 @@ using UnityEngine;
 [Serializable]
 public class Team
 {
-    public string teamName;
+    public string teamTagName;
     public int teamID;
-    public TeamAppearanceScriptableObject teamObject;
+    public TeamByColour teamByColour;
+    public Color colour;
     //public List<TeamByColour> allies;
     public List<TeamByColour> enemies;
 }

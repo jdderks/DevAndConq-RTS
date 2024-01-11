@@ -13,6 +13,8 @@ public class CommandCenter : Building
 
     private void Start()
     {
+        SetTeam(teamByColour);
+
         constructDozerAction.PanelInfo = dozerUnitInfo;
 
         GetActions().Add(constructDozerAction);
@@ -36,8 +38,6 @@ public class CommandCenter : Building
             GameManager.Instance.selectionManager.SelectionPrefab,
             selectableHighlightParent
             );
-
-
 
         //var selectableCollection = GameManager.Instance.SelectableCollection;
         //var uimanager = GameManager.Instance.uiManager;

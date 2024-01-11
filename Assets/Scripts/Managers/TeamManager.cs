@@ -14,56 +14,34 @@ public enum TeamByColour
 
 public class TeamManager : MonoBehaviour
 {
-    [ReadOnly, SerializeField] private TeamAppearanceScriptableObject teamCurrentlyControlling;
+    [ReadOnly, SerializeField] private Team teamCurrentlyControlling;
 
     [Button("Set Red team Controlling")]
     public void SetRedTeamControlling()
     {
-        teamCurrentlyControlling = teams.Select(t => t.teamObject)
-                                        .Where(teamObj => teamObj.teamColour == TeamByColour.Red)
-                                        .FirstOrDefault();
+        teamCurrentlyControlling = teams.Where(team => team.teamByColour == TeamByColour.Red).FirstOrDefault();
+
     }
 
     [Button("Set Blue team Controlling")]
     public void SetBlueTeamControlling()
     {
-        teamCurrentlyControlling = teams.Select(t => t.teamObject)
-                                        .Where(teamObj => teamObj.teamColour == TeamByColour.Blue)
-                                        .FirstOrDefault();
+        teamCurrentlyControlling = teams.Where(team => team.teamByColour == TeamByColour.Blue).FirstOrDefault();
+
     }
 
     public List<Team> teams = new();
 
-    public List<Team> GetEnemyTeams(Team team)
+    public List<TeamByColour> GetEnemyTeams(Team team)
     {
-        List<Team> matchingTeams = new List<Team>();
-
-        foreach (Team t in teams)
-        {
-            bool hasEnemy = false;
-            foreach (var enemy in t.enemies)
-            {
-                if (enemy.Equals(team.teamObject.teamColour))
-                {
-                    hasEnemy = true;
-                    break;
-                }
-            }
-
-            if (hasEnemy)
-            {
-                matchingTeams.Add(t);
-            }
-        }
-
-        return matchingTeams;
+        return team.enemies;
     }
 
     public Team GetTeamByColour(TeamByColour teamByColour)
     {
         foreach (Team team in teams)
         {
-            if (team.teamObject.teamColour == teamByColour)
+            if (team.teamByColour == teamByColour)
             {
                 return team;
             }
@@ -71,5 +49,4 @@ public class TeamManager : MonoBehaviour
 
         return null;
     }
-
 }
