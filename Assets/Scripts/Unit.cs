@@ -17,12 +17,15 @@ public enum UnitType
     VTOL = 4         //For aircraft that can hover and land and take off vertically
 }
 
+/// <summary>
+/// Base class of a unit
+/// TODO: Make this more composited
+/// </summary>
 public class Unit : MonoBehaviour, ISelectable, IDamageable, IAIControllable, ITeamable
 {
     //private and not meant to be shown in inspector
     private float timer = 0f;
-    private float timerInterval = 1f;
-
+    private float timerIntervalInSeconds = 2f;
 
     //Shown in inspector
     [Header("Unit related")]
@@ -95,13 +98,13 @@ public class Unit : MonoBehaviour, ISelectable, IDamageable, IAIControllable, IT
         timer += Time.deltaTime;
 
         // Check if the timer exceeds or equals the interval
-        if (timer >= timerInterval)
+        if (timer >= timerIntervalInSeconds)
         {
             // Call the method
             AIUpdate();
 
             // Reduce the timer to the excess time beyond the interval
-            timer -= timerInterval;
+            timer -= timerIntervalInSeconds;
         }
         #endregion
 
@@ -279,12 +282,4 @@ public class Unit : MonoBehaviour, ISelectable, IDamageable, IAIControllable, IT
 
         return enemyObjects;
     }
-
-    public void SetAIController()
-    {
-        throw new NotImplementedException();
-    }
-
-
-
 }

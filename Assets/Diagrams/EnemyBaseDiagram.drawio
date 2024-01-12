@@ -1,0 +1,49 @@
+<mxfile host="Electron" modified="2024-01-12T13:22:58.495Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/21.1.2 Chrome/106.0.5249.199 Electron/21.4.3 Safari/537.36" etag="csjapVwj4BX_-j275iBU" version="21.1.2" type="device">
+  <diagram name="Page-1" id="fhSJuPpzcmUQDvfBx0BM">
+    <mxGraphModel dx="1419" dy="814" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="BAfRIa-ZmkxZZ4h8rpry-1" value="AI Enemy Base" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="49" y="180" width="730" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="BAfRIa-ZmkxZZ4h8rpry-2" value="DesiredConstructors" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="30" y="420" width="140" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="BAfRIa-ZmkxZZ4h8rpry-3" value="DesiredOffensiveUnits" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="30" y="500" width="140" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="BAfRIa-ZmkxZZ4h8rpry-4" value="DesiredBaseDefenders" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="30" y="580" width="140" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="BAfRIa-ZmkxZZ4h8rpry-9" value="desire influenced by: total amount of constructors &amp;amp; number of total buildings." style="rounded=0;whiteSpace=wrap;html=1;fontSize=9;fontStyle=2;align=center;" vertex="1" parent="1">
+          <mxGeometry x="170" y="420" width="190" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="BAfRIa-ZmkxZZ4h8rpry-10" value="desire influenced by: total amount of enemy units relative to number of units this base has" style="rounded=0;whiteSpace=wrap;html=1;fontSize=9;fontStyle=2;align=center;" vertex="1" parent="1">
+          <mxGeometry x="170" y="500" width="190" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="BAfRIa-ZmkxZZ4h8rpry-12" value="desire influenced by: total amount of&amp;nbsp; allied units in proximity of base + number of enemy base attackers" style="rounded=0;whiteSpace=wrap;html=1;fontSize=9;fontStyle=2;align=center;" vertex="1" parent="1">
+          <mxGeometry x="170" y="580" width="190" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="BAfRIa-ZmkxZZ4h8rpry-13" value="DesiredWarFactories" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="30" y="740" width="140" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="BAfRIa-ZmkxZZ4h8rpry-14" value="desire influenced by: a mininum want + how many war factories the enemies have" style="rounded=0;whiteSpace=wrap;html=1;fontSize=9;fontStyle=2;align=center;" vertex="1" parent="1">
+          <mxGeometry x="170" y="740" width="190" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="BAfRIa-ZmkxZZ4h8rpry-17" value="DesiredBaseAttackers" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="30" y="660" width="140" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="BAfRIa-ZmkxZZ4h8rpry-18" value="desire influenced by:&amp;nbsp; amount of units far away from base &amp;amp; total number of enemy base defenders" style="rounded=0;whiteSpace=wrap;html=1;fontSize=9;fontStyle=2;align=center;" vertex="1" parent="1">
+          <mxGeometry x="170" y="660" width="190" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="BAfRIa-ZmkxZZ4h8rpry-20" value="CommandCenterDanger" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="30" y="820" width="140" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="BAfRIa-ZmkxZZ4h8rpry-21" value="desire influenced by: amount of health the commandcenter has." style="rounded=0;whiteSpace=wrap;html=1;fontSize=9;fontStyle=2;align=center;" vertex="1" parent="1">
+          <mxGeometry x="170" y="820" width="190" height="60" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

@@ -1,0 +1,19 @@
+<mxfile host="Electron" modified="2024-01-12T13:03:40.723Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/21.1.2 Chrome/106.0.5249.199 Electron/21.4.3 Safari/537.36" etag="Jr1VvnEbJQJxu_B4bmz3" version="21.1.2" type="device">
+  <diagram name="Page-1" id="fhSJuPpzcmUQDvfBx0BM">
+    <mxGraphModel dx="2058" dy="1180" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="BAfRIa-ZmkxZZ4h8rpry-1" value="AI Enemy Base" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="49" y="180" width="730" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="BAfRIa-ZmkxZZ4h8rpry-2" value="DesiredConstructors" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="130" y="290" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="BAfRIa-ZmkxZZ4h8rpry-3" value="DesiredTankUnits" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="130" y="370" width="120" height="60" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
