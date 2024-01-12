@@ -109,6 +109,14 @@ public class Unit : MonoBehaviour, ISelectable, IDamageable, IAIControllable, IT
         if (IsMoving == true) UpdateMovement();
     }
 
+    private void LateUpdate()
+    {
+        if (Health < 0)
+        {
+            Die();
+        }
+    }
+
     public virtual void SetTeam(TeamByColour teamByColour)
     {
         OwnedByTeam = GameManager.Instance.teamManager.GetTeamByColour(teamByColour);
@@ -216,11 +224,7 @@ public class Unit : MonoBehaviour, ISelectable, IDamageable, IAIControllable, IT
 
     public virtual void TakeDamage(float amount)
     {
-        Health -= amount;
-        if (Health < 0)
-        {
-            Die();
-        }
+
     }
 
     public virtual void Die()

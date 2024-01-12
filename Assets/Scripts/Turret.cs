@@ -13,14 +13,16 @@ public enum TurretState
 public class Turret : MonoBehaviour
 {
     private float idleTimer = 0f;
-    private float timerInterval = 3f;
+    private float timerInterval = 5f;
 
     private Quaternion originRotation = Quaternion.Euler(-90, 0, 0);
     private Quaternion initialRotation;
     private Quaternion targetRotation;
 
+    [SerializeField] private GameObject parent;
+
     [SerializeField] private float idleTurretRotationRange = 30f;
-    [SerializeField] private float turretRotationSpeed = 5f;
+    [SerializeField] private float turretRotationSpeed = 50f;
     [SerializeField] private float fireRange = 20f;
 
 
@@ -56,25 +58,25 @@ public class Turret : MonoBehaviour
         switch (TurretState)
         {
             case TurretState.None:
-                targetRotation = originRotation;
+                //ReturnToIdle();
                 break;
             case TurretState.Idle:
                 IdleBehaviour();
                 break;
             case TurretState.Attacking:
-                FireTurret();
+                if (target != null || target.GetGameObject() != null)
+                    RotateTurretTowardsEnemy();
+                else
+                    StopAttacking();
                 break;
             default:
                 break;
         }
     }
 
-    private void FireTurret()
+
+    private void RotateTurretTowardsEnemy()
     {
-        if (target)
-        {
-            return;
-        }
         var targetTransform = target.GetGameObject().transform;
 
         // Check if the target is within fire range
@@ -88,7 +90,7 @@ public class Turret : MonoBehaviour
 
             // Calculate the rotation to point at the target
             Vector3 directionToTarget = targetTransform.position - transform.position;
-            Quaternion targetRotation = Quaternion.LookRotation(directionToTarget.normalized);
+            targetRotation = Quaternion.LookRotation(directionToTarget.normalized);
 
             // Set the targetRotation
             targetRotation *= Quaternion.Euler(-90, 0, 0); // Replace with the appropriate rotation adjustment
@@ -108,20 +110,11 @@ public class Turret : MonoBehaviour
 
     private void FireRounds()
     {
-        // Update the time since the last fire
         timeSinceLastFire += Time.deltaTime;
 
-        // Check if the turret can fire based on the fire rate
         if (timeSinceLastFire >= 1f / fireRatePerSeconds)
         {
-            // Implement firing logic here
-            // This method will be called when the rotation to the target is within the threshold
-            // You can handle firing rounds or other actions related to attacking the target
-
-            // Call the Fire method
             Fire();
-
-            // Reset the time since the last fire
             timeSinceLastFire = 0f;
         }
     }
@@ -129,30 +122,41 @@ public class Turret : MonoBehaviour
     private void Fire()
     {
         Debug.Log("Boom, fired at" + target);
-        if (target != null)
-            target.TakeDamage(damage);
-        else
-        {
-            target = null;
-            StopAttacking();
-        }
-    }
+        target.TakeDamage(damage);
+        StopAttacking();
 
+    }
 
     private void IdleBehaviour()
     {
         idleTimer += Time.deltaTime;
+
         if (idleTimer >= timerInterval)
         {
-            // Call the method
-            targetRotation = Quaternion.Euler(
-            transform.localEulerAngles.x,
-            transform.localEulerAngles.y + Random.Range(-idleTurretRotationRange, idleTurretRotationRange),
-            transform.localEulerAngles.z
-        );
+            Quaternion baseRotation = Quaternion.LookRotation(parent.transform.forward, Vector3.up) * Quaternion.Euler(-90, 0, 0);
+
+            // Apply a random rotation within the specified range only on the Y-axis
+            float randomRotation = Random.Range(-idleTurretRotationRange, idleTurretRotationRange);
+            targetRotation = Quaternion.Euler(baseRotation.eulerAngles.x, baseRotation.eulerAngles.y + randomRotation, baseRotation.eulerAngles.z);
 
             idleTimer -= timerInterval;
         }
+
+        // Use RotateTowards to ensure the rotation adheres to the maximum turret rotation speed
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, turretRotationSpeed * Time.deltaTime);
     }
+
+
+
+
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.blue; // Set the color of the arrow
+
+        // Draw an arrow indicating the targetRotation
+        Gizmos.DrawRay(transform.position, parent.transform.forward * 10);
+    }
+
 }
 

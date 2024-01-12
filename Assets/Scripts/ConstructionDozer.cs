@@ -34,7 +34,7 @@ public class ConstructionDozer : Unit
 
     public override void TakeDamage(float amount)
     {
-        base.TakeDamage(amount);
+        Health -= amount;
     }
 
     public override List<RtsAction> GetActions()

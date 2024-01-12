@@ -249,6 +249,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: LightTank
       objectReference: {fileID: 0}
+    - target: {fileID: 3485051687033697307, guid: b88d1bdb24c2d324e969b8dc695b6a76,
+        type: 3}
+      propertyPath: m_Name
+      value: Turret
+      objectReference: {fileID: 0}
+    - target: {fileID: 4425019604439715761, guid: b88d1bdb24c2d324e969b8dc695b6a76,
+        type: 3}
+      propertyPath: m_Name
+      value: Body
+      objectReference: {fileID: 0}
     - target: {fileID: 8948638292156826127, guid: b88d1bdb24c2d324e969b8dc695b6a76,
         type: 3}
       propertyPath: m_LocalRotation.w
@@ -318,6 +328,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c36c1d7565a5d86439354d581ca5fa09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  parent: {fileID: 882591618825355416}
   idleTurretRotationRange: 30
   turretRotationSpeed: 50
   fireRange: 20
+  damage: 12.5
+  fireRatePerSeconds: 2
