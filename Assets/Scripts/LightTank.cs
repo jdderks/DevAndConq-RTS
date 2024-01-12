@@ -19,19 +19,16 @@ public class LightTank : Unit
     public override void AIUpdate()
     {
         var enemies = GetEnemiesInProximity();
-        foreach (var enemy in enemies)
-        {
-            Debug.Log(enemy.GetGameObject());
-        }
         if (enemies.Count > 0)
             if (enemies[0] is IDamageable damageable)
-            {
-                turret.Attack(damageable);
-            }
+                if (turret != null)
+                    turret.Attack(damageable);
+
+
     }
 
     public override void TakeDamage(float amount)
     {
-        base.TakeDamage(amount);
+        Health -= amount;
     }
 }

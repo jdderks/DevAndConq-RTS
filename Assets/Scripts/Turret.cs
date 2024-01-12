@@ -64,6 +64,8 @@ public class Turret : MonoBehaviour
                 IdleBehaviour();
                 break;
             case TurretState.Attacking:
+                if (this == null)
+                    return;
                 if (target != null || target.GetGameObject() != null)
                     RotateTurretTowardsEnemy();
                 else
@@ -124,7 +126,6 @@ public class Turret : MonoBehaviour
         Debug.Log("Boom, fired at" + target);
         target.TakeDamage(damage);
         StopAttacking();
-
     }
 
     private void IdleBehaviour()

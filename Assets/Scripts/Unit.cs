@@ -156,7 +156,6 @@ public class Unit : MonoBehaviour, ISelectable, IDamageable, IAIControllable, IT
 
     public GameObject GetGameObject()
     {
-        Debug.Log(this);
         return gameObject;
     }
 

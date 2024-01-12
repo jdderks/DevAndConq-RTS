@@ -93,7 +93,7 @@ GameObject:
   - component: {fileID: 3686088194171416761}
   m_Layer: 7
   m_Name: CommandCenter
-  m_TagString: Untagged
+  m_TagString: Red Team
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -130,12 +130,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c67eea61a988304985dde9e81b24893, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ownedByTeam: {fileID: 11400000, guid: d9cf410b1e62f8741969cb0691dabf51, type: 2}
+  teamByColour: 0
+  ownedByTeam:
+    teamTagName: Blue Team
+    teamID: 0
+    teamByColour: 0
+    enemies: 
+    teamMaterial: {fileID: 0}
   selectableHighlightParent: {fileID: 4932796389901929149}
-  visualObjects: {fileID: 79868756870634226}
+  isInstantiated: 0
+  visualObject: {fileID: 79868756870634226}
   constructionPlatform: {fileID: 8717631847118694767}
   interactable: 1
   constructionPercentageText: {fileID: 1678434743651455065}
+  constructionDurationInSeconds: 20
   unitSpawnPoint: {fileID: 8312614883363445547}
   dozerUnitInfo: {fileID: 11400000, guid: 51e284193633f73418a3bab9a20c1266, type: 2}
 --- !u!65 &3686088194171416761
