@@ -18,4 +18,4 @@ MonoBehaviour:
   actionType: 1
   actionPrefab: {fileID: 882591618825355416, guid: 2e60c02deba0d4c40be63a193aa75b09,
     type: 3}
-  actionDelay: 1
+  actionDelay: 10

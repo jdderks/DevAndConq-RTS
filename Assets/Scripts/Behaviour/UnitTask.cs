@@ -14,14 +14,14 @@ public enum TaskState
 public enum TaskPriority
 {
     Idle = 0,
-    Priority = 1
+    Busy = 1
 }
 
 public abstract class UnitTask
 {
     protected Unit unit;
 
-    public TaskPriority priority;
+    private TaskPriority priority;
 
     public Action Completed;
     public Action Canceled;
@@ -36,12 +36,12 @@ public abstract class UnitTask
     private TaskState taskState;
 
     public TaskState TaskState { get => taskState; set => taskState = value; }
+    public TaskPriority Priority { get => priority; set => priority = value; }
 
     public void Begin()
     {
         this.TaskState = TaskState.Active;
-
-        OnBegin();//Begun += OnBegin;
+        OnBegin();
         if (taskState == TaskState.Active)
             Begun?.Invoke();
 
@@ -50,16 +50,13 @@ public abstract class UnitTask
     public void Cancel()
     {
         this.TaskState = TaskState.Cancelled;
-
         OnCancelled();
         Canceled?.Invoke();
-
     }
 
     public void Complete()
     {
         this.TaskState = TaskState.Completed;
-
         OnComplete();
         Completed?.Invoke();
 

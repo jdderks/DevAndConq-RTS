@@ -168,6 +168,11 @@ public class Unit : MonoBehaviour, ISelectable, IDamageable, IAIControllable, IT
         task.Begin();
     }
 
+    public void StopAllTasks()
+    {
+        currentTask = null;
+    }
+
     private void UpdateMovement()
     {
         if (agent.remainingDistance <= thresholdDistance)

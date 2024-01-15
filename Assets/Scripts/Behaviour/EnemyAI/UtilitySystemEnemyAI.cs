@@ -97,17 +97,17 @@ public class UtilitySystemEnemyAI : MonoBehaviour, IAIControllable, IAIEnemyBase
             case DesirePriority.Defender:
                 break;
             case DesirePriority.Factory:
-                IEnumerable<Unit> bulldozers = ownedUnits.Where(unit => unit is ConstructionDozer && ((ConstructionDozer)unit).CurrentTask == null);
+                IEnumerable<Unit> bulldozers = ownedUnits.Where(unit => unit is ConstructionDozer && ((ConstructionDozer)unit).CurrentTask.Priority == TaskPriority.Idle);
 
                 if (bulldozers.Any() &&
                     buildingPositioner.buildingPositions.Any(t => !t.occupied))
                 {
                     ConstructionDozer randomBulldozer = bulldozers.ElementAt(UnityEngine.Random.Range(0, bulldozers.Count())) as ConstructionDozer;
-                    var buildingPosition = buildingPositioner.GetRandomBuildingPosition(false);
+                    BuildingPosition buildingPosition = buildingPositioner.GetRandomBuildingPosition(false);
                     var warFactoryPrefab = randomBulldozer.ConstructWarFactoryAction.GetPanelInfo().actionPrefab;
-                    buildingPosition.occupied = true;
                     var warFactory = GameManager.Instance.buildingManager.InstantiateBuildingAndGiveTask(warFactoryPrefab, buildingPosition.position, randomBulldozer);
                     ownedBuildings.Add(warFactory.GetComponent<WarFactory>());
+                    buildingPositioner.SetOccupied(buildingPosition);
                 }
                 break;
             case DesirePriority.Danger:
@@ -130,6 +130,11 @@ public class UtilitySystemEnemyAI : MonoBehaviour, IAIControllable, IAIEnemyBase
 
         // Determine the highest desire and return the corresponding DesirePriority
         float maxDesire = Mathf.Max(desiredConstructors, desiredFactories, commandCenterDanger);
+
+        if (maxDesire < 0.5f) //no tasks have a real priority right now so just do nothing for a bit
+        {
+            return DesirePriority.None; // Default case
+        }
 
         if (maxDesire == desiredConstructors)
             return DesirePriority.Constructor;

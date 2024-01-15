@@ -14,6 +14,7 @@ public class ConstructionDozer : Unit
 
     private void Start()
     {
+        StartTask(new IdleTask(this));
         ConstructWarFactoryAction.SetActionValues(this);
         ConstructWarFactoryAction.PanelInfo = constructWarFactoryPanelInfo;//GameManager.Instance.Settings.rtsActionSettings.constructWarFactoryPanelInfo; 
         bulldozerActions.Add(ConstructWarFactoryAction);

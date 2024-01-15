@@ -11,7 +11,6 @@ public class SequenceTask : UnitTask
     {
         this.unit = agent;
         subtasks.AddRange(tasks);
-        priority = TaskPriority.Priority;
     }
 
     public override void OnBegin()

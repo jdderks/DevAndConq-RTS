@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class IdleTask : UnitTask
 {
-
     public IdleTask(Unit agent)
     {
         this.unit = agent;
@@ -16,6 +15,7 @@ public class IdleTask : UnitTask
         //Assert.IsNotNull(agent.IdleAnimation, "you have to assign an idle animation to the unit!");
         //if (agent.IdleAnimation != null)
         //    agent.IdleAnimation.Play();
+        Priority = TaskPriority.Idle;
         unit.PlayIdleAnimation();
     }
 

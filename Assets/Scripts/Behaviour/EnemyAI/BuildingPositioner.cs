@@ -50,6 +50,11 @@ public class BuildingPositioner : MonoBehaviour
         return eligiblePositions[randomIndex];
     }
 
+    public void SetOccupied(BuildingPosition position)
+    {
+        position.occupied = true;
+    }
+
 }
 
 [System.Serializable]
