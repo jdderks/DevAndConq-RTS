@@ -58,7 +58,7 @@ public class Turret : MonoBehaviour
         switch (TurretState)
         {
             case TurretState.None:
-                //ReturnToIdle();
+                Debug.LogWarning("Turret state should never be none!", this);
                 break;
             case TurretState.Idle:
                 IdleBehaviour();

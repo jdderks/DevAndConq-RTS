@@ -166,6 +166,7 @@ public class Unit : MonoBehaviour, ISelectable, IDamageable, IAIControllable, IT
         CurrentTask = task;
         task.Begin();
     }
+
     private void UpdateMovement()
     {
         if (agent.remainingDistance <= thresholdDistance)
@@ -174,9 +175,7 @@ public class Unit : MonoBehaviour, ISelectable, IDamageable, IAIControllable, IT
             if (dist <= thresholdDistance)
             {
                 if (CurrentTask is MoveUnitTask)
-                {
                     CurrentTask.Complete();
-                }
                 else if (CurrentTask is SequenceTask)
                 {
                     SequenceTask seqTask = CurrentTask as SequenceTask;
@@ -188,7 +187,7 @@ public class Unit : MonoBehaviour, ISelectable, IDamageable, IAIControllable, IT
         }
     }
 
-    public List<GameObject> GetTeamableObjectsInProximity()
+    public List<GameObject> GetUnitsAndBuildingsInProximity()
     {
         Collider[] colliders = Physics.OverlapSphere(transform.position, detectionRadius);
         var gameObjects = new List<GameObject>();
@@ -259,11 +258,11 @@ public class Unit : MonoBehaviour, ISelectable, IDamageable, IAIControllable, IT
     protected List<ITeamable> GetEnemiesInProximity()
     {
         var teamManager = GameManager.Instance.teamManager;
-        List<GameObject> teamableObjectsInProximity = GetTeamableObjectsInProximity();
+        List<GameObject> teamableObjectsInProximity = GetUnitsAndBuildingsInProximity();
 
         List<TeamByColour> enemyTeams = teamManager.GetEnemyTeams(OwnedByTeam);
 
-        var enemyTags = new List<string>();
+        List<string> enemyTags = new List<string>();
         foreach (var enemyTeam in enemyTeams)
         {
             Team team = teamManager.GetTeamByColour(enemyTeam);
@@ -280,5 +279,10 @@ public class Unit : MonoBehaviour, ISelectable, IDamageable, IAIControllable, IT
         }
 
         return enemyObjects;
+    }
+
+    public TeamByColour GetTeam()
+    {
+        return OwnedByTeam.teamByColour;
     }
 }

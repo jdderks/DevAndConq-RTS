@@ -50,19 +50,24 @@ public class ActionQueue
 
         if (currentAction.RemainingTime <= 0)
         {
-            currentAction.Action.Activate();
+            //currentAction.Action.Activate();
+            currentAction.OnActivate?.Invoke();
             RemoveFromQueue(0);
             isProcessingQueue = false;
         }
     }
 
-    public void AddToActionQueue(RtsAction action)
+    public RtsQueueAction AddToActionQueue(RtsAction action)
     {
         if (items.Count < 8)
         {
-            items.Add(new RtsQueueAction(action, action.GetPanelInfo().actionDelay));
+            var queueAction = new RtsQueueAction(action, action.GetPanelInfo().actionDelay);
+            items.Add(queueAction);
             IsOutDated = true;
+            queueAction.OnActivate += () => action.Activate();
+            return queueAction;
         }
+        return null;
     }
 
     public void RemoveFromQueue(int i = 0)

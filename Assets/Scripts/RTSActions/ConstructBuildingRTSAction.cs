@@ -1,6 +1,6 @@
-using NUnit.Framework;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.Assertions;
 using UnityEngine;
 
 public class ConstructBuildingRTSAction : RtsAction
@@ -18,9 +18,9 @@ public class ConstructBuildingRTSAction : RtsAction
     }
 
 
-    public override void Activate()
+    public override GameObject Activate()
     {
-        
+        return null;
     }
 
     public override ISelectable GetOrigin()

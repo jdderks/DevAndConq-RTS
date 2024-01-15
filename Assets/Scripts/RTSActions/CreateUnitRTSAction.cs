@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using System.Net.NetworkInformation;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -31,7 +33,7 @@ public class CreateUnitRTSAction : RtsBuildingAction
     }
 
 
-    public override void Activate()
+    public override GameObject Activate()
     {
         Assert.IsNotNull(unitGameObject, "Use SetUnitValues to set the values before activating the RTSAction!");
         Assert.IsNotNull(spawnPointOrigin, "Use SetUnitValues to set the values before activating the RTSAction!");
@@ -40,6 +42,7 @@ public class CreateUnitRTSAction : RtsBuildingAction
         //unitToSpawn.tag = building.gameObject.tag;
         var unit = unitToSpawn.GetComponent<Unit>();
         unit.SetTeam(building.ownedByTeam.teamByColour);
+        return unitToSpawn;
     }
 
     //This could be used in the future to get the origin of the action

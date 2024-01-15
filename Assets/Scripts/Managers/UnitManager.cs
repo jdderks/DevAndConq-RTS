@@ -32,6 +32,12 @@ public class UnitManager : Manager
 
     public void AddSelected(GameObject go)
     {
+        ITeamable gameObjectTeamable = go.GetComponent<ITeamable>();
+        TeamByColour currentControllingTeam = GameManager.Instance.teamManager.TeamCurrentlyControlling.teamByColour;
+        if (gameObjectTeamable != null)
+            if (currentControllingTeam != gameObjectTeamable.GetTeam())
+                return;
+
         var building = go.GetComponent<Building>();
         if (building != null)
         {

@@ -143,4 +143,9 @@ public abstract class Building : MonoBehaviour, ISelectable, ITeamable, IDamagea
     {
         
     }
+
+    public TeamByColour GetTeam()
+    {
+        return ownedByTeam.teamByColour;
+    }
 }

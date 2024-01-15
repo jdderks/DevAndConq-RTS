@@ -5,6 +5,7 @@ using UnityEngine;
 public interface ITeamable
 {
     public void SetTeam(TeamByColour teamByColour);
+    public TeamByColour GetTeam();
 
     public GameObject GetGameObject();
 }

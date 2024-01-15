@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract class RtsAction
 {
-    public abstract void Activate();
+    public abstract GameObject Activate();
 
     public abstract ISelectable GetOrigin();
 

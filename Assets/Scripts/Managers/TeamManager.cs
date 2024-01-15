@@ -19,18 +19,24 @@ public class TeamManager : Manager
     [Button("Set Red team Controlling")]
     public void SetRedTeamControlling()
     {
-        teamCurrentlyControlling = teams.Where(team => team.teamByColour == TeamByColour.Red).FirstOrDefault();
+        TeamCurrentlyControlling = teams.Where(team => team.teamByColour == TeamByColour.Red).FirstOrDefault();
 
     }
 
     [Button("Set Blue team Controlling")]
     public void SetBlueTeamControlling()
     {
-        teamCurrentlyControlling = teams.Where(team => team.teamByColour == TeamByColour.Blue).FirstOrDefault();
+        TeamCurrentlyControlling = teams.Where(team => team.teamByColour == TeamByColour.Blue).FirstOrDefault();
 
     }
 
     public List<Team> teams = new();
+
+    public Team TeamCurrentlyControlling 
+    { 
+        get => teamCurrentlyControlling; 
+        private set => teamCurrentlyControlling = value; 
+    }
 
     public List<TeamByColour> GetEnemyTeams(Team team)
     {
