@@ -13,7 +13,15 @@ public enum AIBaseState
     EndGame = 2
 }
 
-
+public enum DesirePriority
+{
+    None = -1,
+    Constructor = 0,
+    Attacker = 1,
+    Defender = 2,
+    Factory = 3,
+    Danger = 4
+}
 
 
 public class UtilitySystemEnemyAI : MonoBehaviour, IAIControllable, IAIEnemyBase
@@ -23,13 +31,14 @@ public class UtilitySystemEnemyAI : MonoBehaviour, IAIControllable, IAIEnemyBase
     private float timerIntervalInSeconds = 2f;
 
     //private Team ownedByTeam;
-
-    private AIBaseState currentBaseState = AIBaseState.None;
-
-    private List<Building> ownedBuildings = new();
-    private List<Unit> ownedUnits = new();
-
     private List<CommandCenter> enemyCommandCenters = new();
+
+    [SerializeField, ReadOnly] private AIBaseState currentBaseState = AIBaseState.None;
+    [SerializeField, ReadOnly] private DesirePriority currentDesire = DesirePriority.None;
+
+    [SerializeField] private List<Building> ownedBuildings = new();
+    [SerializeField] private List<Unit> ownedUnits = new();
+
 
     [SerializeField] private float dangerDetectionRadius = 25;
 
@@ -49,6 +58,7 @@ public class UtilitySystemEnemyAI : MonoBehaviour, IAIControllable, IAIEnemyBase
     private void Start()
     {
         ownedBuildings.Add(controllingCommandCenter);
+
         //Set enemy command centers
         //Give command for construction of a bulldozer
     }
@@ -73,17 +83,64 @@ public class UtilitySystemEnemyAI : MonoBehaviour, IAIControllable, IAIEnemyBase
 
     public void AIUpdate()
     {
-        int dozerAmount = ownedUnits.Where(u => u is ConstructionDozer).ToList().Count;
-        desiredConstructors = constructorDesireObject.CalculateDesire(dozerAmount);
+        currentDesire = CalculateDesiresAndDangers();
 
-        int warFactoryAmount = ownedBuildings.Where(u => u is WarFactory).ToList().Count;
-        desiredFactories = factoryDesireObject.CalculateDesire(warFactoryAmount, dozerAmount);
+        switch (currentDesire)
+        {
+            case DesirePriority.None:
+                break;
+            case DesirePriority.Constructor:
+                AddConstructionDozerToQueue();
+                break;
+            case DesirePriority.Attacker:
+                break;
+            case DesirePriority.Defender:
+                break;
+            case DesirePriority.Factory:
+                IEnumerable<Unit> bulldozers = ownedUnits.Where(unit => unit is ConstructionDozer && ((ConstructionDozer)unit).CurrentTask == null);
 
-        commandCenterDanger = commandCenterDangerObject.CalculateDesire(GetEnemiesInProximity().Count);
-        
-
-
+                if (bulldozers.Any() &&
+                    buildingPositioner.buildingPositions.Any(t => !t.occupied))
+                {
+                    ConstructionDozer randomBulldozer = bulldozers.ElementAt(UnityEngine.Random.Range(0, bulldozers.Count())) as ConstructionDozer;
+                    var buildingPosition = buildingPositioner.GetRandomBuildingPosition(false);
+                    var warFactoryPrefab = randomBulldozer.ConstructWarFactoryAction.GetPanelInfo().actionPrefab;
+                    buildingPosition.occupied = true;
+                    var warFactory = GameManager.Instance.buildingManager.InstantiateBuildingAndGiveTask(warFactoryPrefab, buildingPosition.position, randomBulldozer);
+                    ownedBuildings.Add(warFactory.GetComponent<WarFactory>());
+                }
+                break;
+            case DesirePriority.Danger:
+                break;
+            default:
+                break;
+        }
     }
+
+    private DesirePriority CalculateDesiresAndDangers()
+    {
+        // Calculate all desired amounts
+        int dozerAmount = ownedUnits.Count(u => u is ConstructionDozer);
+        int warFactoryAmount = ownedBuildings.Count(u => u is WarFactory);
+
+        // Calculate desires using the desire objects
+        desiredConstructors = constructorDesireObject.CalculateDesire(dozerAmount);
+        desiredFactories = factoryDesireObject.CalculateDesire(warFactoryAmount, dozerAmount);
+        commandCenterDanger = commandCenterDangerObject.CalculateDesire(GetEnemiesInProximity().Count);
+
+        // Determine the highest desire and return the corresponding DesirePriority
+        float maxDesire = Mathf.Max(desiredConstructors, desiredFactories, commandCenterDanger);
+
+        if (maxDesire == desiredConstructors)
+            return DesirePriority.Constructor;
+        else if (maxDesire == desiredFactories)
+            return DesirePriority.Factory;
+        else if (maxDesire == commandCenterDanger)
+            return DesirePriority.Danger;
+
+        return DesirePriority.None; // Default case
+    }
+
 
     [Button("Construct Dozer")]
     public void AddConstructionDozerToQueue()

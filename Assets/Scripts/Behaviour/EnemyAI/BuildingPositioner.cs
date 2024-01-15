@@ -2,6 +2,7 @@ using NaughtyAttributes;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class BuildingPositioner : MonoBehaviour
@@ -26,6 +27,29 @@ public class BuildingPositioner : MonoBehaviour
             buildingPositions.Add(newBuildingPosition);
         }
     }
+
+    public BuildingPosition GetRandomBuildingPosition(bool includeOccupied)
+    {
+        if (buildingPositions.Count == 0)
+        {
+            Debug.LogWarning("No building positions available.");
+            return new();
+        }
+
+        List<BuildingPosition> eligiblePositions = includeOccupied
+            ? buildingPositions.ToList()
+            : buildingPositions.Where(pos => !pos.occupied).ToList();
+
+        if (eligiblePositions.Count == 0)
+        {
+            Debug.LogWarning("No eligible building positions found.");
+            return new();
+        }
+
+        int randomIndex = UnityEngine.Random.Range(0, eligiblePositions.Count);
+        return eligiblePositions[randomIndex];
+    }
+
 }
 
 [System.Serializable]

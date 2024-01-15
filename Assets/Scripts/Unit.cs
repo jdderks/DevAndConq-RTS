@@ -32,6 +32,7 @@ public class Unit : MonoBehaviour, ISelectable, IDamageable, IAIControllable, IT
     [SerializeField] float thresholdDistance = 2.5f;
     //[SerializeField] private float downwardForce = 9.81f; //Controls gravity
 
+    [SerializeField] private UnitTask currentTask = null;
     [SerializeField] private float health = 100f;
 
     [SerializeField] private float unitSpeed = 5f;
@@ -69,7 +70,7 @@ public class Unit : MonoBehaviour, ISelectable, IDamageable, IAIControllable, IT
     public bool IsMoving { get; set; }
 
     public UnitType UnitType { get => unitType; set => unitType = value; }
-    public UnitTask CurrentTask { get; private set; }
+    public UnitTask CurrentTask { get => currentTask; private set => currentTask = value; }
     public bool TaskDebugInfo { get => taskDebugInfo; set => taskDebugInfo = value; }
     public float UnitSpeed { get => unitSpeed; set => unitSpeed = value; }
     public NavMeshAgent Agent { get => agent; set => agent = value; }

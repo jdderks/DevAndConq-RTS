@@ -4,16 +4,19 @@ using UnityEngine;
 
 public class ConstructionDozer : Unit
 {
+
+    [Header("Construction dozer related"), SerializeField] private PanelInfoScriptableObject constructWarFactoryPanelInfo;
     private List<RtsAction> bulldozerActions = new();
     ConstructBuildingRTSAction constructWarFactoryAction = new();
 
-    [Header("Construction dozer related"), SerializeField] private PanelInfoScriptableObject constructWarFactoryPanelInfo;
+
+    public ConstructBuildingRTSAction ConstructWarFactoryAction { get => constructWarFactoryAction; private set => constructWarFactoryAction = value; }
 
     private void Start()
     {
-        constructWarFactoryAction.SetActionValues(this);
-        constructWarFactoryAction.PanelInfo = constructWarFactoryPanelInfo;//GameManager.Instance.Settings.rtsActionSettings.constructWarFactoryPanelInfo; 
-        bulldozerActions.Add(constructWarFactoryAction);
+        ConstructWarFactoryAction.SetActionValues(this);
+        ConstructWarFactoryAction.PanelInfo = constructWarFactoryPanelInfo;//GameManager.Instance.Settings.rtsActionSettings.constructWarFactoryPanelInfo; 
+        bulldozerActions.Add(ConstructWarFactoryAction);
     }
 
     public override void Die()

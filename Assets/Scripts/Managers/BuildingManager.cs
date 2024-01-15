@@ -66,29 +66,33 @@ public class BuildingManager : Manager
 
                 if (Input.GetMouseButtonDown(0)) // Left mouse button to place object
                 {
-                    GameObject buildingGameObject = Instantiate(buildingToPlace, hit.point, Quaternion.identity);
-                    Building building = buildingGameObject.GetComponent<Building>();
+                    InstantiateBuildingAndGiveTask(buildingToPlace, hit.point, originUnit);
 
-                    building.SetTeam(originUnit.OwnedByTeam.teamByColour);
-                    building.ResetConstruction();// = 0;
-
-                    MoveUnitTask moveTask = new(originUnit, building.unitSpawnPoint.position);
-                    ConstructionTask constructionTask = new(originUnit, building);
-
-                    // Move and then construct the building
-                    var sequenceConstructionTask = new SequenceTask(originUnit, moveTask, constructionTask);
-
-                    originUnit.StartTask(sequenceConstructionTask);
-
-                    Destroy(ghostObject);
                     isBuilding = false;
                     originUnit = null;
                     buildingToPlace = null;
+                    Destroy(ghostObject);
                 }
             }
 
         }
     }
 
+    public GameObject InstantiateBuildingAndGiveTask(GameObject buildingToInstantiate, Vector3 position, Unit unitToGiveTask)
+    {
+        GameObject buildingGameObject = Instantiate(buildingToInstantiate, position, Quaternion.identity);
+        Building building = buildingGameObject.GetComponent<Building>();
 
+        building.SetTeam(unitToGiveTask.OwnedByTeam.teamByColour);
+        building.ResetConstruction();// = 0;
+
+        MoveUnitTask moveTask = new(unitToGiveTask, building.unitSpawnPoint.position);
+        ConstructionTask constructionTask = new(unitToGiveTask, building);
+
+        // Move and then construct the building
+        var sequenceConstructionTask = new SequenceTask(unitToGiveTask, moveTask, constructionTask);
+
+        unitToGiveTask.StartTask(sequenceConstructionTask);
+        return buildingGameObject;
+    }
 }
