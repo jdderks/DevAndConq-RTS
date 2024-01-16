@@ -5,14 +5,6 @@ using System.Net.NetworkInformation;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-//public enum UnitToSpawn
-//{
-//    None = 0,
-//    Bulldozer = 1,
-//    LightTank = 2,
-//    HeavyTank = 3
-//}
-
 public class CreateUnitRTSAction : RtsBuildingAction
 {
     public Building building; //Origin building
@@ -39,10 +31,12 @@ public class CreateUnitRTSAction : RtsBuildingAction
         Assert.IsNotNull(spawnPointOrigin, "Use SetUnitValues to set the values before activating the RTSAction!");
 
         var unitToSpawn = GameObject.Instantiate(unitGameObject, spawnPointOrigin.position, Quaternion.identity);
-        //unitToSpawn.tag = building.gameObject.tag;
+
         var unit = unitToSpawn.GetComponent<Unit>();
         unit.SetTeam(building.ownedByTeam.teamByColour);
         return unitToSpawn;
+
+        //unitToSpawn.tag = building.gameObject.tag;
     }
 
     //This could be used in the future to get the origin of the action

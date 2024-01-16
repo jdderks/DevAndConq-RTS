@@ -17,6 +17,7 @@ public enum ConstructionState
 
 public abstract class Building : MonoBehaviour, ISelectable, ITeamable, IDamageable
 {
+    [ProgressBar("Building Health", maxValue: 500), SerializeField] private float Health = 500;
     public TeamByColour teamByColour;
     [ReadOnly, HorizontalLine, Header("Team: "), SerializeField] public Team ownedByTeam;
     public List<RtsAction> rtsBuildingActions = new(); //These are empty RTS action slots
@@ -136,12 +137,16 @@ public abstract class Building : MonoBehaviour, ISelectable, ITeamable, IDamagea
 
     public void TakeDamage(float amount)
     {
-        
+        Health -= amount;
+        if (Health < 0)
+        {
+            Die();
+        }
     }
 
-    public void Die()
+    public virtual void Die()
     {
-        
+        Destroy(gameObject);
     }
 
     public TeamByColour GetTeam()

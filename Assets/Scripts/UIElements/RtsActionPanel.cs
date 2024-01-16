@@ -50,7 +50,7 @@ public class RtsActionPanel : MonoBehaviour
                         break;
                     case RTSActionType.SpawnUnit:
                         Assert.IsNotNull(origin.GetActionQueue(), "Origin doesn't have an action queue set!");
-                        origin.GetActionQueue().AddToActionQueue(action);
+                        RtsQueueAction actionQueue = origin.GetActionQueue().AddToActionQueue(action);
                         break;
                     case RTSActionType.BuildStructure:
                         //Debug.Log("Origin: " + origin);

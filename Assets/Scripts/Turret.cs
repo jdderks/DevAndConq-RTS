@@ -64,9 +64,7 @@ public class Turret : MonoBehaviour
                 IdleBehaviour();
                 break;
             case TurretState.Attacking:
-                if (this == null)
-                    return;
-                if (target != null || target.GetGameObject() != null)
+                if (target != null && target.GetGameObject() != null)
                     RotateTurretTowardsEnemy();
                 else
                     StopAttacking();
@@ -79,7 +77,18 @@ public class Turret : MonoBehaviour
 
     private void RotateTurretTowardsEnemy()
     {
-        var targetTransform = target.GetGameObject().transform;
+        Transform targetTransform;
+
+        // Ensure that target is not null before accessing GetGameObject()
+        if (target != null && target.GetGameObject() != null)
+        {
+            targetTransform = target.GetGameObject().transform;
+        }
+        else
+        {
+            StopAttacking();
+            return;
+        }
 
         // Check if the target is within fire range
         if (Vector3.Distance(transform.position, targetTransform.position) > fireRange)
@@ -123,9 +132,11 @@ public class Turret : MonoBehaviour
 
     private void Fire()
     {
-        Debug.Log("Boom, fired at" + target);
-        target.TakeDamage(damage);
-        StopAttacking();
+        if (target != null || target.GetGameObject() != null)
+        {
+            target.TakeDamage(damage);
+            StopAttacking();
+        }
     }
 
     private void IdleBehaviour()

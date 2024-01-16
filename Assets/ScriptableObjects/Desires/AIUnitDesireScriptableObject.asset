@@ -9,27 +9,27 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c34f35a2eda49934dbaeffa80bfc71af, type: 3}
-  m_Name: ConstructorDesire
+  m_Script: {fileID: 11500000, guid: 0f5c44b2164f3f24ea0fbbde8484bff8, type: 3}
+  m_Name: AIUnitDesireScriptableObject
   m_EditorClassIdentifier: 
   weightCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: -0.0018157959
-      value: 0.99999976
-      inSlope: 0.069970936
-      outSlope: 0.069970936
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0.15542522
-    - serializedVersion: 3
-      time: 1.0069841
-      value: 0.0016426742
+      time: 0
+      value: 1
       inSlope: 0
       outSlope: 0
-      tangentMode: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
       weightedMode: 0
       inWeight: 0
       outWeight: 0

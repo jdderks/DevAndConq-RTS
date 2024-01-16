@@ -27,7 +27,10 @@ public class CommandCenter : Building
 
     public override GameObject GetGameObject()
     {
-        return gameObject;
+        if (!this)
+            return null;
+        else
+            return gameObject;
     }
 
     public override void Select()

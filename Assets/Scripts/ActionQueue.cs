@@ -57,14 +57,25 @@ public class ActionQueue
         }
     }
 
-    public RtsQueueAction AddToActionQueue(RtsAction action)
+    public RtsQueueAction AddToActionQueue(RtsAction action, List<Unit> listToAddTo = null)
     {
         if (items.Count < 8)
         {
             var queueAction = new RtsQueueAction(action, action.GetPanelInfo().actionDelay);
             items.Add(queueAction);
             IsOutDated = true;
-            queueAction.OnActivate += () => action.Activate();
+
+            if (listToAddTo != null)
+            {
+                queueAction.OnActivate += () =>
+                {
+                    listToAddTo.Add(action.Activate().GetComponent<Unit>());
+                };
+            }
+            else
+            {
+                queueAction.OnActivate += () => action.Activate();
+            }
             return queueAction;
         }
         return null;
