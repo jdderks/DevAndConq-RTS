@@ -5,13 +5,13 @@ using NaughtyAttributes;
 using System.Linq;
 using UnityEditor.UI;
 
-public enum AIBaseState
-{
-    None = -1,
-    Settling = 0,
-    Base = 1,
-    EndGame = 2
-}
+//public enum AIBaseState
+//{
+//    None = -1,
+//    Settling = 0,
+//    Base = 1,
+//    EndGame = 2
+//}
 
 public enum DesirePriority
 {
@@ -36,7 +36,7 @@ public class UtilitySystemEnemyAI : MonoBehaviour, IAIControllable, IAIEnemyBase
     //private Team ownedByTeam;
     [ReadOnly, SerializeField] private List<CommandCenter> enemyCommandCenters = new();
 
-    [SerializeField, ReadOnly] private AIBaseState currentBaseState = AIBaseState.None;
+    //[SerializeField, ReadOnly] private AIBaseState currentBaseState = AIBaseState.None;
     [SerializeField, ReadOnly] private DesirePriority currentDesire = DesirePriority.None;
 
     [SerializeField] private List<Building> ownedBuildings = new();
@@ -101,73 +101,88 @@ public class UtilitySystemEnemyAI : MonoBehaviour, IAIControllable, IAIEnemyBase
     public void AIUpdate()
     {
         currentDesire = CalculateDesiresAndDangers();
+        SetCurrentDesire();
+    }
 
+    private void SetCurrentDesire()
+    {
         switch (currentDesire)
         {
             case DesirePriority.None:
+                Debug.Log("Why is the prioritystate none?");
                 break;
             case DesirePriority.Constructor:
                 AddConstructionDozerToQueue();
                 break;
             case DesirePriority.AttackUnits:
-                foreach (Building building in ownedBuildings)
-                {
-                    if (building is WarFactory factory)
-                        if (factory.Interactable)
-                            factory.actionQueue.AddToActionQueue(factory.GetActions().FirstOrDefault(), ownedUnits);
-                    List<LightTank> tanks = new List<LightTank>();
-
-                    foreach (var unit in ownedUnits)
-                    {
-                        if (unit is LightTank lightTank)
-                        {
-                            tanks.Add(lightTank);
-                        }
-                    }
-                    if (tanks.Count >= amountOfUnitsOnHold)
-                    {
-                        foreach (LightTank tank in tanks)
-                        {
-                            ownedUnits.Remove(tank);
-                            if (enemyCommandCenters.Any())
-                                tank.StartTask(new MoveUnitTask(tank, enemyCommandCenters[Random.Range(0, enemyCommandCenters.Count)].transform.position));
-                            else
-                                tank.StartTask(new MoveUnitTask(tank, controllingCommandCenter.transform.position));
-                        }
-                        amountOfUnitsOnHold = Random.Range(5, 15);
-                    }
-                }
+                PrepareAttack();
                 break;
             case DesirePriority.Factory:
-                List<Unit> bulldozers = new List<Unit>();
-                foreach (var unit in ownedUnits)
-                {
-                    if (unit is ConstructionDozer)
-                    {
-                        ConstructionDozer constructionDozer = (ConstructionDozer)unit;
-
-                        if (constructionDozer.CurrentTask != null && constructionDozer.CurrentTask.Priority == TaskPriority.Idle)
-                        {
-                            bulldozers.Add(unit);
-                        }
-                    }
-                }
-
-                if (bulldozers.Any() &&
-                    buildingPositioner.buildingPositions.Any(t => !t.occupied))
-                {
-                    ConstructionDozer randomBulldozer = bulldozers.ElementAt(UnityEngine.Random.Range(0, bulldozers.Count())) as ConstructionDozer;
-                    BuildingPosition buildingPosition = buildingPositioner.GetRandomBuildingPosition(false);
-                    var warFactoryPrefab = randomBulldozer.ConstructWarFactoryAction.GetPanelInfo().actionPrefab;
-                    var warFactory = GameManager.Instance.buildingManager.InstantiateBuildingAndGiveTask(warFactoryPrefab, buildingPosition.position, randomBulldozer);
-                    ownedBuildings.Add(warFactory.GetComponent<WarFactory>());
-                    buildingPositioner.SetOccupied(buildingPosition);
-                }
+                ConstructFactory();
                 break;
             case DesirePriority.Danger:
                 break;
             default:
                 break;
+        }
+    }
+
+    private void ConstructFactory()
+    {
+        List<Unit> bulldozers = new List<Unit>();
+        foreach (var unit in ownedUnits)
+        {
+            if (unit is ConstructionDozer)
+            {
+                ConstructionDozer constructionDozer = (ConstructionDozer)unit;
+
+                if (constructionDozer.CurrentTask != null && constructionDozer.CurrentTask.Priority == TaskPriority.Idle)
+                {
+                    bulldozers.Add(unit);
+                }
+            }
+        }
+
+        if (bulldozers.Any() &&
+            buildingPositioner.buildingPositions.Any(t => !t.occupied))
+        {
+            ConstructionDozer randomBulldozer = bulldozers.ElementAt(UnityEngine.Random.Range(0, bulldozers.Count())) as ConstructionDozer;
+            BuildingPosition buildingPosition = buildingPositioner.GetRandomBuildingPosition(false);
+            var warFactoryPrefab = randomBulldozer.ConstructWarFactoryAction.GetPanelInfo().actionPrefab;
+            var warFactory = GameManager.Instance.buildingManager.InstantiateBuildingAndGiveTask(warFactoryPrefab, buildingPosition.position, randomBulldozer);
+            ownedBuildings.Add(warFactory.GetComponent<WarFactory>());
+            buildingPositioner.SetOccupied(buildingPosition);
+        }
+    }
+
+    private void PrepareAttack()
+    {
+        foreach (Building building in ownedBuildings)
+        {
+            if (building is WarFactory factory)
+                if (factory.Interactable)
+                    factory.actionQueue.AddToActionQueue(factory.GetActions().FirstOrDefault(), ownedUnits);
+            List<LightTank> tanks = new List<LightTank>();
+
+            foreach (var unit in ownedUnits)
+            {
+                if (unit is LightTank lightTank)
+                {
+                    tanks.Add(lightTank);
+                }
+            }
+            if (tanks.Count >= amountOfUnitsOnHold)
+            {
+                foreach (LightTank tank in tanks)
+                {
+                    ownedUnits.Remove(tank);
+                    if (enemyCommandCenters.Any())
+                        tank.StartTask(new MoveUnitTask(tank, enemyCommandCenters[Random.Range(0, enemyCommandCenters.Count)].transform.position));
+                    else
+                        tank.StartTask(new MoveUnitTask(tank, controllingCommandCenter.transform.position));
+                }
+                amountOfUnitsOnHold = Random.Range(5, 15);
+            }
         }
     }
 

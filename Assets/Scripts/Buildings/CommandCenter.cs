@@ -40,11 +40,6 @@ public class CommandCenter : Building
             GameManager.Instance.selectionManager.SelectionPrefab,
             selectableHighlightParent
             );
-
-        //var selectableCollection = GameManager.Instance.SelectableCollection;
-        //var uimanager = GameManager.Instance.uiManager;
-
-        //uimanager.UpdateRtsActionPanel(units: selectableCollection.GetSelectedUnits(), building: this);
     }
 
     public override void Deselect()
