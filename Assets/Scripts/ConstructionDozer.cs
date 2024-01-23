@@ -6,8 +6,10 @@ public class ConstructionDozer : Unit
 {
 
     [Header("Construction dozer related"), SerializeField] private PanelInfoScriptableObject constructWarFactoryPanelInfo;
+    [SerializeField] private PanelInfoScriptableObject constructTurretActionPanelInfo;
     private List<RtsAction> bulldozerActions = new();
     ConstructBuildingRTSAction constructWarFactoryAction = new();
+    ConstructBuildingRTSAction constructTurretAction = new();
 
 
     public ConstructBuildingRTSAction ConstructWarFactoryAction { get => constructWarFactoryAction; private set => constructWarFactoryAction = value; }
@@ -16,7 +18,10 @@ public class ConstructionDozer : Unit
     {
         StartTask(new IdleTask(this));
         ConstructWarFactoryAction.SetActionValues(this);
-        ConstructWarFactoryAction.PanelInfo = constructWarFactoryPanelInfo;//GameManager.Instance.Settings.rtsActionSettings.constructWarFactoryPanelInfo; 
+        ConstructWarFactoryAction.PanelInfo = constructWarFactoryPanelInfo;//GameManager.Instance.Settings.rtsActionSettings.constructWarFactoryPanelInfo;
+
+        constructTurretAction.SetActionValues(this);
+        constructTurretAction.PanelInfo = constructTurretActionPanelInfo;
         bulldozerActions.Add(ConstructWarFactoryAction);
     }
 

@@ -26,12 +26,11 @@ public enum DesirePriority
 public class UtilitySystemEnemyAI : MonoBehaviour, IAIControllable, IAIEnemyBase
 {
     //Ai Enemy Timings
-    [ReadOnly, SerializeField, ProgressBar(2f, EColor.Blue)] private float timer = 0f;
-    private float timerIntervalInSeconds = 2f;
+    [ReadOnly, SerializeField, ProgressBar(1f, EColor.Blue)] private float timer = 0f;
+    private float timerIntervalInSeconds = 1f;
 
     private int bullDozersInQueue = 0;
     private int amountOfUnitsOnHold = 0;
-
 
     //private Team ownedByTeam;
     [ReadOnly, SerializeField] private List<CommandCenter> enemyCommandCenters = new();
@@ -49,6 +48,7 @@ public class UtilitySystemEnemyAI : MonoBehaviour, IAIControllable, IAIEnemyBase
 
     [SerializeField, ProgressBar("Constructor Desire", 1)] private float desiredConstructors = 0.5f;
     [SerializeField, ProgressBar("Attacker Desire", 1)] private float desiredOffensiveUnits = 0.5f;
+    [SerializeField, ProgressBar("Defender Desire", 1)]   private float desiredDefensesUnits = 0.5f;
     [SerializeField, ProgressBar("Factory Desire", 1)] private float desiredFactories = 0.5f;
     [SerializeField, ProgressBar("CommandCenterDanger", 1)] private float commandCenterDanger = 0.5f;
 
@@ -57,15 +57,18 @@ public class UtilitySystemEnemyAI : MonoBehaviour, IAIControllable, IAIEnemyBase
     [SerializeField] private AIDesireScriptableObject commandCenterDangerObject;
     [SerializeField] private AIUnitDesireScriptableObject offensiveUnitDesireObject;
 
+    [Header("Personality related") ,SerializeField] private AIPersonalityScriptableObject currentPersonality;
+
     private void Start()
     {
         ownedBuildings.Add(controllingCommandCenter);
         amountOfUnitsOnHold = Random.Range(5, 15);
         SetCommandCenters();
-
-        //Set enemy command centers
-        //Give command for construction of a bulldozer
-    }
+        if (currentPersonality == null)
+        {
+            currentPersonality = GameManager.Instance.personalityManager.GetRandomPersonality();
+        }
+}
 
     private void SetCommandCenters()
     {
