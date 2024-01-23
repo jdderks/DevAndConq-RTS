@@ -5,14 +5,6 @@ using NaughtyAttributes;
 using System.Linq;
 using UnityEditor.UI;
 
-//public enum AIBaseState
-//{
-//    None = -1,
-//    Settling = 0,
-//    Base = 1,
-//    EndGame = 2
-//}
-
 public enum DesirePriority
 {
     None = -1,
@@ -21,7 +13,6 @@ public enum DesirePriority
     Factory = 2,
     Danger = 3
 }
-
 
 public class UtilitySystemEnemyAI : MonoBehaviour, IAIControllable, IAIEnemyBase
 {
@@ -48,7 +39,7 @@ public class UtilitySystemEnemyAI : MonoBehaviour, IAIControllable, IAIEnemyBase
 
     [SerializeField, ProgressBar("Constructor Desire", 1)] private float desiredConstructors = 0.5f;
     [SerializeField, ProgressBar("Attacker Desire", 1)] private float desiredOffensiveUnits = 0.5f;
-    [SerializeField, ProgressBar("Defender Desire", 1)]   private float desiredDefensesUnits = 0.5f;
+    [SerializeField, ProgressBar("Defender Desire", 1)] private float desiredDefensesUnits = 0.5f;
     [SerializeField, ProgressBar("Factory Desire", 1)] private float desiredFactories = 0.5f;
     [SerializeField, ProgressBar("CommandCenterDanger", 1)] private float commandCenterDanger = 0.5f;
 
@@ -56,19 +47,28 @@ public class UtilitySystemEnemyAI : MonoBehaviour, IAIControllable, IAIEnemyBase
     [SerializeField] private AIWarFactoryDesireObject factoryDesireObject;
     [SerializeField] private AIDesireScriptableObject commandCenterDangerObject;
     [SerializeField] private AIUnitDesireScriptableObject offensiveUnitDesireObject;
+    [SerializeField] private AIDefensesDesireScriptableObject defensiveUnitDesireObject;
 
-    [Header("Personality related") ,SerializeField] private AIPersonalityScriptableObject currentPersonality;
+    [Header("Personality related")]
+    [SerializeField] private AIPersonalityScriptableObject currentPersonality;
 
     private void Start()
     {
         ownedBuildings.Add(controllingCommandCenter);
-        amountOfUnitsOnHold = Random.Range(5, 15);
+        amountOfUnitsOnHold = GetArmySize();
         SetCommandCenters();
         if (currentPersonality == null)
         {
             currentPersonality = GameManager.Instance.personalityManager.GetRandomPersonality();
         }
-}
+    }
+
+    private int GetArmySize()
+    {
+        int size = Random.Range(5, 15);
+        size *= (int)currentPersonality.aggressivenessModifier;
+        return size;
+    }
 
     private void SetCommandCenters()
     {
@@ -194,12 +194,17 @@ public class UtilitySystemEnemyAI : MonoBehaviour, IAIControllable, IAIEnemyBase
         // Calculate all desired amounts
         int dozerAmount = ownedUnits.Count(u => u is ConstructionDozer);
         int warFactoryAmount = ownedBuildings.Count(u => u is WarFactory);
+        int enemyUnitsAmount = GameManager.Instance.unitManager.GetEnemyUnits(controllingCommandCenter.ownedByTeam).Count();
         // Calculate desires using the desire objects
         desiredConstructors = constructorDesireObject.CalculateDesire(dozerAmount + bullDozersInQueue, 1);
         desiredFactories = factoryDesireObject.CalculateDesire(warFactoryAmount, dozerAmount);
         commandCenterDanger = commandCenterDangerObject.CalculateDesire(GetEnemiesInProximity().Count);
         desiredOffensiveUnits = offensiveUnitDesireObject.CalculateDesire(warFactoryAmount, ownedUnits.Count);
+        desiredDefensesUnits = defensiveUnitDesireObject.CalculateDesire(GetTurrets().Count, enemyUnitsAmount);
 
+        desiredOffensiveUnits *= currentPersonality.aggressivenessModifier;
+        
+        
         // Determine the highest desire and return the corresponding DesirePriority
         float maxDesire = Mathf.Max(desiredConstructors, desiredOffensiveUnits, desiredFactories, commandCenterDanger);
 
@@ -218,6 +223,19 @@ public class UtilitySystemEnemyAI : MonoBehaviour, IAIControllable, IAIEnemyBase
             return DesirePriority.Danger;
 
         return DesirePriority.None; // Default case
+    }
+
+    private List<Building> GetTurrets()
+    {
+        List<Building> turrets = new();
+        foreach (var item in ownedBuildings)
+        {
+            if (item is TurretBuilding)
+            {
+                turrets.Add(item);
+            }
+        }
+        return turrets;
     }
 
 

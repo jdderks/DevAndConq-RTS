@@ -57,6 +57,18 @@ public class UnitManager : Manager
         GameManager.Instance.SelectableCollection.deselectAll();
     }
 
+    public List<Unit> GetEnemyUnits(Team team)
+    {
+        List<Unit> enemyUnits = new();
+        foreach (var unit in units)
+        {
+            if (team.enemies.Contains(unit.OwnedByTeam.teamByColour))
+            {
+                enemyUnits.Add(unit);
+            }
+        }
+        return enemyUnits;
+    }
 
     //public void SetTask(Unit unit, UnitTask task)
     //{
