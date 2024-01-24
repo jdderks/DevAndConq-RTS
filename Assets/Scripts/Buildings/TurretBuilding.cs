@@ -1,3 +1,4 @@
+using NaughtyAttributes;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,7 +7,29 @@ using UnityEngine.Assertions;
 public class TurretBuilding : Building, IAIControllable
 {
     [SerializeField] private Turret turret;
+    [SerializeField] private float detectionRadius = 30;
 
+    [ReadOnly, SerializeField, ProgressBar(1f, EColor.Blue)] private float timer = 0f;
+    private float timerIntervalInSeconds = 1f;
+
+    private new void Update()
+    {
+        #region AI Update Timing
+        // Increment the timer by the deltaTime
+        timer += Time.deltaTime;
+
+        // Check if the timer exceeds or equals the interval
+        if (timer >= timerIntervalInSeconds)
+        {
+            // Call the method
+            AIUpdate();
+
+            // Reduce the timer to the excess time beyond the interval
+            timer -= timerIntervalInSeconds;
+        }
+        #endregion
+        base.Update();
+    }
 
     public void AIUpdate()
     {
@@ -81,4 +104,5 @@ public class TurretBuilding : Building, IAIControllable
             selectableHighlightParent
             );
     }
+
 }

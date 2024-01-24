@@ -48,6 +48,12 @@ public abstract class Building : MonoBehaviour, ISelectable, ITeamable, IDamagea
     public float ConstructionDurationInSeconds { get => constructionDurationInSeconds; set => constructionDurationInSeconds = value; }
     public bool Interactable { get => interactable; set => interactable = value; }
 
+
+    private void Start()
+    {
+        GameManager.Instance.buildingManager.SubscribeBuilding(this);
+    }
+
     public void Update()
     {
         if (actionQueue != null)
@@ -152,5 +158,10 @@ public abstract class Building : MonoBehaviour, ISelectable, ITeamable, IDamagea
     public TeamByColour GetTeam()
     {
         return ownedByTeam.teamByColour;
+    }
+
+    private void OnDestroy()
+    {
+        GameManager.Instance.buildingManager.UnsubscribeBuilding(this);
     }
 }

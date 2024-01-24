@@ -112,7 +112,7 @@ public class UtilitySystemEnemyAI : MonoBehaviour, IAIControllable, IAIEnemyBase
         switch (currentDesire)
         {
             case DesirePriority.None:
-                Debug.Log("Why is the prioritystate none?");
+                //Debug.Log("Why is the prioritystate none?");
                 break;
             case DesirePriority.Constructor:
                 AddConstructionDozerToQueue();
@@ -162,10 +162,20 @@ public class UtilitySystemEnemyAI : MonoBehaviour, IAIControllable, IAIEnemyBase
     {
         foreach (Building building in ownedBuildings)
         {
-            if (building is WarFactory factory)
-                if (factory.Interactable)
-                    factory.actionQueue.AddToActionQueue(factory.GetActions().FirstOrDefault(), ownedUnits);
             List<LightTank> tanks = new List<LightTank>();
+
+            if (building is WarFactory factory)
+            {
+                if (!factory.Interactable) continue;
+                if (GetTurrets(enemyCommandCenters[0].ownedByTeam).Count * 0.5 > tanks.Count)
+                {
+                    factory.actionQueue.AddToActionQueue(factory.GetActions().LastOrDefault(), ownedUnits);
+                }
+                else
+                {
+                    factory.actionQueue.AddToActionQueue(factory.GetActions().FirstOrDefault(), ownedUnits);
+                }
+            }
 
             foreach (var unit in ownedUnits)
             {
@@ -200,11 +210,11 @@ public class UtilitySystemEnemyAI : MonoBehaviour, IAIControllable, IAIEnemyBase
         desiredFactories = factoryDesireObject.CalculateDesire(warFactoryAmount, dozerAmount);
         commandCenterDanger = commandCenterDangerObject.CalculateDesire(GetEnemiesInProximity().Count);
         desiredOffensiveUnits = offensiveUnitDesireObject.CalculateDesire(warFactoryAmount, ownedUnits.Count);
-        desiredDefensesUnits = defensiveUnitDesireObject.CalculateDesire(GetTurrets().Count, enemyUnitsAmount);
+        desiredDefensesUnits = defensiveUnitDesireObject.CalculateDesire(GetTurrets(controllingCommandCenter.ownedByTeam).Count, enemyUnitsAmount);
 
         desiredOffensiveUnits *= currentPersonality.aggressivenessModifier;
-        
-        
+
+
         // Determine the highest desire and return the corresponding DesirePriority
         float maxDesire = Mathf.Max(desiredConstructors, desiredOffensiveUnits, desiredFactories, commandCenterDanger);
 
@@ -225,14 +235,14 @@ public class UtilitySystemEnemyAI : MonoBehaviour, IAIControllable, IAIEnemyBase
         return DesirePriority.None; // Default case
     }
 
-    private List<Building> GetTurrets()
+    private List<Building> GetTurrets(Team team)
     {
         List<Building> turrets = new();
-        foreach (var item in ownedBuildings)
+        foreach (var building in GameManager.Instance.buildingManager.AllBuildings)
         {
-            if (item is TurretBuilding)
+            if (building.ownedByTeam == team && building is TurretBuilding)
             {
-                turrets.Add(item);
+                turrets.Add(building);
             }
         }
         return turrets;
@@ -292,5 +302,9 @@ public class UtilitySystemEnemyAI : MonoBehaviour, IAIControllable, IAIEnemyBase
         Gizmos.DrawWireSphere(controllingCommandCenter.transform.position, dangerDetectionRadius);
     }
 
+    ~UtilitySystemEnemyAI()
+    {
+
+    }
 
 }

@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3af41af8fe23fb4487732251635ac7b, type: 3}
   m_Name: overpoweredPersonality
   m_EditorClassIdentifier: 
-  aggressivenessModifier: 0
-  defensivenessModifier: 0
-  overpowerednessModifier: 0
+  aggressivenessModifier: 1
+  defensivenessModifier: 1
+  overpowerednessModifier: 1
+  constructionSpeedMultiplier: 1

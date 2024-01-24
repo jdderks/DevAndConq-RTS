@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e541fc1ce6933ae40b4fbb6ccd597511, type: 3}
   m_Name: ConstructTurretPanelInfo
   m_EditorClassIdentifier: 
-  cost: 2000
+  cost: 750
   panelText: Construct Turret
   image: {fileID: 0}
   actionType: 2
-  actionPrefab: {fileID: 5147303210068363325, guid: 0770c7548a93d6a49b450289fc86bf65,
+  actionPrefab: {fileID: 4325746014672301942, guid: 0770c7548a93d6a49b450289fc86bf65,
     type: 3}
   actionDelay: 0

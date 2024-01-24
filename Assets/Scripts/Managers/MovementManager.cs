@@ -26,26 +26,26 @@ public class MovementManager : Manager
     /// </summary>
     void OnDrawGizmos()
     {
-        Gizmos.color = Color.blue;
-        foreach (Unit unit in unitManager.Units)
-        {
-            if (unit.CurrentTask is MoveUnitTask)
-            {
-                MoveUnitTask task = unit.CurrentTask as MoveUnitTask;
-                for (int i = 0; i < task.Path.corners.Length; i++)
-                {
-                    Gizmos.DrawSphere(task.Path.corners[i], 0.2f);
+        //Gizmos.color = Color.blue;
+        //foreach (Unit unit in unitManager.Units)
+        //{
+        //    if (unit.CurrentTask is MoveUnitTask)
+        //    {
+        //        MoveUnitTask task = unit.CurrentTask as MoveUnitTask;
+        //        for (int i = 0; i < task.Path.corners.Length; i++)
+        //        {
+        //            Gizmos.DrawSphere(task.Path.corners[i], 0.2f);
 
-                    if (i < task.Path.corners.Length - 1)
-                    {
-                        Gizmos.DrawLine(task.Path.corners[i], task.Path.corners[i + 1]);
-                    }
-                }
+        //            if (i < task.Path.corners.Length - 1)
+        //            {
+        //                Gizmos.DrawLine(task.Path.corners[i], task.Path.corners[i + 1]);
+        //            }
+        //        }
 
-                // Add a debug ray for the forward direction of the agent
-                Debug.DrawRay(unit.transform.position, unit.transform.forward * 5f, Color.red);
-            }
-        }
+        //        // Add a debug ray for the forward direction of the agent
+        //        Debug.DrawRay(unit.transform.position, unit.transform.forward * 5f, Color.red);
+        //    }
+        //}
     }
 
 }

@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: aggressivePersonality
   m_EditorClassIdentifier: 
   aggressivenessModifier: 1.5
-  defensivenessModifier: 0
-  overpowerednessModifier: 0
-  constructionSpeedMultiplier: 0
+  defensivenessModifier: 1
+  overpowerednessModifier: 1
+  constructionSpeedMultiplier: 1

@@ -33,6 +33,8 @@ public class BuildingManager : Manager
 
     List<Building> allBuildings = new();
 
+    public List<Building> AllBuildings { get => allBuildings; set => allBuildings = value; }
+
     public void EnterBuildingPlacementMode(Unit originUnit, GameObject buildingToPlace)
     {
         if (originUnit != null)
@@ -45,6 +47,20 @@ public class BuildingManager : Manager
         ghostObject = Instantiate(ghostObjectPrefab, posToPlace, Quaternion.identity);
 
         isBuilding = true;
+    }
+
+    public void SubscribeBuilding(Building building)
+    {
+        AllBuildings.Add(building);
+    }
+    public void UnsubscribeBuilding(Building building)
+    {
+        if (AllBuildings.Contains(building))
+        {
+            AllBuildings.Remove(building);
+            return;
+        }
+        Debug.Log("building you tried to unsubscribe is not subsribed!");
     }
 
     public void Update()

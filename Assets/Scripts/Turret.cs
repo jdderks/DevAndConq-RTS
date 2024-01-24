@@ -19,6 +19,8 @@ public class Turret : MonoBehaviour
     private Quaternion initialRotation;
     private Quaternion targetRotation;
 
+    [SerializeField] private bool fixRotationForTank = true;
+
     [SerializeField] private GameObject parent;
 
     [SerializeField] private float idleTurretRotationRange = 30f;
@@ -104,7 +106,10 @@ public class Turret : MonoBehaviour
             targetRotation = Quaternion.LookRotation(directionToTarget.normalized);
 
             // Set the targetRotation
-            targetRotation *= Quaternion.Euler(-90, 0, 0); // Replace with the appropriate rotation adjustment
+            if (fixRotationForTank)
+            {
+                targetRotation *= Quaternion.Euler(-90, 0, 0); // Replace with the appropriate rotation adjustment
+            }
 
             // Use RotateTowards to ensure the rotation adheres to the maximum turret rotation speed
             transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, turretRotationSpeed * Time.deltaTime);

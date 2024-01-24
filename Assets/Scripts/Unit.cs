@@ -157,6 +157,10 @@ public class Unit : MonoBehaviour, ISelectable, IDamageable, IAIControllable, IT
 
     public GameObject GetGameObject()
     {
+        if (this == null || gameObject == null)
+        {
+            return null;
+        }
         return gameObject;
     }
 
@@ -290,5 +294,10 @@ public class Unit : MonoBehaviour, ISelectable, IDamageable, IAIControllable, IT
     public TeamByColour GetTeam()
     {
         return OwnedByTeam.teamByColour;
+    }
+
+    private void OnDestroy()
+    {
+        GameManager.Instance.unitManager.Units.Remove(this);
     }
 }
