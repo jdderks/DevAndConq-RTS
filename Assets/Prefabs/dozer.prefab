@@ -216,7 +216,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   thresholdDistance: 2.5
+  health: 100
   unitSpeed: 5
+  attackRange: 25
   taskDebugInfo: 1
   visualObjects:
   - {fileID: 5306591777888603716}
@@ -227,11 +229,13 @@ MonoBehaviour:
     teamTagName: 
     teamID: 0
     teamByColour: 0
-    colour: {r: 0, g: 0, b: 0, a: 0}
     enemies: 
+    teamMaterial: {fileID: 0}
   constructionMultiplier: 1
   detectionRadius: 20
   constructWarFactoryPanelInfo: {fileID: 11400000, guid: ad1d768cad7bbb64bb0ab74fcd9b6917,
+    type: 2}
+  constructTurretActionPanelInfo: {fileID: 11400000, guid: 69bb4c9227bd2f64990b454edfcb729f,
     type: 2}
 --- !u!195 &1612675931448646361
 NavMeshAgent:

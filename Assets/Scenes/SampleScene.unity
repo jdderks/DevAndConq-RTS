@@ -2629,6 +2629,8 @@ MonoBehaviour:
     type: 2}
   offensiveUnitDesireObject: {fileID: 11400000, guid: d119b5aa624cad14d8c94f0cc525b5cf,
     type: 2}
+  defensiveUnitDesireObject: {fileID: 11400000, guid: 3afc0e13ced6cab4985685cc62d56938,
+    type: 2}
   currentPersonality: {fileID: 0}
 --- !u!4 &1579988677
 Transform:

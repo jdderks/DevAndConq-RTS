@@ -55,12 +55,12 @@ public class UtilitySystemEnemyAI : MonoBehaviour, IAIControllable, IAIEnemyBase
     private void Start()
     {
         ownedBuildings.Add(controllingCommandCenter);
-        amountOfUnitsOnHold = GetArmySize();
         SetCommandCenters();
         if (currentPersonality == null)
         {
             currentPersonality = GameManager.Instance.personalityManager.GetRandomPersonality();
         }
+        amountOfUnitsOnHold = GetArmySize();
     }
 
     private int GetArmySize()

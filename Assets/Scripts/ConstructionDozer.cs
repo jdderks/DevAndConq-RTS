@@ -23,6 +23,7 @@ public class ConstructionDozer : Unit
         constructTurretAction.SetActionValues(this);
         constructTurretAction.PanelInfo = constructTurretActionPanelInfo;
         bulldozerActions.Add(ConstructWarFactoryAction);
+        bulldozerActions.Add(constructTurretAction);
     }
 
     public override void Die()
