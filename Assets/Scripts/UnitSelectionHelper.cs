@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
@@ -59,12 +57,12 @@ public static class UnitSelectionHelper
 
     public static void DrawLine(Color color, Vector2 startPosition)
     {
-        Vector2 endPosition = Event.current.mousePosition;
+        //Vector2 endPosition = Event.current.mousePosition;
 
-        Handles.BeginGUI();
-        Handles.color = color;
-        Handles.DrawAAPolyLine(2f, startPosition, endPosition);
-        Handles.EndGUI();
+        //Handles.BeginGUI();
+        //Handles.color = color;
+        //Handles.DrawAAPolyLine(2f, startPosition, endPosition);
+        //Handles.EndGUI();
     }
 }
 

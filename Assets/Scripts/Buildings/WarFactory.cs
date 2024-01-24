@@ -6,8 +6,10 @@ using UnityEngine.Assertions;
 public class WarFactory : Building
 {
     CreateUnitRTSAction constructLightTankAction = new CreateUnitRTSAction();
+    CreateUnitRTSAction constructHeavyTankAction = new CreateUnitRTSAction();
 
     [SerializeField] private PanelInfoScriptableObject lightTankUnitInfo;// = GameManager.Instance.Settings.rtsActionSettings.lightTankPanelInfo;
+    [SerializeField] private PanelInfoScriptableObject heavyTankUnitInfo;// = GameManager.Instance.Settings.rtsActionSettings.lightTankPanelInfo;
 
 
     // Start is called before the first frame update
@@ -15,10 +17,18 @@ public class WarFactory : Building
     {
         if (!isInstantiated) SetTeam(teamByColour);
         constructLightTankAction.PanelInfo = lightTankUnitInfo;
+        constructHeavyTankAction.PanelInfo = heavyTankUnitInfo;
+
         GetActions().Add(constructLightTankAction);
+        GetActions().Add(constructHeavyTankAction);
 
         constructLightTankAction.SetUnitValues(
             unitObject: lightTankUnitInfo.actionPrefab,
+            originBuilding: this,
+            team: ownedByTeam);
+
+        constructHeavyTankAction.SetUnitValues(
+            unitObject: heavyTankUnitInfo.actionPrefab,
             originBuilding: this,
             team: ownedByTeam);
     }

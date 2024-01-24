@@ -355,6 +355,7 @@ MonoBehaviour:
   constructionDurationInSeconds: 3
   unitSpawnPoint: {fileID: 8312614883363445547}
   lightTankUnitInfo: {fileID: 11400000, guid: 3232f129903b8b6429f391beeb2d50c2, type: 2}
+  heavyTankUnitInfo: {fileID: 11400000, guid: 44f8c5e52d1622f4ba9523042c0cb9d1, type: 2}
 --- !u!65 &664566930645919150
 BoxCollider:
   m_ObjectHideFlags: 0

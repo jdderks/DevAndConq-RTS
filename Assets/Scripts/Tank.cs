@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LightTank : Unit
+public class Tank : Unit
 {
 
     //private Coroutine resetRotationCoroutine = null;

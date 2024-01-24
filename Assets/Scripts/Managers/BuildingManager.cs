@@ -1,7 +1,4 @@
-using NUnit.Framework;
-using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 //This class was written with some help from this tutorial, I really only skimmed through it but it felt right to still credit it: https://www.youtube.com/watch?v=YuGabUUSqlE

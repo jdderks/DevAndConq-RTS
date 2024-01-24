@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using NaughtyAttributes;
 using System.Linq;
-using UnityEditor.UI;
 
 public enum DesirePriority
 {
@@ -65,7 +64,7 @@ public class UtilitySystemEnemyAI : MonoBehaviour, IAIControllable, IAIEnemyBase
 
     private int GetArmySize()
     {
-        int size = Random.Range(5, 15);
+        int size = UnityEngine.Random.Range(5, 15);
         size *= (int)currentPersonality.aggressivenessModifier;
         return size;
     }
@@ -162,39 +161,36 @@ public class UtilitySystemEnemyAI : MonoBehaviour, IAIControllable, IAIEnemyBase
     {
         foreach (Building building in ownedBuildings)
         {
-            List<LightTank> tanks = new List<LightTank>();
-
+            List<Tank> tanks = new List<Tank>();
+            var enemyturrets = GetTurrets(enemyCommandCenters[0].ownedByTeam);
             if (building is WarFactory factory)
             {
                 if (!factory.Interactable) continue;
-                if (GetTurrets(enemyCommandCenters[0].ownedByTeam).Count * 0.5 > tanks.Count)
-                {
-                    factory.actionQueue.AddToActionQueue(factory.GetActions().LastOrDefault(), ownedUnits);
-                }
-                else
-                {
-                    factory.actionQueue.AddToActionQueue(factory.GetActions().FirstOrDefault(), ownedUnits);
-                }
+                if (enemyturrets.Count > 0)
+                    if (enemyturrets.Count * 0.5 > tanks.Count)
+                        factory.actionQueue.AddToActionQueue(factory.GetActions().LastOrDefault(), ownedUnits); // add heavy tank
+                    else
+                        factory.actionQueue.AddToActionQueue(factory.GetActions().FirstOrDefault(), ownedUnits); //add light tank
             }
 
             foreach (var unit in ownedUnits)
             {
-                if (unit is LightTank lightTank)
+                if (unit is Tank lightTank)
                 {
                     tanks.Add(lightTank);
                 }
             }
             if (tanks.Count >= amountOfUnitsOnHold)
             {
-                foreach (LightTank tank in tanks)
+                foreach (Tank tank in tanks)
                 {
                     ownedUnits.Remove(tank);
                     if (enemyCommandCenters.Any())
-                        tank.StartTask(new MoveUnitTask(tank, enemyCommandCenters[Random.Range(0, enemyCommandCenters.Count)].transform.position));
+                        tank.StartTask(new MoveUnitTask(tank, enemyCommandCenters[UnityEngine.Random.Range(0, enemyCommandCenters.Count)].transform.position));
                     else
                         tank.StartTask(new MoveUnitTask(tank, controllingCommandCenter.transform.position));
                 }
-                amountOfUnitsOnHold = Random.Range(5, 15);
+                amountOfUnitsOnHold = UnityEngine.Random.Range(5, 15);
             }
         }
     }
@@ -267,27 +263,32 @@ public class UtilitySystemEnemyAI : MonoBehaviour, IAIControllable, IAIEnemyBase
         var teamManager = GameManager.Instance.teamManager;
         List<ITeamable> enemyObjects = new List<ITeamable>();
 
-        Collider[] colliders = Physics.OverlapSphere(controllingCommandCenter.transform.position, dangerDetectionRadius);
-
-        List<string> enemyTags = new List<string>();
-        foreach (var enemyTeam in teamManager.GetEnemyTeams(controllingCommandCenter.ownedByTeam))
+        if (controllingCommandCenter != null)
         {
-            Team team = teamManager.GetTeamByColour(enemyTeam);
-            enemyTags.Add(team.teamTagName);
-        }
+            Collider[] colliders;
 
-        foreach (Collider collider in colliders)
-        {
-            if (collider.gameObject.layer == LayerMask.NameToLayer("Building") ||
-                collider.gameObject.layer == LayerMask.NameToLayer("Unit"))
+            colliders = Physics.OverlapSphere(controllingCommandCenter.transform.position, dangerDetectionRadius);
+
+            List<string> enemyTags = new List<string>();
+            foreach (var enemyTeam in teamManager.GetEnemyTeams(controllingCommandCenter.ownedByTeam))
             {
-                if (collider.gameObject == gameObject) continue;
+                Team team = teamManager.GetTeamByColour(enemyTeam);
+                enemyTags.Add(team.teamTagName);
+            }
 
-                ITeamable teamableObject = collider.gameObject.GetComponent<ITeamable>();
-
-                if (teamableObject != null && enemyTags.Contains(collider.gameObject.tag))
+            foreach (Collider collider in colliders)
+            {
+                if (collider.gameObject.layer == LayerMask.NameToLayer("Building") ||
+                    collider.gameObject.layer == LayerMask.NameToLayer("Unit"))
                 {
-                    enemyObjects.Add(teamableObject);
+                    if (collider.gameObject == gameObject) continue;
+
+                    ITeamable teamableObject = collider.gameObject.GetComponent<ITeamable>();
+
+                    if (teamableObject != null && enemyTags.Contains(collider.gameObject.tag))
+                    {
+                        enemyObjects.Add(teamableObject);
+                    }
                 }
             }
         }

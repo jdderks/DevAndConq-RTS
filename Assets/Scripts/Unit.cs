@@ -1,12 +1,9 @@
 using NaughtyAttributes;
-using NUnit.Framework;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.Profiling;
-using UnityEngine.UIElements;
+using UnityEngine.Assertions;
 
 public enum UnitType
 {

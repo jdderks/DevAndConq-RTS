@@ -10,7 +10,7 @@ public class AIDefensesDesireScriptableObject : ScriptableObject
         float desire = 0f;
         if (existingTurrets < enemyUnits * 0.5f)
         {
-            desire = existingTurrets * enemyUnits * 0.01f * personality.defensivenessModifier;
+            desire = existingTurrets * enemyUnits * 0.01f * (personality != null ? personality.defensivenessModifier : 1);
                     
         }
         return desire;
