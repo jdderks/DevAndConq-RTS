@@ -50,6 +50,40 @@ public class BuildingPositioner : MonoBehaviour
         return eligiblePositions[randomIndex];
     }
 
+    public BuildingPosition GetBuildingPositionClosestToTransform(Transform transform, bool includeOccupied)
+    {
+        if (buildingPositions.Count == 0)
+        {
+            Debug.LogWarning("No building positions available.");
+            return new();
+        }
+
+        List<BuildingPosition> eligiblePositions = includeOccupied
+            ? buildingPositions.ToList()
+            : buildingPositions.Where(pos => !pos.occupied).ToList();
+
+        if (eligiblePositions.Count == 0)
+        {
+            Debug.LogWarning("No eligible building positions found.");
+            return new();
+        }
+
+        BuildingPosition closestPosition = eligiblePositions[0];
+        float closestDistance = Vector3.Distance(transform.position, closestPosition.position);
+
+        foreach (BuildingPosition position in eligiblePositions)
+        {
+            float distance = Vector3.Distance(transform.position, position.position);
+            if (distance < closestDistance)
+            {
+                closestDistance = distance;
+                closestPosition = position;
+            }
+        }
+
+        return closestPosition;
+    }
+
     public void SetOccupied(BuildingPosition position)
     {
         position.occupied = true;

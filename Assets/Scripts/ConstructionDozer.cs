@@ -13,6 +13,7 @@ public class ConstructionDozer : Unit
 
 
     public ConstructBuildingRTSAction ConstructWarFactoryAction { get => constructWarFactoryAction; private set => constructWarFactoryAction = value; }
+    public ConstructBuildingRTSAction ConstructTurretAction { get => constructTurretAction; set => constructTurretAction = value; }
 
     private void Start()
     {
@@ -20,10 +21,10 @@ public class ConstructionDozer : Unit
         ConstructWarFactoryAction.SetActionValues(this);
         ConstructWarFactoryAction.PanelInfo = constructWarFactoryPanelInfo;//GameManager.Instance.Settings.rtsActionSettings.constructWarFactoryPanelInfo;
 
-        constructTurretAction.SetActionValues(this);
-        constructTurretAction.PanelInfo = constructTurretActionPanelInfo;
+        ConstructTurretAction.SetActionValues(this);
+        ConstructTurretAction.PanelInfo = constructTurretActionPanelInfo;
         bulldozerActions.Add(ConstructWarFactoryAction);
-        bulldozerActions.Add(constructTurretAction);
+        bulldozerActions.Add(ConstructTurretAction);
     }
 
     public override void Die()

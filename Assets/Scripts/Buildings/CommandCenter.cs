@@ -3,12 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine.Assertions;
 using UnityEngine;
+using NaughtyAttributes;
 
 public class CommandCenter : Building
 {
     CreateUnitRTSAction constructDozerAction = new CreateUnitRTSAction();
 
     [SerializeField] private PanelInfoScriptableObject dozerUnitInfo;// = GameManager.Instance.Settings.rtsActionSettings.bullDozerPanelInfo;
+    [SerializeField] private GameObject defensiveParent;
+    [SerializeField] private BuildingPositioner defensivePositioner = new();
+
+    public BuildingPositioner DefensivePositioner { get => defensivePositioner; set => defensivePositioner = value; }
+
+
     //ActionQueue ActionQueue = new();
 
     private void Start()
@@ -55,4 +62,21 @@ public class CommandCenter : Building
         mats[1] = ownedByTeam.teamMaterial;
         renderer.materials = mats;
     }
+
+    //[Button("Update defensive positions")]
+    //public void SetDefensivePositions()
+    //{
+    //    defensivePositioner.buildingPositions = new();
+    //    foreach (Transform child in transform)
+    //    {
+    //        // Create a new BuildingPosition
+    //        BuildingPosition newBuildingPosition = new BuildingPosition();
+
+    //        // Give the new buildingPosition the Vector3 position from the child object
+    //        newBuildingPosition.position = child.position;
+
+    //        // Add the new BuildingPosition to the list
+    //        defensivePositioner.buildingPositions.Add(newBuildingPosition);
+    //    }
+    //}
 }

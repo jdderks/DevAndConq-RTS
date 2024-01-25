@@ -10,7 +10,8 @@ public enum DesirePriority
     Constructor = 0,
     AttackUnits = 1,
     Factory = 2,
-    Danger = 3
+    Danger = 3,
+    Defend = 4
 }
 
 public class UtilitySystemEnemyAI : MonoBehaviour, IAIControllable, IAIEnemyBase
@@ -38,7 +39,7 @@ public class UtilitySystemEnemyAI : MonoBehaviour, IAIControllable, IAIEnemyBase
 
     [SerializeField, ProgressBar("Constructor Desire", 1)] private float desiredConstructors = 0.5f;
     [SerializeField, ProgressBar("Attacker Desire", 1)] private float desiredOffensiveUnits = 0.5f;
-    [SerializeField, ProgressBar("Defender Desire", 1)] private float desiredDefensesUnits = 0.5f;
+    [SerializeField, ProgressBar("Defender Desire", 1)] private float desiredDefenses = 0.5f;
     [SerializeField, ProgressBar("Factory Desire", 1)] private float desiredFactories = 0.5f;
     [SerializeField, ProgressBar("CommandCenterDanger", 1)] private float commandCenterDanger = 0.5f;
 
@@ -124,6 +125,9 @@ public class UtilitySystemEnemyAI : MonoBehaviour, IAIControllable, IAIEnemyBase
                 break;
             case DesirePriority.Danger:
                 break;
+            case DesirePriority.Defend:
+                ConstructDefenses();
+                break;
             default:
                 break;
         }
@@ -157,20 +161,53 @@ public class UtilitySystemEnemyAI : MonoBehaviour, IAIControllable, IAIEnemyBase
         }
     }
 
+    private void ConstructDefenses()
+    {
+        List<Unit> bulldozers = new List<Unit>();
+        foreach (var unit in ownedUnits)
+        {
+            if (unit is ConstructionDozer)
+            {
+                ConstructionDozer constructionDozer = (ConstructionDozer)unit;
+
+                if (constructionDozer.CurrentTask != null && constructionDozer.CurrentTask.Priority == TaskPriority.Idle)
+                {
+                    bulldozers.Add(unit);
+                }
+            }
+        }
+
+        if (bulldozers.Any() && controllingCommandCenter.DefensivePositioner.buildingPositions.Any(t => !t.occupied))
+        {
+            ConstructionDozer randomBulldozer = bulldozers.ElementAt(UnityEngine.Random.Range(0, bulldozers.Count())) as ConstructionDozer;
+            BuildingPosition buildingPosition;
+            if (enemyCommandCenters.Any())
+                buildingPosition = controllingCommandCenter.DefensivePositioner.GetBuildingPositionClosestToTransform(enemyCommandCenters[0].transform, false);
+            else
+                buildingPosition = controllingCommandCenter.DefensivePositioner.GetRandomBuildingPosition(false);
+            var defensesPrefab = randomBulldozer.ConstructTurretAction.GetPanelInfo().actionPrefab;
+            var warFactory = GameManager.Instance.buildingManager.InstantiateBuildingAndGiveTask(defensesPrefab, buildingPosition.position, randomBulldozer);
+            ownedBuildings.Add(warFactory.GetComponent<WarFactory>());
+            buildingPositioner.SetOccupied(buildingPosition);
+        }
+    }
+
     private void PrepareAttack()
     {
         foreach (Building building in ownedBuildings)
         {
+            if (building is not WarFactory) break;
+            
             List<Tank> tanks = new List<Tank>();
             var enemyturrets = GetTurrets(enemyCommandCenters[0].ownedByTeam);
             if (building is WarFactory factory)
             {
                 if (!factory.Interactable) continue;
-                if (enemyturrets.Count > 0)
-                    if (enemyturrets.Count * 0.5 > tanks.Count)
-                        factory.actionQueue.AddToActionQueue(factory.GetActions().LastOrDefault(), ownedUnits); // add heavy tank
-                    else
-                        factory.actionQueue.AddToActionQueue(factory.GetActions().FirstOrDefault(), ownedUnits); //add light tank
+
+                if (enemyturrets.Count * 0.5 > tanks.Count)
+                    factory.actionQueue.AddToActionQueue(factory.GetActions().LastOrDefault(), ownedUnits); // add heavy tank
+                else
+                    factory.actionQueue.AddToActionQueue(factory.GetActions().FirstOrDefault(), ownedUnits); //add light tank
             }
 
             foreach (var unit in ownedUnits)
@@ -206,13 +243,20 @@ public class UtilitySystemEnemyAI : MonoBehaviour, IAIControllable, IAIEnemyBase
         desiredFactories = factoryDesireObject.CalculateDesire(warFactoryAmount, dozerAmount);
         commandCenterDanger = commandCenterDangerObject.CalculateDesire(GetEnemiesInProximity().Count);
         desiredOffensiveUnits = offensiveUnitDesireObject.CalculateDesire(warFactoryAmount, ownedUnits.Count);
-        desiredDefensesUnits = defensiveUnitDesireObject.CalculateDesire(GetTurrets(controllingCommandCenter.ownedByTeam).Count, enemyUnitsAmount);
+        desiredDefenses = defensiveUnitDesireObject.CalculateDesire(dozerAmount, GetTurrets(controllingCommandCenter.ownedByTeam).Count, enemyUnitsAmount);
 
         desiredOffensiveUnits *= currentPersonality.aggressivenessModifier;
+        desiredDefenses *= currentPersonality.defensivenessModifier;
+
+        desiredConstructors = Mathf.Clamp(desiredConstructors, 0, 1);
+        desiredFactories = Mathf.Clamp(desiredFactories, 0, 1);
+        commandCenterDanger = Mathf.Clamp(commandCenterDanger, 0, 1);
+        desiredOffensiveUnits = Mathf.Clamp(desiredOffensiveUnits, 0, 1);
+        desiredDefenses = Mathf.Clamp(desiredDefenses, 0, 1);
 
 
         // Determine the highest desire and return the corresponding DesirePriority
-        float maxDesire = Mathf.Max(desiredConstructors, desiredOffensiveUnits, desiredFactories, commandCenterDanger);
+        float maxDesire = Mathf.Max(desiredConstructors, desiredOffensiveUnits, desiredFactories, commandCenterDanger, desiredDefenses);
 
         if (maxDesire < 0.5f) //no tasks have a real priority right now so just do nothing for a bit
         {
@@ -227,6 +271,9 @@ public class UtilitySystemEnemyAI : MonoBehaviour, IAIControllable, IAIEnemyBase
             return DesirePriority.AttackUnits;
         else if (maxDesire == commandCenterDanger)
             return DesirePriority.Danger;
+        else if (maxDesire == desiredDefenses)
+            return DesirePriority.Defend;
+
 
         return DesirePriority.None; // Default case
     }
@@ -302,10 +349,4 @@ public class UtilitySystemEnemyAI : MonoBehaviour, IAIControllable, IAIEnemyBase
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(controllingCommandCenter.transform.position, dangerDetectionRadius);
     }
-
-    ~UtilitySystemEnemyAI()
-    {
-
-    }
-
 }

@@ -104,7 +104,11 @@ public class BuildingManager : Manager
 
         // Move and then construct the building
         var sequenceConstructionTask = new SequenceTask(unitToGiveTask, moveTask, constructionTask);
-
+        sequenceConstructionTask.Priority = TaskPriority.Busy;
+        sequenceConstructionTask.Completed += () =>
+        {
+            unitToGiveTask.StartTask(new IdleTask(unitToGiveTask));
+        };
         unitToGiveTask.StartTask(sequenceConstructionTask);
         return buildingGameObject;
     }

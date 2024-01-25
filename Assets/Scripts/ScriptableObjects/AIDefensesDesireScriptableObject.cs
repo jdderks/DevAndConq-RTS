@@ -5,14 +5,9 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New AI Defenses Desire", menuName = "Desire/DefensesDesireObject")]
 public class AIDefensesDesireScriptableObject : ScriptableObject
 {
-    public float CalculateDesire(int existingTurrets, int enemyUnits, AIPersonalityScriptableObject personality = null)
+    public float CalculateDesire(int amountofDozers, int existingTurrets, int enemyUnits)
     {
-        float desire = 0f;
-        if (existingTurrets < enemyUnits * 0.5f)
-        {
-            desire = existingTurrets * enemyUnits * 0.01f * (personality != null ? personality.defensivenessModifier : 1);
-                    
-        }
-        return desire;
+        if (amountofDozers == 0) return 0;
+        return (1f / (existingTurrets + 1)) * (enemyUnits + 1);
     }
 }

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3af41af8fe23fb4487732251635ac7b, type: 3}
   m_Name: defensivePersonality
   m_EditorClassIdentifier: 
-  aggressivenessModifier: 1
-  defensivenessModifier: 2
+  aggressivenessModifier: 0.7
+  defensivenessModifier: 1.6
   overpowerednessModifier: 1
   constructionSpeedMultiplier: 1
