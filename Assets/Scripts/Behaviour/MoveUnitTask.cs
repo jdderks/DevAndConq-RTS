@@ -1,9 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.IO.LowLevel.Unsafe;
 using UnityEngine;
 using UnityEngine.AI;
-using static UnityEngine.GraphicsBuffer;
 
 public class MoveUnitTask : UnitTask
 {
@@ -25,7 +21,7 @@ public class MoveUnitTask : UnitTask
     public override void OnBegin()
     {
         unit.IsMoving = true;
-        unit.Agent.SetDestination(destination);
+        unit.MoveToPoint(destination);//Agent.SetDestination(destination);
     }
 
     public override void OnComplete()

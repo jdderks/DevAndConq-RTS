@@ -103,7 +103,9 @@ public class BuildingManager : Manager
         ConstructionTask constructionTask = new(unitToGiveTask, building);
 
         // Move and then construct the building
-        var sequenceConstructionTask = new SequenceTask(unitToGiveTask, moveTask, constructionTask);
+        var sequenceConstructionTask = new SequenceTask(unitToGiveTask/*, moveTask, constructionTask*/);
+        sequenceConstructionTask.AddTask(moveTask);
+        sequenceConstructionTask.AddTask(constructionTask);
         sequenceConstructionTask.Priority = TaskPriority.Busy;
         sequenceConstructionTask.Completed += () =>
         {

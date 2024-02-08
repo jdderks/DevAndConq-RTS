@@ -220,6 +220,8 @@ public class Unit : MonoBehaviour, ISelectable, IDamageable, IAIControllable, IT
     public virtual void StopIdleAnimation() { }
     public virtual void MeleeAttack() { }
     public virtual void RangedAttack(Unit unit, IDamageable targetUnit = null) { }
+    public virtual void StopAttacking() { }
+
 
     [ExecuteInEditMode]
     private void OnDrawGizmos()
@@ -262,7 +264,7 @@ public class Unit : MonoBehaviour, ISelectable, IDamageable, IAIControllable, IT
         //Profiler.EndSample();
     }
 
-    protected List<ITeamable> GetEnemiesInProximity()
+    protected List<IDamageable> GetEnemiesInProximity()
     {
         var teamManager = GameManager.Instance.teamManager;
         List<GameObject> teamableObjectsInProximity = GetUnitsAndBuildingsInProximity();
@@ -276,14 +278,15 @@ public class Unit : MonoBehaviour, ISelectable, IDamageable, IAIControllable, IT
             enemyTags.Add(team.teamTagName);
         }
 
-        List<ITeamable> enemyObjects = new List<ITeamable>();
+        List<IDamageable> enemyObjects = new List<IDamageable>();
         foreach (var obj in teamableObjectsInProximity)
         {
             if (enemyTags.Contains(obj.tag))
             {
-                enemyObjects.Add(obj.GetComponent<ITeamable>());
+                enemyObjects.Add(obj.GetComponent<IDamageable>());
             }
         }
+        enemyObjects.Sort((x, y) => Vector3.Distance(transform.position, x.GetGameObject().transform.position).CompareTo(Vector3.Distance(transform.position, y.GetGameObject().transform.position)));
 
         return enemyObjects;
     }
@@ -296,5 +299,15 @@ public class Unit : MonoBehaviour, ISelectable, IDamageable, IAIControllable, IT
     private void OnDestroy()
     {
         GameManager.Instance.unitManager.Units.Remove(this);
+    }
+
+    public void MoveToPoint(Vector3 destination)
+    {
+        Agent.SetDestination(destination);
+    }
+
+    public void MoveInProximityOfPoint(Vector3 destination, float proximityDistance)
+    {
+        Agent.SetDestination(destination);
     }
 }

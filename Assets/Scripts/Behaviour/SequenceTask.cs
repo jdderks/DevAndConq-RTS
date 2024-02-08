@@ -7,10 +7,10 @@ public class SequenceTask : UnitTask
     private List<UnitTask> subtasks = new List<UnitTask>();
     private int currentTaskIndex = 0;
 
-    public SequenceTask(Unit agent, params UnitTask[] tasks)
+    public SequenceTask(Unit agent/*, params UnitTask[] tasks*/)
     {
         this.unit = agent;
-        subtasks.AddRange(tasks);
+        //subtasks.AddRange(tasks);
     }
 
     public override void OnBegin()
@@ -36,6 +36,18 @@ public class SequenceTask : UnitTask
     public override void OnComplete()
     {
         // SequenceTask completed
+    }
+
+    public void AddTask(UnitTask task, bool addAsNext = false)
+    {
+        if (addAsNext)
+        {
+            subtasks.Insert(currentTaskIndex, task);
+        }
+        else
+        {
+            subtasks.Add(task);
+        }
     }
 
     private void ExecuteNextTask()

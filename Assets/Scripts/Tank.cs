@@ -18,13 +18,17 @@ public class Tank : Unit
 
     public override void AIUpdate()
     {
-        var enemies = GetEnemiesInProximity();
-        if (enemies.Count > 0)
-            if (enemies[0] is IDamageable damageable)
-                if (turret != null)
-                    turret.Attack(damageable);
+        //if enemies in proximity and taskstate is idle, start attack task
+        var closeEnemies = GetEnemiesInProximity();
+        if (closeEnemies.Count > 0 && CurrentTask.Priority == TaskPriority.Idle)
+        {
+            var chaseTask = new SequenceTask(this);
+            var moveTask = new MoveUnitTask(this, closeEnemies[0].GetGameObject().transform.position);
 
 
+            //start attack task to attack closest target
+            //StartTask(new AttackTask(target: closeEnemies[0], chaseTarget: false));
+        }
     }
 
     public override void TakeDamage(float amount)

@@ -7,7 +7,8 @@ public enum TurretState
 {
     None = -1,
     Idle = 0,
-    Attacking = 1
+    Attacking = 1,
+    Disabled = 2
 }
 
 public class Turret : MonoBehaviour
@@ -67,9 +68,12 @@ public class Turret : MonoBehaviour
                 break;
             case TurretState.Attacking:
                 if (target != null && target.GetGameObject() != null)
-                    RotateTurretTowardsEnemy();
+                    RotateTurretTowardsTarget(target.GetGameObject().transform);
                 else
                     StopAttacking();
+                break;
+            case TurretState.Disabled:
+
                 break;
             default:
                 break;
@@ -77,10 +81,8 @@ public class Turret : MonoBehaviour
     }
 
 
-    private void RotateTurretTowardsEnemy()
+    private void RotateTurretTowardsTarget(Transform targetTransform)
     {
-        Transform targetTransform;
-
         // Ensure that target is not null before accessing GetGameObject()
         if (target != null && target.GetGameObject() != null)
         {
@@ -137,6 +139,7 @@ public class Turret : MonoBehaviour
 
     private void Fire()
     {
+        //TODO: Particles/Effects user feedback
         if (target != null || target.GetGameObject() != null)
         {
             target.TakeDamage(damage);
@@ -174,6 +177,7 @@ public class Turret : MonoBehaviour
         // Draw an arrow indicating the targetRotation
         Gizmos.DrawRay(transform.position, parent.transform.forward * 10);
     }
+
 
 }
 
