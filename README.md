@@ -1,0 +1,1 @@
+This is my personal RTS game project, for this project my goal is to make a "command and conquer" esque Real-time strategy game all on my own. This project is a showcase of my code using game AI, systems and more.
