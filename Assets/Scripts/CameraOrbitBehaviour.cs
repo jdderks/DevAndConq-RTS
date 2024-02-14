@@ -7,10 +7,10 @@ public class CameraOrbitBehaviour : MonoBehaviour
     private Transform _XForm_Parent;
 
     private Vector3 _LocalRotation;
-    private float _CameraDistance = 10.0f;
 
+
+    [SerializeField] private float _CameraDistance = 10.0f;
     [SerializeField] private KeyCode orbitInput = KeyCode.Mouse2;
-
     [SerializeField] private float MouseSensitivity = 4.0f;
     [SerializeField] private float ScrollSensitvity = 2.0f;
     [SerializeField] private float OrbitDampening = 10.0f;
@@ -21,6 +21,8 @@ public class CameraOrbitBehaviour : MonoBehaviour
 
     void Start()
     {
+        _LocalRotation = transform.rotation.eulerAngles;
+
         this._XForm_Camera = this.transform;
         this._XForm_Parent = this.transform.parent;
     }

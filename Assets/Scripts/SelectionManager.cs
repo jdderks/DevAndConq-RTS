@@ -291,6 +291,7 @@ public class SelectionManager : Manager
 
     private void OnDrawGizmos()
     {
+#if UNITY_EDITOR
         if (lineInput)
         {
             var p1 = lineSelectionPosition1;
@@ -298,6 +299,7 @@ public class SelectionManager : Manager
             var thickness = 3;
             Handles.DrawBezier(p1, p2, p1, p2, Color.red, null, thickness);
         }
+#endif
     }
 
     void ShowTextBelowCursor(string text, float textSize = 16f)
