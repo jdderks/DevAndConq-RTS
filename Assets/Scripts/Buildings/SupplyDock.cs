@@ -1,3 +1,4 @@
+using NaughtyAttributes;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,7 +6,7 @@ using UnityEngine;
 public class SupplyDock : MonoBehaviour
 {
     //Make sure the range of this slider is always the maximum amount of crates!
-    [SerializeField, Range(0, 55)] private int amountOfCrates;
+    [SerializeField, Range(0, 68)] private int amountOfCrates;
 
     [SerializeField] private List<GameObject> crates = new();
 
@@ -24,6 +25,12 @@ public class SupplyDock : MonoBehaviour
     private void OnValidate()
     {
         AmountOfCratesChanged();
+    }
+
+    [Button("Reverse crates list")]
+    private void ReverseCrateslist()
+    {
+        crates.Reverse();
     }
 
     public void AmountOfCratesChanged()
