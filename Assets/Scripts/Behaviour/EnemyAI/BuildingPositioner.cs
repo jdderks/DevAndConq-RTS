@@ -7,7 +7,7 @@ using UnityEngine;
 
 public class BuildingPositioner : MonoBehaviour
 {
-    [SerializeField] public List<BuildingPosition> buildingPositions = new();
+    [SerializeField] public List<BuildingPosition> buildingPositions;// = new();
 
     [Button("Get Building Positions from children objects")]
     public void FillBuildingPositionsWithChildrenObjects()

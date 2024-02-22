@@ -17,7 +17,6 @@ public class ConstructBuildingRTSAction : RtsAction
         this.unit = unit;
     }
 
-
     public override GameObject Activate()
     {
         return null;

@@ -372,9 +372,9 @@ MonoBehaviour:
   visualObject: {fileID: 1764710816292155935}
   constructionPlatform: {fileID: 940535181809686030}
   interactable: 0
-  constructionPercentageText: {fileID: 0}
+  constructionPercentageText: {fileID: 8081147086776855001}
   constructionDurationInSeconds: 20
-  unitSpawnPoint: {fileID: 0}
+  unitSpawnPoint: {fileID: 8312614883363445547}
   supplyTruckUnitInfo: {fileID: 0}
 --- !u!1 &7092820535732571216
 GameObject:

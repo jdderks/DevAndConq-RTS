@@ -8,7 +8,7 @@ public class CommandCenter : Building
     [SerializeField] private PanelInfoScriptableObject dozerUnitInfo;// = GameManager.Instance.Settings.rtsActionSettings.bullDozerPanelInfo;
     [SerializeField] private GameObject defensiveParent;
     [SerializeField] private BuildingPositioner defensivePositioner = new();
-
+    [SerializeField] private Economy economy;
     public BuildingPositioner DefensivePositioner { get => defensivePositioner; set => defensivePositioner = value; }
 
 
