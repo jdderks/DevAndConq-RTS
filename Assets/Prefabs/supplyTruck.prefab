@@ -175,7 +175,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7337393460853754355}
-  - component: {fileID: 8033680055266323415}
+  - component: {fileID: 6569073471961194750}
   - component: {fileID: 1612675931448646361}
   - component: {fileID: 316012778632912943}
   - component: {fileID: 4259151927323909876}
@@ -203,7 +203,7 @@ Transform:
   - {fileID: 7414280817557565439}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8033680055266323415
+--- !u!114 &6569073471961194750
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -212,7 +212,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 882591618825355416}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0df3ab29e1742ae439b9c7e2b6823b50, type: 3}
+  m_Script: {fileID: 11500000, guid: d7d8bc4f56d2e354da0bd1d1621a93fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   thresholdDistance: 2.5
@@ -220,8 +220,7 @@ MonoBehaviour:
   unitSpeed: 5
   attackRange: 25
   taskDebugInfo: 1
-  visualObjects:
-  - {fileID: 0}
+  visualObjects: []
   selectableHighlightParent: {fileID: 7414280817557565439}
   unitType: 0
   agent: {fileID: 1612675931448646361}
@@ -233,11 +232,6 @@ MonoBehaviour:
     teamMaterial: {fileID: 0}
   constructionMultiplier: 1
   detectionRadius: 20
-  constructWarFactoryPanelInfo: {fileID: 11400000, guid: ad1d768cad7bbb64bb0ab74fcd9b6917,
-    type: 2}
-  constructTurretActionPanelInfo: {fileID: 11400000, guid: 69bb4c9227bd2f64990b454edfcb729f,
-    type: 2}
-  constructSupplyCenterActionPanelInfo: {fileID: 0}
 --- !u!195 &1612675931448646361
 NavMeshAgent:
   m_ObjectHideFlags: 0

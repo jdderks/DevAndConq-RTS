@@ -237,7 +237,7 @@ MonoBehaviour:
     type: 2}
   constructTurretActionPanelInfo: {fileID: 11400000, guid: 69bb4c9227bd2f64990b454edfcb729f,
     type: 2}
-  constructSupplyCenterActionPanelInfo: {fileID: 11400000, guid: 000f856d57a1862409fb7ab2544ac3a2,
+  constructSupplyCenterActionPanelInfo: {fileID: 11400000, guid: e4269f3f9b55c9542aaf5c5b03b9f084,
     type: 2}
 --- !u!195 &1612675931448646361
 NavMeshAgent:

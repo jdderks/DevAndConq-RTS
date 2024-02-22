@@ -314,8 +314,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6041605619507586267}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -1, z: -0, w: 0.0000028312204}
+  m_LocalPosition: {x: 0.00000023441758, y: 0, z: 0.1060791}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -325,7 +325,7 @@ Transform:
   - {fileID: 8312614883363445547}
   - {fileID: 1384385811840133285}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -180, z: 0}
 --- !u!65 &664566930645919150
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -373,9 +373,10 @@ MonoBehaviour:
   constructionPlatform: {fileID: 940535181809686030}
   interactable: 0
   constructionPercentageText: {fileID: 8081147086776855001}
-  constructionDurationInSeconds: 20
+  constructionDurationInSeconds: 5
   unitSpawnPoint: {fileID: 8312614883363445547}
-  supplyTruckUnitInfo: {fileID: 0}
+  supplyTruckUnitInfo: {fileID: 11400000, guid: 000f856d57a1862409fb7ab2544ac3a2,
+    type: 2}
 --- !u!1 &7092820535732571216
 GameObject:
   m_ObjectHideFlags: 0

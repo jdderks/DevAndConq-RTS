@@ -37,7 +37,7 @@ public class ConstructionTask : UnitTask
 
     public override void OnComplete()
     {
-        //targetBuilding.SetTeam(unit.OwnedByTeam.teamByColour);
+        targetBuilding.SetTeam(unit.OwnedByTeam.teamByColour);
     }
 
     public void Finish()

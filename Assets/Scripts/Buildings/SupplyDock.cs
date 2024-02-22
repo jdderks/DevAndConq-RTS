@@ -10,6 +10,9 @@ public class SupplyDock : MonoBehaviour
 
     [SerializeField] private List<GameObject> crates = new();
 
+    [SerializeField] private Transform interactPosition;
+
+    public Transform InteractPosition { get => interactPosition; set => interactPosition = value; }
 
     // Start is called before the first frame update
     void Start()
