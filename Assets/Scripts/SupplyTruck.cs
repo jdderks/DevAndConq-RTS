@@ -13,16 +13,20 @@ public class SupplyTruck : Unit
     private SupplyDock currentSupplyDock;
     private SupplyCenter currentSupplyCenter;
 
-    private void OnEnable()
+    private void Start()
     {
         SetCurrentSupplyDockAndCenter();
         if (currentSupplyDock != null)
         {
             //Set repeating sequence task to constantly go to the supply dock and back.
             var moveToSupplyDockTask = new MoveUnitTask(this, currentSupplyDock.InteractPosition.position);
+            moveToSupplyDockTask.Completed += () => { Debug.Log("DON MOVEN"); };
             var harvestTask = new GatherSuppliesTask(this, currentSupplyDock);
+            harvestTask.Completed += () => { Debug.Log("DON HARVESTED"); };
             var moveToSupplyCenterTask = new MoveUnitTask(this, currentSupplyCenter.InteractPosition.position);
+            moveToSupplyCenterTask.Completed += () => { Debug.Log("DON MOVEN BACK"); };
             var deliverTask = new DeliverSuppliesTask(this, currentSupplyCenter);
+            harvestTask.Completed += () => { Debug.Log("DON DDELIVRRR"); };
 
             var sequenceTask = new SequenceTask(this);
             sequenceTask.AddTask(moveToSupplyDockTask);

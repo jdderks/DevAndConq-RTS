@@ -188,6 +188,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9112827500529306217}
   - component: {fileID: 4581913285060308921}
+  - component: {fileID: 1311804007871457615}
   m_Layer: 9
   m_Name: SupplyDock
   m_TagString: Untagged
@@ -298,6 +299,27 @@ MonoBehaviour:
   - {fileID: 697157340797991879}
   - {fileID: 2764145990700355075}
   interactPosition: {fileID: 2664273136602283528}
+--- !u!65 &1311804007871457615
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8631040838266602178}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 10.508303, y: 10.46, z: 15.922083}
+  m_Center: {x: -0.0019257069, y: 0, z: 0.05303955}
 --- !u!1001 &48076248385508531
 PrefabInstance:
   m_ObjectHideFlags: 0
