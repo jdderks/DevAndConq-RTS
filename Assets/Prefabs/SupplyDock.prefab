@@ -226,6 +226,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d736faef39c678a4297192576954fcfb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  amountOfMoneyPerCrate: 500
   amountOfCrates: 68
   crates:
   - {fileID: 6517787020678475481}

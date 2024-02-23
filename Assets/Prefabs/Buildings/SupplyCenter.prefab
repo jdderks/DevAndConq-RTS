@@ -377,6 +377,7 @@ MonoBehaviour:
   unitSpawnPoint: {fileID: 8312614883363445547}
   supplyTruckUnitInfo: {fileID: 11400000, guid: 000f856d57a1862409fb7ab2544ac3a2,
     type: 2}
+  interactPosition: {fileID: 0}
 --- !u!1 &7092820535732571216
 GameObject:
   m_ObjectHideFlags: 0

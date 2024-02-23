@@ -7,8 +7,9 @@ public class SupplyCenter : Building
 {
     CreateUnitRTSAction constructSupplyTruck = new CreateUnitRTSAction();
     [SerializeField] private PanelInfoScriptableObject supplyTruckUnitInfo;// = GameManager.Instance.Settings.rtsActionSettings.lightTankPanelInfo;
+    [SerializeField] private Transform interactPosition;
 
-
+    public Transform InteractPosition { get => interactPosition; set => interactPosition = value; }
 
     public void Start()
     {
@@ -21,6 +22,15 @@ public class SupplyCenter : Building
             unitObject: supplyTruckUnitInfo.actionPrefab,
             originBuilding: this,
             team: ownedByTeam);
+
+        //Spawns a supplytruck as soon as the building is done :)
+        OnConstructionFinished += ConstructSupplyTruckOnSpawn;
+
+        void ConstructSupplyTruckOnSpawn()
+        {
+            constructSupplyTruck.Activate();
+            OnConstructionFinished -= ConstructSupplyTruckOnSpawn;
+        }
     }
 
     public override void Deselect()

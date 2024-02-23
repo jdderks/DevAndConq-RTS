@@ -26,7 +26,7 @@ public class MoveUnitTask : UnitTask
 
     public override void OnComplete()
     {
-        Debug.Log(unit + " finished moving!");
+        //Debug.Log(unit + " finished moving!");
         unit.IsMoving = false;
     }
 

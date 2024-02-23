@@ -23,6 +23,8 @@ public abstract class Building : MonoBehaviour, ISelectable, ITeamable, IDamagea
     public List<RtsAction> rtsBuildingActions = new(); //These are empty RTS action slots
     public ActionQueue actionQueue = new ActionQueue(); //This could be a Queue<> but I'd like items to be able to be removed from the center.
 
+    public System.Action OnConstructionFinished;
+
     private ConstructionState constructionState = ConstructionState.None;
 
     [HorizontalLine, SerializeField] protected Transform selectableHighlightParent;
@@ -138,7 +140,7 @@ public abstract class Building : MonoBehaviour, ISelectable, ITeamable, IDamagea
             ConstructionTask constrTask = seqTask.GetCurrentTask() as ConstructionTask;
             constrTask.Finish();
         }
-
+        OnConstructionFinished?.Invoke();
     }
 
     public void TakeDamage(float amount)
