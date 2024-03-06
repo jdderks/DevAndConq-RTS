@@ -33,8 +33,6 @@ public class TextLibrary
 
         return info;
     }
-
-
 }
 
 [System.Serializable]

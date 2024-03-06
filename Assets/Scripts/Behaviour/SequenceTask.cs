@@ -5,7 +5,7 @@ using UnityEngine;
 public class SequenceTask : UnitTask
 {
     private List<UnitTask> subtasks = new List<UnitTask>();
-    private int currentTaskIndex = 0;
+    protected int currentTaskIndex = 0;
 
     public SequenceTask(Unit agent/*, params UnitTask[] tasks*/)
     {
@@ -35,6 +35,7 @@ public class SequenceTask : UnitTask
 
     public override void OnComplete()
     {
+        Debug.Log("Sequence Task completed.");
         // SequenceTask completed
     }
 
@@ -50,7 +51,7 @@ public class SequenceTask : UnitTask
         }
     }
 
-    private void ExecuteNextTask()
+    protected void ExecuteNextTask()
     {
         if (currentTaskIndex < subtasks.Count)
         {
@@ -83,6 +84,32 @@ public class SequenceTask : UnitTask
         {
             Debug.LogWarning("No current task available in the sequence.");
             return null;
+        }
+    }
+}
+
+
+public class RepeatingSequenceTask : SequenceTask
+{
+    private bool shouldRepeat = false;
+
+    public RepeatingSequenceTask(Unit agent, bool shouldRepeat = false) : base(agent) 
+    {
+        this.shouldRepeat = shouldRepeat;
+    }
+
+    public override void OnComplete()
+    {
+        Debug.Log("Repeating Sequence Task completed.");
+
+        if (shouldRepeat)
+        {
+            currentTaskIndex = 0; // Reset the index to start from the beginning
+            ExecuteNextTask(); // Start the sequence again
+        }
+        else
+        {
+            base.OnComplete(); // Call base OnComplete if not repeating
         }
     }
 }

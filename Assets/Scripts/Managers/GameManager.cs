@@ -25,6 +25,7 @@ public class GameManager : MonoBehaviour
     public BuildingManager buildingManager;
     public TeamManager teamManager;
     public PersonalityManager personalityManager;
+    public Updater updater;
 
     [SerializeField] private SelectableCollection selectableCollection;
     public SelectableCollection SelectableCollection { get => selectableCollection; set => selectableCollection = value; }

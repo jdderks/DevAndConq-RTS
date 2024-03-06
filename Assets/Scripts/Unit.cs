@@ -71,7 +71,7 @@ public class Unit : MonoBehaviour, ISelectable, IDamageable, IAIControllable, IT
     public bool TaskDebugInfo { get => taskDebugInfo; set => taskDebugInfo = value; }
     public float UnitSpeed { get => unitSpeed; set => unitSpeed = value; }
     public NavMeshAgent Agent { get => agent; set => agent = value; }
-    public Action MovingSuccess { get => movingSuccess; set => movingSuccess = value; }
+    //public Action MovingSuccess { get => movingSuccess; set => movingSuccess = value; }
     public float ConstructionMultiplier { get => constructionMultiplier; set => constructionMultiplier = value; }
     public Team OwnedByTeam { get => ownedByTeam; set => ownedByTeam = value; }
     public float Health { get => health; set => health = value; }

@@ -21,6 +21,8 @@ public abstract class UnitTask
 {
     protected Unit unit;
 
+    private bool isRepeated = false;
+
     private TaskPriority priority;
 
     public Action Completed;
@@ -34,9 +36,9 @@ public abstract class UnitTask
     public abstract void OnComplete();
 
     private TaskState taskState;
-
     public TaskState TaskState { get => taskState; set => taskState = value; }
     public TaskPriority Priority { get => priority; set => priority = value; }
+    public bool IsRepeated { get => isRepeated; set => isRepeated = value; }
 
     public void Begin()
     {
@@ -50,8 +52,8 @@ public abstract class UnitTask
     public void Cancel()
     {
         this.TaskState = TaskState.Cancelled;
-        OnCancelled();
         Canceled?.Invoke();
+        OnCancelled();
     }
 
     public void Complete()

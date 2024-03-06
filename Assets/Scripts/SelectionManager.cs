@@ -74,13 +74,13 @@ public class SelectionManager : Manager
                 marqueePosition1 = Input.mousePosition;
 
         //2. while left mouse button held
-        if (GameManager.Instance.inputManager.GetMouseToSelectInput()) //TODO: Make InputManager 
+        if (GameManager.Instance.inputManager.GetMouseToSelectInput())
             if (!EventSystem.current.IsPointerOverGameObject())
                 if ((marqueePosition1 - Input.mousePosition).magnitude > 40)
                     dragSelect = true;
 
         //3. when mouse button comes up
-        if (GameManager.Instance.inputManager.GetMouseToSelectInputUp()) //TODO: Make InputManager 
+        if (GameManager.Instance.inputManager.GetMouseToSelectInputUp())
         {
             if (dragSelect == false) //single select
             {

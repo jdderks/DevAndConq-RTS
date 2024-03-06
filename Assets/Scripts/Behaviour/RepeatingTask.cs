@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Timers;
+using System.Net;
+using System.Threading;
 using UnityEngine;
 
 /// <summary>
@@ -8,9 +9,8 @@ using UnityEngine;
 /// </summary>
 public class RepeatingTask : UnitTask
 {
-
-
     UnitTask repeatingTask;
+    RTSTimer retryTimer;
 
     /// <summary>
     /// Make a task repeated, note that you can repeat Sequence tasks as well.
@@ -34,10 +34,6 @@ public class RepeatingTask : UnitTask
         UnsubscribeTasks();
     }
 
-    public override void OnComplete()
-    {
-    }
-
     public void StartTask()
     {
         repeatingTask.Begin();
@@ -45,13 +41,24 @@ public class RepeatingTask : UnitTask
 
     public void OnTaskCancelled()
     {
-        repeatingTask.Cancel();
+        retryTimer = new RTSTimer(1f);
+        retryTimer.TimeElapsed += OnRetryTimer;
+        //repeatingTask.Cancel();
     }
 
     private void UnsubscribeTasks()
     {
+        retryTimer.Destroy();
         repeatingTask.Completed -= StartTask;
         repeatingTask.Canceled -= OnTaskCancelled;
-
     }
+
+    public void OnRetryTimer()
+    {
+        retryTimer.TimeElapsed -= OnRetryTimer;
+        retryTimer = null;
+        StartTask();
+    }
+
+    public override void OnComplete(){}
 }

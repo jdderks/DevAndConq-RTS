@@ -210,7 +210,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.16666667
   m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 23800000, guid: 88b840e375675c94ba2cfdad971c7a12, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: 31cc26521eec038478e23a73d5ee94f4, type: 2}
   m_BuildHeightMesh: 0
 --- !u!154 &70103842
 TerrainCollider:
@@ -3511,6 +3511,50 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startingMoney: 10000
   currentAmountOfMoney: -1
+--- !u!1 &1636231143
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1636231144}
+  - component: {fileID: 1636231145}
+  m_Layer: 0
+  m_Name: Updater
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1636231144
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1636231143}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2024898263}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1636231145
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1636231143}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efbbb3253d717dd49bc47fdbbad53ad6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1706050627
 GameObject:
   m_ObjectHideFlags: 0
@@ -3846,6 +3890,7 @@ Transform:
   - {fileID: 208433318}
   - {fileID: 427967730}
   - {fileID: 1973686776}
+  - {fileID: 1636231144}
   - {fileID: 1145611811}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3882,6 +3927,7 @@ MonoBehaviour:
   buildingManager: {fileID: 427967731}
   teamManager: {fileID: 80605192}
   personalityManager: {fileID: 1973686777}
+  updater: {fileID: 1636231145}
   selectableCollection: {fileID: 2024898265}
   PanelItems: []
 --- !u!1 &2026121733
