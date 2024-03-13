@@ -118,7 +118,7 @@ public class Unit : MonoBehaviour, ISelectable, IDamageable, IAIControllable, IT
         }
     }
 
-    public virtual void SetTeam(TeamByColour teamByColour)
+    public virtual void SetTeam(TeamColour teamByColour)
     {
         OwnedByTeam = GameManager.Instance.teamManager.GetTeamByColour(teamByColour);
 
@@ -269,7 +269,7 @@ public class Unit : MonoBehaviour, ISelectable, IDamageable, IAIControllable, IT
         var teamManager = GameManager.Instance.teamManager;
         List<GameObject> teamableObjectsInProximity = GetUnitsAndBuildingsInProximity();
 
-        List<TeamByColour> enemyTeams = teamManager.GetEnemyTeams(OwnedByTeam);
+        List<TeamColour> enemyTeams = teamManager.GetEnemyTeams(OwnedByTeam);
 
         List<string> enemyTags = new List<string>();
         foreach (var enemyTeam in enemyTeams)
@@ -291,7 +291,7 @@ public class Unit : MonoBehaviour, ISelectable, IDamageable, IAIControllable, IT
         return enemyObjects;
     }
 
-    public TeamByColour GetTeam()
+    public TeamColour GetTeam()
     {
         return OwnedByTeam.teamByColour;
     }

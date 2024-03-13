@@ -10,6 +10,7 @@ public class CommandCenter : Building
     [SerializeField] private BuildingPositioner defensivePositioner;
     [SerializeField] private Economy economy;
     public BuildingPositioner DefensivePositioner { get => defensivePositioner; set => defensivePositioner = value; }
+    public Economy Economy { get => economy; set => economy = value; }
 
 
     //ActionQueue ActionQueue = new();
@@ -50,7 +51,7 @@ public class CommandCenter : Building
         Destroy(instantiatedSelectionObject);
     }
 
-    public override void SetTeam(TeamByColour teamByColour)
+    public override void SetTeam(TeamColour teamByColour)
     {
         ownedByTeam = GameManager.Instance.teamManager.GetTeamByColour(teamByColour);
         Renderer renderer = visualObject.GetComponentInChildren<Renderer>();

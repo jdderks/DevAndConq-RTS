@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class Economy : MonoBehaviour
 {
-    public int startingMoney = 10000;
-    public int currentAmountOfMoney = -1;
+    [SerializeField] private int startingMoney = 10000;
+    [SerializeField] private int currentAmountOfMoney = -1;
 
     private void Start()
     {
@@ -17,11 +17,10 @@ public class Economy : MonoBehaviour
 
     public bool DecreaseMoney(int amount)
     {
-        if (currentAmountOfMoney - amount < 0)
-        {
-            return false;
-        }
+        if (currentAmountOfMoney - amount < 0) return false;
+
         currentAmountOfMoney -= amount;
+        Debug.Log($"Money decreased by {amount.ToString()}, new amount: {currentAmountOfMoney}");
         return true;
     }
 }

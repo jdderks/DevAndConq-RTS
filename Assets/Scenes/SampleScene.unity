@@ -606,6 +606,51 @@ Transform:
   m_Children: []
   m_Father: {fileID: 479529159}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &314464385
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 314464386}
+  - component: {fileID: 314464387}
+  m_Layer: 0
+  m_Name: EconomyManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &314464386
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 314464385}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2024898263}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &314464387
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 314464385}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c1dcfcd19c1a004aa4e79d6a4ae1da3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  economies: []
 --- !u!1 &330585543
 GameObject:
   m_ObjectHideFlags: 0
@@ -891,7 +936,7 @@ Transform:
   - {fileID: 237530472}
   - {fileID: 749632106}
   - {fileID: 433645546}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1187283453}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &382438507
 GameObject:
@@ -2548,6 +2593,7 @@ Transform:
   m_Children:
   - {fileID: 70103844}
   - {fileID: 2125791459}
+  - {fileID: 355869473}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1292679839
@@ -3891,6 +3937,7 @@ Transform:
   - {fileID: 427967730}
   - {fileID: 1973686776}
   - {fileID: 1636231144}
+  - {fileID: 314464386}
   - {fileID: 1145611811}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3928,6 +3975,7 @@ MonoBehaviour:
   teamManager: {fileID: 80605192}
   personalityManager: {fileID: 1973686777}
   updater: {fileID: 1636231145}
+  economyManager: {fileID: 314464387}
   selectableCollection: {fileID: 2024898265}
   PanelItems: []
 --- !u!1 &2026121733
@@ -5315,6 +5363,5 @@ SceneRoots:
   - {fileID: 176155141}
   - {fileID: 1579988677}
   - {fileID: 1187283453}
-  - {fileID: 355869473}
   - {fileID: 6533672865467156970}
   - {fileID: 1319232445}

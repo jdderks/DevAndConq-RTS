@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public enum TeamByColour
+public enum TeamColour
 {
     None = -1,
     Red = 0,
@@ -19,14 +19,14 @@ public class TeamManager : Manager
     [Button("Set Red team Controlling")]
     public void SetRedTeamControlling()
     {
-        TeamCurrentlyControlling = teams.Where(team => team.teamByColour == TeamByColour.Red).FirstOrDefault();
+        TeamCurrentlyControlling = teams.Where(team => team.teamByColour == TeamColour.Red).FirstOrDefault();
 
     }
 
     [Button("Set Blue team Controlling")]
     public void SetBlueTeamControlling()
     {
-        TeamCurrentlyControlling = teams.Where(team => team.teamByColour == TeamByColour.Blue).FirstOrDefault();
+        TeamCurrentlyControlling = teams.Where(team => team.teamByColour == TeamColour.Blue).FirstOrDefault();
 
     }
 
@@ -38,12 +38,12 @@ public class TeamManager : Manager
         private set => teamCurrentlyControlling = value; 
     }
 
-    public List<TeamByColour> GetEnemyTeams(Team team)
+    public List<TeamColour> GetEnemyTeams(Team team)
     {
         return team.enemies;
     }
 
-    public Team GetTeamByColour(TeamByColour teamByColour)
+    public Team GetTeamByColour(TeamColour teamByColour)
     {
         foreach (Team team in teams)
         {
@@ -55,4 +55,10 @@ public class TeamManager : Manager
 
         return null;
     }
+
+    public IEnumerable<CommandCenter> GetAllCommandCenters()
+    {
+        return FindObjectsByType<CommandCenter>(FindObjectsSortMode.None);
+    }
+
 }

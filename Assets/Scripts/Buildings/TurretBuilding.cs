@@ -45,7 +45,7 @@ public class TurretBuilding : Building, IAIControllable
         var teamManager = GameManager.Instance.teamManager;
         List<GameObject> teamableObjectsInProximity = GetUnitsAndBuildingsInProximity();
 
-        List<TeamByColour> enemyTeams = teamManager.GetEnemyTeams(ownedByTeam);
+        List<TeamColour> enemyTeams = teamManager.GetEnemyTeams(ownedByTeam);
 
         List<string> enemyTags = new List<string>();
         foreach (var enemyTeam in enemyTeams)

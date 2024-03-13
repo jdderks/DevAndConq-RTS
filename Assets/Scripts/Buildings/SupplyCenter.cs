@@ -52,7 +52,7 @@ public class SupplyCenter : Building
             );
     }
 
-    public override void SetTeam(TeamByColour teamByColour)
+    public override void SetTeam(TeamColour teamByColour)
     {
         ownedByTeam = GameManager.Instance.teamManager.GetTeamByColour(teamByColour);
 

@@ -28,13 +28,11 @@ public class SupplyTruck : Unit
             repeatingTask.AddTask(moveToSupplyCenterTask);
             //sequenceTask.AddTask(deliverTask);
 
-            Assert.IsNotNull(currentSupplyDock, "supply dock is null!");
-            Assert.IsNotNull(currentSupplyCenter, "supply center is null!");
-
             StartTask(repeatingTask);
         }
         else
         {
+            Debug.Log($"{this.ToString()} their supplydock is: {currentSupplyDock.ToString()} or their supplycenter is: {currentSupplyCenter.ToString()}");
             StartTask(new IdleTask(this));
         }
     }

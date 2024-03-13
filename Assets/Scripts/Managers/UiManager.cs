@@ -1,10 +1,5 @@
 using NaughtyAttributes;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class UiManager : Manager
@@ -17,13 +12,6 @@ public class UiManager : Manager
     [SerializeField] private LanguageSets currentSelectedLanguage = LanguageSets.English;
 
     public ActionQueuePanel ActionQueuePanel { get => actionQueuePanel; set => actionQueuePanel = value; }
-
-    //private TextMeshProUGUI InfoPanelText_UnitAmount;
-
-    private void Update()
-    {
-        
-    }
 
     public void UpdateRtsActionPanel(ISelectable selectable)
     {

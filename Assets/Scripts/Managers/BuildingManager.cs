@@ -87,7 +87,6 @@ public class BuildingManager : Manager
                     Destroy(ghostObject);
                 }
             }
-
         }
     }
 

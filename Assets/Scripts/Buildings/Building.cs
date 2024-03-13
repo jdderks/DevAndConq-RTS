@@ -18,7 +18,7 @@ public enum ConstructionState
 public abstract class Building : MonoBehaviour, ISelectable, ITeamable, IDamageable
 {
     [ProgressBar("Building Health", maxValue: 500), SerializeField] private float Health = 500;
-    public TeamByColour teamByColour;
+    public TeamColour teamByColour;
     [ReadOnly, HorizontalLine, Header("Team: "), SerializeField] public Team ownedByTeam;
     public List<RtsAction> rtsBuildingActions = new(); //These are empty RTS action slots
     public ActionQueue actionQueue = new ActionQueue(); //This could be a Queue<> but I'd like items to be able to be removed from the center.
@@ -34,7 +34,6 @@ public abstract class Building : MonoBehaviour, ISelectable, ITeamable, IDamagea
     [SerializeField] private GameObject constructionPlatform;
     [SerializeField] private bool interactable = false;
     [SerializeField] TextMeshProUGUI constructionPercentageText;
-
 
     private Unit unitBeingConstructedBy = null;
 
@@ -74,7 +73,7 @@ public abstract class Building : MonoBehaviour, ISelectable, ITeamable, IDamagea
         return rtsBuildingActions;
     }
 
-    public virtual void SetTeam(TeamByColour teamByColour)
+    public virtual void SetTeam(TeamColour teamByColour)
     {
         ownedByTeam = GameManager.Instance.teamManager.GetTeamByColour(teamByColour);
         //Renderer renderer = visualObject.GetComponentInChildren<Renderer>();
@@ -157,7 +156,7 @@ public abstract class Building : MonoBehaviour, ISelectable, ITeamable, IDamagea
         Destroy(gameObject);
     }
 
-    public TeamByColour GetTeam()
+    public TeamColour GetTeam()
     {
         return ownedByTeam.teamByColour;
     }

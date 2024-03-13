@@ -72,7 +72,7 @@ public class UtilitySystemEnemyAI : MonoBehaviour, IAIControllable, IAIEnemyBase
 
     private void SetCommandCenters()
     {
-        CommandCenter[] commandCenters = FindObjectsByType<CommandCenter>(FindObjectsSortMode.None);
+        var commandCenters = GameManager.Instance.teamManager.GetAllCommandCenters();
 
         foreach (var commandCenter in commandCenters)
         {

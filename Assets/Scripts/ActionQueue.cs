@@ -57,28 +57,37 @@ public class ActionQueue
         }
     }
 
-    public RtsQueueAction AddToActionQueue(RtsAction action, List<Unit> listToAddTo = null)
+    public RtsQueueAction AddToActionQueue(RtsAction action, List<Unit> listToAddTo = null, TeamColour teamColour = TeamColour.None)
     {
-        if (items.Count < 8)
-        {
-            var queueAction = new RtsQueueAction(action, action.GetPanelInfo().actionDelay);
-            items.Add(queueAction);
-            IsOutDated = true;
+        if (items.Count > 8) return null;//TODO: magic number
 
-            if (listToAddTo != null)
-            {
-                queueAction.OnActivate += () =>
-                {
-                    listToAddTo.Add(action.Activate().GetComponent<Unit>());
-                };
-            }
-            else
-            {
-                queueAction.OnActivate += () => action.Activate();
-            }
-            return queueAction;
+        //if economy is null, continue doing everything. if Economy.DecreaseMoney returns false, return null
+        
+        var economy = GameManager.Instance.economyManager.GetEconomy(teamColour);
+
+        if (economy != null && !economy.DecreaseMoney(action.GetPanelInfo().cost))
+        {
+            return null;
         }
-        return null;
+
+
+
+        var queueAction = new RtsQueueAction(action, action.GetPanelInfo().actionDelay);
+        items.Add(queueAction);
+        IsOutDated = true;
+
+        if (listToAddTo != null)
+        {
+            queueAction.OnActivate += () =>
+            {
+                listToAddTo.Add(action.Activate().GetComponent<Unit>());
+            };
+        }
+        else
+        {
+            queueAction.OnActivate += () => action.Activate();
+        }
+        return queueAction;
     }
 
     public void RemoveFromQueue(int i = 0)

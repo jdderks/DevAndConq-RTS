@@ -50,11 +50,9 @@ public class RtsActionPanel : MonoBehaviour
                         break;
                     case RTSActionType.SpawnUnit:
                         Assert.IsNotNull(origin.GetActionQueue(), "Origin doesn't have an action queue set!");
-                        RtsQueueAction actionQueue = origin.GetActionQueue().AddToActionQueue(action);
+                        /*RtsQueueAction actionQueue = */origin.GetActionQueue().AddToActionQueue(action);
                         break;
                     case RTSActionType.BuildStructure:
-                        //Debug.Log("Origin: " + origin);
-                        //Debug.Log("Prefab:" + actionInfo.actionPrefab);
                         GameManager.Instance.buildingManager.EnterBuildingPlacementMode(origin as Unit, actionInfo.actionPrefab);
                         break;
                     case RTSActionType.Upgrade:
