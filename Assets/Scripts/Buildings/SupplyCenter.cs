@@ -13,7 +13,7 @@ public class SupplyCenter : Building
 
     public void Start()
     {
-        if (!isInstantiated) SetTeam(teamByColour);
+        if (!isInstantiated) SetTeam(colourEnum);
 
         constructSupplyTruck.PanelInfo = supplyTruckUnitInfo;
         GetActions().Add(constructSupplyTruck);

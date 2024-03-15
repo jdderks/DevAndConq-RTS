@@ -17,7 +17,7 @@ public class CommandCenter : Building
 
     private void Start()
     {
-        SetTeam(teamByColour);
+        SetTeam(colourEnum);
 
         constructDozerAction.PanelInfo = dozerUnitInfo;
 

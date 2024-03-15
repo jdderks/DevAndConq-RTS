@@ -1,6 +1,4 @@
-using System.Collections;
 using System.Collections.Generic;
-using System.Net.NetworkInformation;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -8,6 +6,7 @@ public class RtsActionPanel : MonoBehaviour
 {
     [SerializeField] private Transform panelParent;
     List<ActionPanelItem> panels = new();
+
 
 
     public void UpdatePanels(List<RtsAction> actions)
@@ -33,7 +32,13 @@ public class RtsActionPanel : MonoBehaviour
 
             panels.Add(panel);
 
-            ISelectable origin = action.GetOrigin(); // = action.GetOrigin() as Building;
+            ISelectable origin = action.GetOrigin();
+            var building = action.GetOrigin() as Building;
+
+            TeamColour actionColor = TeamColour.None;
+
+            if (building)
+                actionColor = building.colourEnum;
 
             panel.SetPanelItemInfo(
                 image: actionInfo.image,
@@ -50,7 +55,8 @@ public class RtsActionPanel : MonoBehaviour
                         break;
                     case RTSActionType.SpawnUnit:
                         Assert.IsNotNull(origin.GetActionQueue(), "Origin doesn't have an action queue set!");
-                        /*RtsQueueAction actionQueue = */origin.GetActionQueue().AddToActionQueue(action);
+                        /*RtsQueueAction actionQueue = */
+                        origin.GetActionQueue().AddToActionQueue(action);
                         break;
                     case RTSActionType.BuildStructure:
                         GameManager.Instance.buildingManager.EnterBuildingPlacementMode(origin as Unit, actionInfo.actionPrefab);

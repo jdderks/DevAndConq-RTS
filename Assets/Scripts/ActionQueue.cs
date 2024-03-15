@@ -57,20 +57,9 @@ public class ActionQueue
         }
     }
 
-    public RtsQueueAction AddToActionQueue(RtsAction action, List<Unit> listToAddTo = null, TeamColour teamColour = TeamColour.None)
+    public RtsQueueAction AddToActionQueue(RtsAction action, List<Unit> listToAddTo = null)
     {
-        if (items.Count > 8) return null;//TODO: magic number
-
-        //if economy is null, continue doing everything. if Economy.DecreaseMoney returns false, return null
-        
-        var economy = GameManager.Instance.economyManager.GetEconomy(teamColour);
-
-        if (economy != null && !economy.DecreaseMoney(action.GetPanelInfo().cost))
-        {
-            return null;
-        }
-
-
+        if (items.Count > 8) return null; //TODO: magic number
 
         var queueAction = new RtsQueueAction(action, action.GetPanelInfo().actionDelay);
         items.Add(queueAction);

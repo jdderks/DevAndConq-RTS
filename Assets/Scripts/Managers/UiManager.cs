@@ -1,5 +1,6 @@
 using NaughtyAttributes;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class UiManager : Manager
@@ -9,9 +10,12 @@ public class UiManager : Manager
     [SerializeField] private ActionQueuePanel actionQueuePanel;
     [SerializeField] private GameObject actionQueuePanelGameObject;
 
+    [SerializeField] private TextMeshProUGUI moneyAmountText;
+
     [SerializeField] private LanguageSets currentSelectedLanguage = LanguageSets.English;
 
     public ActionQueuePanel ActionQueuePanel { get => actionQueuePanel; set => actionQueuePanel = value; }
+    public TextMeshProUGUI MoneyAmountText { get => moneyAmountText; set => moneyAmountText = value; }
 
     public void UpdateRtsActionPanel(ISelectable selectable)
     {

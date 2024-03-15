@@ -15,7 +15,7 @@ public class WarFactory : Building
     // Start is called before the first frame update
     void Start()
     {
-        if (!isInstantiated) SetTeam(teamByColour);
+        if (!isInstantiated) SetTeam(colourEnum);
         constructLightTankAction.PanelInfo = lightTankUnitInfo;
         constructHeavyTankAction.PanelInfo = heavyTankUnitInfo;
 

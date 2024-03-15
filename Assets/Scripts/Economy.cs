@@ -10,6 +10,12 @@ public class Economy : MonoBehaviour
         currentAmountOfMoney = startingMoney;
     }
 
+    public bool CanAffordAction(RtsAction action)
+    {
+        var actionCost = action.GetPanelInfo().cost;
+        return currentAmountOfMoney - actionCost >= 0;
+    }
+
     public void IncreaseMoney(int amount)
     {
         currentAmountOfMoney += amount;

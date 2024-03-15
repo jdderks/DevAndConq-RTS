@@ -18,7 +18,7 @@ public enum ConstructionState
 public abstract class Building : MonoBehaviour, ISelectable, ITeamable, IDamageable
 {
     [ProgressBar("Building Health", maxValue: 500), SerializeField] private float Health = 500;
-    public TeamColour teamByColour;
+    public TeamColour colourEnum;
     [ReadOnly, HorizontalLine, Header("Team: "), SerializeField] public Team ownedByTeam;
     public List<RtsAction> rtsBuildingActions = new(); //These are empty RTS action slots
     public ActionQueue actionQueue = new ActionQueue(); //This could be a Queue<> but I'd like items to be able to be removed from the center.

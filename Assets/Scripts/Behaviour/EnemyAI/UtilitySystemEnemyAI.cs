@@ -197,17 +197,19 @@ public class UtilitySystemEnemyAI : MonoBehaviour, IAIControllable, IAIEnemyBase
         foreach (Building building in ownedBuildings)
         {
             if (building is not WarFactory) break;
-            
+
             List<Tank> tanks = new List<Tank>();
             var enemyturrets = GetTurrets(enemyCommandCenters[0].ownedByTeam);
+
             if (building is WarFactory factory)
             {
                 if (!factory.Interactable) continue;
 
-                if (enemyturrets.Count * 0.5 > tanks.Count)
-                    factory.actionQueue.AddToActionQueue(factory.GetActions().LastOrDefault(), ownedUnits); // add heavy tank
-                else
-                    factory.actionQueue.AddToActionQueue(factory.GetActions().FirstOrDefault(), ownedUnits); //add light tank
+                RtsAction actionToPrepare = GetProduceTankAction(tanks, enemyturrets, factory);
+
+                if (actionToPrepare != null)
+                    factory.actionQueue.AddToActionQueue(actionToPrepare, ownedUnits);
+
             }
 
             foreach (var unit in ownedUnits)
@@ -230,6 +232,26 @@ public class UtilitySystemEnemyAI : MonoBehaviour, IAIControllable, IAIEnemyBase
                 amountOfUnitsOnHold = UnityEngine.Random.Range(5, 15);
             }
         }
+    }
+
+    private RtsAction GetProduceTankAction(List<Tank> tanks, List<Building> enemyturrets, WarFactory factory)
+    {
+        RtsAction actionToPrepare;
+        if (enemyturrets.Count * 0.5 > tanks.Count)
+            actionToPrepare = factory.GetActions().LastOrDefault(); // add heavy tank
+        else
+            actionToPrepare = factory.GetActions().FirstOrDefault();
+
+        var economy = GameManager.Instance.economyManager.GetEconomy(controllingCommandCenter.colourEnum);
+
+        bool couldAfford = economy.CanAffordAction(actionToPrepare);
+        if (!couldAfford)
+        {
+            return null;
+        }
+
+        economy.DecreaseMoney(actionToPrepare.GetPanelInfo().cost);
+        return actionToPrepare;
     }
 
     private DesirePriority CalculateDesiresAndDangers()
