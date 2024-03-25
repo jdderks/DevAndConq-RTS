@@ -339,7 +339,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Health: 500
-  teamByColour: 0
+  colourEnum: 0
   ownedByTeam:
     teamTagName: Blue Team
     teamID: 1

@@ -17,6 +17,18 @@ public class UiManager : Manager
     public ActionQueuePanel ActionQueuePanel { get => actionQueuePanel; set => actionQueuePanel = value; }
     public TextMeshProUGUI MoneyAmountText { get => moneyAmountText; set => moneyAmountText = value; }
 
+
+    private void Update()
+    {
+        
+    }
+
+    public void UpdateEconomyUI()
+    {
+        var currentEconomy = GameManager.Instance.economyManager.GetEconomy(GameManager.Instance.teamManager.TeamCurrentlyControlling.teamByColour);
+        moneyAmountText.text = currentEconomy.CurrentAmountOfMoney.ToString();
+    }
+
     public void UpdateRtsActionPanel(ISelectable selectable)
     {
         var actions = new List<RtsAction>();

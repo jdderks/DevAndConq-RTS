@@ -242,15 +242,6 @@ public class UtilitySystemEnemyAI : MonoBehaviour, IAIControllable, IAIEnemyBase
         else
             actionToPrepare = factory.GetActions().FirstOrDefault();
 
-        var economy = GameManager.Instance.economyManager.GetEconomy(controllingCommandCenter.colourEnum);
-
-        bool couldAfford = economy.CanAffordAction(actionToPrepare);
-        if (!couldAfford)
-        {
-            return null;
-        }
-
-        economy.DecreaseMoney(actionToPrepare.GetPanelInfo().cost);
         return actionToPrepare;
     }
 
@@ -312,7 +303,6 @@ public class UtilitySystemEnemyAI : MonoBehaviour, IAIControllable, IAIEnemyBase
         }
         return turrets;
     }
-
 
     [Button("Construct Dozer")]
     public void AddConstructionDozerToQueue()

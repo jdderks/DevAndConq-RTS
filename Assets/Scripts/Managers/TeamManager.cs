@@ -60,5 +60,4 @@ public class TeamManager : Manager
     {
         return FindObjectsByType<CommandCenter>(FindObjectsSortMode.None);
     }
-
 }

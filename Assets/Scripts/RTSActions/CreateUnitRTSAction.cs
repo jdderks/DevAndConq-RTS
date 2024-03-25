@@ -30,11 +30,27 @@ public class CreateUnitRTSAction : RtsBuildingAction
     {
         Assert.IsNotNull(unitGameObject, "Use SetUnitValues to set the values before activating the RTSAction!");
         Assert.IsNotNull(spawnPointOrigin, "Use SetUnitValues to set the values before activating the RTSAction!");
+        
+        var economy = GameManager.Instance.economyManager.GetEconomy(building.ownedByTeam.teamByColour);
+        Debug.Log("Activated effect with cost: " + GetPanelInfo().cost);
+
+        bool couldAfford = economy.CanAffordAction(this);
+        if (!couldAfford)
+        {
+            Debug.Log("Unit not constructed! Not enough money");
+            return null;
+        }
+
+        economy.DecreaseMoney(GetPanelInfo().cost);
 
         var unitToSpawn = GameObject.Instantiate(unitGameObject, spawnPointOrigin.position, Quaternion.identity);
 
         var unit = unitToSpawn.GetComponent<Unit>();
         unit.SetTeam(building.ownedByTeam.teamByColour);
+
+
+
+
         return unitToSpawn;
 
         //unitToSpawn.tag = building.gameObject.tag;
