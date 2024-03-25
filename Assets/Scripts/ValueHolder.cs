@@ -1,6 +1,7 @@
 using NaughtyAttributes;
 using System;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -21,5 +22,4 @@ public class ValueHolder : MonoBehaviour
     }
 
     public Texture2D Texture { get => texture; set => texture = value; }
-
 }

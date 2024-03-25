@@ -15,4 +15,19 @@ public class NoiseValues
 
     public int seed;
     public Vector2 offset;
+
+    public NoiseValues Clone()
+    {
+        NoiseValues clone = new NoiseValues();
+
+        clone.resolution = this.resolution;
+        clone.noiseScale = this.noiseScale;
+        clone.octaves = this.octaves;
+        clone.persistance = this.persistance;
+        clone.lacunarity = this.lacunarity;
+        clone.seed = this.seed;
+        clone.offset = this.offset;
+
+        return clone;
+    }
 }
