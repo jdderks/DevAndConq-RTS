@@ -11,7 +11,9 @@ public enum DesirePriority
     AttackUnits = 1,
     Factory = 2,
     Danger = 3,
-    Defend = 4
+    Defend = 4,
+    SupplyCenter = 5,
+    SupplyTruck = 6
 }
 
 public class UtilitySystemEnemyAI : MonoBehaviour, IAIControllable, IAIEnemyBase
@@ -41,13 +43,16 @@ public class UtilitySystemEnemyAI : MonoBehaviour, IAIControllable, IAIEnemyBase
     [SerializeField, ProgressBar("Attacker Desire", 1)] private float desiredOffensiveUnits = 0.5f;
     [SerializeField, ProgressBar("Defender Desire", 1)] private float desiredDefenses = 0.5f;
     [SerializeField, ProgressBar("Factory Desire", 1)] private float desiredFactories = 0.5f;
-    [SerializeField, ProgressBar("CommandCenterDanger", 1)] private float commandCenterDanger = 0.5f;
+    [SerializeField, ProgressBar("SupplyCenter Desire", 1)] private float desiredSupplyCenters = 0.5f;
+    [SerializeField, ProgressBar("SupplyTruck Desire", 1)] private float desiredSupplyTrucks = 0.5f;
+    [SerializeField, ProgressBar("CommandCenter Danger", 1, EColor.Orange)] private float commandCenterDanger = 0.5f;
 
     [SerializeField] private AIDesireScriptableObject constructorDesireObject;
     [SerializeField] private AIWarFactoryDesireObject factoryDesireObject;
     [SerializeField] private AIDesireScriptableObject commandCenterDangerObject;
     [SerializeField] private AIUnitDesireScriptableObject offensiveUnitDesireObject;
     [SerializeField] private AIDefensesDesireScriptableObject defensiveUnitDesireObject;
+    [SerializeField] private AISupplyResourceDesireScriptableObject supplyResourceDesireObject;
 
     [Header("Personality related")]
     [SerializeField] private AIPersonalityScriptableObject currentPersonality;
@@ -128,6 +133,10 @@ public class UtilitySystemEnemyAI : MonoBehaviour, IAIControllable, IAIEnemyBase
             case DesirePriority.Defend:
                 ConstructDefenses();
                 break;
+            case DesirePriority.SupplyCenter:
+                break;
+            case DesirePriority.SupplyTruck:
+                break;
             default:
                 break;
         }
@@ -135,19 +144,7 @@ public class UtilitySystemEnemyAI : MonoBehaviour, IAIControllable, IAIEnemyBase
 
     private void ConstructFactory()
     {
-        List<Unit> bulldozers = new List<Unit>();
-        foreach (var unit in ownedUnits)
-        {
-            if (unit is ConstructionDozer)
-            {
-                ConstructionDozer constructionDozer = (ConstructionDozer)unit;
-
-                if (constructionDozer.CurrentTask != null && constructionDozer.CurrentTask.Priority == TaskPriority.Idle)
-                {
-                    bulldozers.Add(unit);
-                }
-            }
-        }
+        List<Unit> bulldozers = GetAvailableBulldozers();
 
         if (bulldozers.Any() &&
             buildingPositioner.buildingPositions.Any(t => !t.occupied))
@@ -161,7 +158,23 @@ public class UtilitySystemEnemyAI : MonoBehaviour, IAIControllable, IAIEnemyBase
         }
     }
 
-    private void ConstructDefenses()
+    private void ConstructSupplyCenter()
+    {
+        List<Unit> bulldozers = GetAvailableBulldozers();
+
+        if (bulldozers.Any() &&
+            buildingPositioner.buildingPositions.Any(t => !t.occupied))
+        {
+            ConstructionDozer randomBulldozer = bulldozers.ElementAt(UnityEngine.Random.Range(0, bulldozers.Count())) as ConstructionDozer;
+            BuildingPosition buildingPosition = buildingPositioner.GetRandomBuildingPosition(false);
+            var warFactoryPrefab = randomBulldozer.ConstructWarFactoryAction.GetPanelInfo().actionPrefab;
+            var warFactory = GameManager.Instance.buildingManager.InstantiateBuildingAndGiveTask(warFactoryPrefab, buildingPosition.position, randomBulldozer);
+            ownedBuildings.Add(warFactory.GetComponent<WarFactory>());
+            buildingPositioner.SetOccupied(buildingPosition);
+        }
+    }
+
+    private List<Unit> GetAvailableBulldozers()
     {
         List<Unit> bulldozers = new List<Unit>();
         foreach (var unit in ownedUnits)
@@ -176,6 +189,13 @@ public class UtilitySystemEnemyAI : MonoBehaviour, IAIControllable, IAIEnemyBase
                 }
             }
         }
+
+        return bulldozers;
+    }
+
+    private void ConstructDefenses()
+    {
+        List<Unit> bulldozers = GetAvailableBulldozers();
 
         if (bulldozers.Any() && controllingCommandCenter.DefensivePositioner.buildingPositions.Any(t => !t.occupied))
         {
@@ -196,7 +216,7 @@ public class UtilitySystemEnemyAI : MonoBehaviour, IAIControllable, IAIEnemyBase
     {
         foreach (Building building in ownedBuildings)
         {
-            if (building is not WarFactory) break;
+            if (building is not WarFactory) continue;
 
             List<Tank> tanks = new List<Tank>();
             var enemyturrets = GetTurrets(enemyCommandCenters[0].ownedByTeam);
@@ -251,12 +271,15 @@ public class UtilitySystemEnemyAI : MonoBehaviour, IAIControllable, IAIEnemyBase
         int dozerAmount = ownedUnits.Count(u => u is ConstructionDozer);
         int warFactoryAmount = ownedBuildings.Count(u => u is WarFactory);
         int enemyUnitsAmount = GameManager.Instance.unitManager.GetEnemyUnits(controllingCommandCenter.ownedByTeam).Count();
+
         // Calculate desires using the desire objects
         desiredConstructors = constructorDesireObject.CalculateDesire(dozerAmount + bullDozersInQueue, 1);
         desiredFactories = factoryDesireObject.CalculateDesire(warFactoryAmount, dozerAmount);
         commandCenterDanger = commandCenterDangerObject.CalculateDesire(GetEnemiesInProximity().Count);
         desiredOffensiveUnits = offensiveUnitDesireObject.CalculateDesire(warFactoryAmount, ownedUnits.Count);
         desiredDefenses = defensiveUnitDesireObject.CalculateDesire(dozerAmount, GetTurrets(controllingCommandCenter.ownedByTeam).Count, enemyUnitsAmount);
+        desiredSupplyCenters = supplyResourceDesireObject.CalculateSupplyCenterDesire(ownedBuildings.Count(b => b is SupplyCenter));
+        desiredSupplyTrucks = supplyResourceDesireObject.CalculateSupplyTruckDesire(ownedUnits.Count(t => t is SupplyTruck));
 
         desiredOffensiveUnits *= currentPersonality.aggressivenessModifier;
         desiredDefenses *= currentPersonality.defensivenessModifier;
@@ -266,10 +289,11 @@ public class UtilitySystemEnemyAI : MonoBehaviour, IAIControllable, IAIEnemyBase
         commandCenterDanger = Mathf.Clamp(commandCenterDanger, 0, 1);
         desiredOffensiveUnits = Mathf.Clamp(desiredOffensiveUnits, 0, 1);
         desiredDefenses = Mathf.Clamp(desiredDefenses, 0, 1);
-
+        desiredSupplyTrucks = Mathf.Clamp(desiredSupplyTrucks, 0, 1);
+        desiredSupplyCenters = Mathf.Clamp(desiredSupplyCenters, 0, 1);
 
         // Determine the highest desire and return the corresponding DesirePriority
-        float maxDesire = Mathf.Max(desiredConstructors, desiredOffensiveUnits, desiredFactories, commandCenterDanger, desiredDefenses);
+        float maxDesire = Mathf.Max(desiredConstructors, desiredOffensiveUnits, desiredFactories, commandCenterDanger, desiredDefenses, desiredSupplyTrucks, desiredSupplyCenters);
 
         if (maxDesire < 0.5f) //no tasks have a real priority right now so just do nothing for a bit
         {
@@ -286,6 +310,10 @@ public class UtilitySystemEnemyAI : MonoBehaviour, IAIControllable, IAIEnemyBase
             return DesirePriority.Danger;
         else if (maxDesire == desiredDefenses)
             return DesirePriority.Defend;
+        else if (maxDesire == desiredSupplyCenters)
+            return DesirePriority.SupplyCenter;
+        else if (maxDesire == desiredSupplyTrucks)
+            return DesirePriority.SupplyTruck;
 
 
         return DesirePriority.None; // Default case

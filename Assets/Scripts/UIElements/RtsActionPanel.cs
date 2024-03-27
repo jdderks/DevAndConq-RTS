@@ -60,6 +60,9 @@ public class RtsActionPanel : MonoBehaviour
                         break;
                     case RTSActionType.BuildStructure:
                         GameManager.Instance.buildingManager.EnterBuildingPlacementMode(origin as Unit, actionInfo.actionPrefab);
+                        Unit unit = origin as Unit;
+                        var economy = GameManager.Instance.economyManager.GetEconomy(unit.GetTeam());
+                        economy.DecreaseMoney(actionInfo.cost);
                         break;
                     case RTSActionType.Upgrade:
                         break;
