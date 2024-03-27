@@ -1,17 +1,29 @@
 using System;
-using UnityEngine.Assertions;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
-using UnityEngine.Experimental.AI;
 
 public class SupplyTruck : Unit
 {
     private List<RtsAction> supplyTruckActions = new();
     private SupplyDock currentSupplyDock;
     private SupplyCenter currentSupplyCenter;
+
+    [SerializeField]
+    private GameObject loadedObject;
+
+
+    private bool hasLoad = false;
+    public bool HasLoad
+    {
+        get => hasLoad;
+        set
+        {
+            loadedObject.SetActive(value);
+            hasLoad = value;
+        }
+    }
 
     private void Start()
     {
@@ -21,12 +33,16 @@ public class SupplyTruck : Unit
             var repeatingTask = new RepeatingSequenceTask(this, shouldRepeat: true);
 
             var moveToSupplyDockTask = new MoveUnitTask(this, currentSupplyDock.InteractPosition.position);
+            var harvestTask = new InteractWithBuildingTask(this, currentSupplyDock);
             var moveToSupplyCenterTask = new MoveUnitTask(this, currentSupplyCenter.InteractPosition.position);
+            var deliverTask = new InteractWithBuildingTask(this, currentSupplyCenter);
+
+
 
             repeatingTask.AddTask(moveToSupplyDockTask);
-            //sequenceTask.AddTask(harvestTask);
+            repeatingTask.AddTask(harvestTask);
             repeatingTask.AddTask(moveToSupplyCenterTask);
-            //sequenceTask.AddTask(deliverTask);
+            repeatingTask.AddTask(deliverTask);
 
             StartTask(repeatingTask);
         }
@@ -41,6 +57,7 @@ public class SupplyTruck : Unit
     {
         base.Die();
     }
+
 
     public override void TakeDamage(float amount)
     {

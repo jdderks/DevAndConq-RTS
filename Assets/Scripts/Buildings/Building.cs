@@ -68,6 +68,9 @@ public abstract class Building : MonoBehaviour, ISelectable, ITeamable, IDamagea
     public abstract GameObject GetGameObject();
     public abstract void Select();
 
+    public abstract bool UnitInteract(Unit unit);
+
+
     public List<RtsAction> GetActions()
     {
         return rtsBuildingActions;

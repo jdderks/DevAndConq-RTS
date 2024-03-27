@@ -227,6 +227,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d736faef39c678a4297192576954fcfb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Health: 500
+  colourEnum: 0
+  ownedByTeam:
+    teamTagName: 
+    teamID: 0
+    teamByColour: 0
+    enemies: 
+    teamMaterial: {fileID: 0}
+  selectableHighlightParent: {fileID: 0}
+  isInstantiated: 0
+  visualObject: {fileID: 0}
+  constructionPlatform: {fileID: 0}
+  interactable: 0
+  constructionPercentageText: {fileID: 0}
+  constructionDurationInSeconds: 20
+  unitSpawnPoint: {fileID: 2664273136602283528}
   amountOfMoneyPerCrate: 500
   amountOfCrates: 68
   crates:

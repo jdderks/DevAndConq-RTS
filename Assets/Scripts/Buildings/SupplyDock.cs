@@ -3,11 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SupplyDock : MonoBehaviour
+public class SupplyDock : Building
 {
     //Make sure the range of this slider is always the maximum amount of crates!
     [SerializeField] private int amountOfMoneyPerCrate = 500;
-    
+
     [SerializeField, Range(0, 68)] private int amountOfCrates;
 
     [SerializeField] private List<GameObject> crates = new();
@@ -33,10 +33,10 @@ public class SupplyDock : MonoBehaviour
 
     }
 
-    void Update()
-    {
+    //new void Update()
+    //{
 
-    }
+    //}
 
     private void OnValidate()
     {
@@ -69,4 +69,24 @@ public class SupplyDock : MonoBehaviour
     {
         AmountOfCrates--;
     }
+
+    public override void Deselect() { } //Left empty on purpose
+    public override void Select() { } //Left empty on purpose
+
+    public override GameObject GetGameObject()
+    {
+        return gameObject;
+    }
+
+    public override bool UnitInteract(Unit unit)
+    {
+        if (unit is not SupplyTruck) return false;
+        SupplyTruck supplyTruck = unit as SupplyTruck;
+        if (supplyTruck.HasLoad) return false;
+
+        supplyTruck.HasLoad = true;
+        RemoveSupplies(supplyTruck);
+
+        return true;
+    } //Left empty on purpose
 }

@@ -80,4 +80,6 @@ public class WarFactory : Building
         //}
         //renderer.materials[1] = ownedByTeam.teamMaterial;
     }
+
+    public override bool UnitInteract(Unit unit) { return false; } //Left empty on purpose
 }

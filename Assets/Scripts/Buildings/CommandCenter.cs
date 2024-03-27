@@ -60,6 +60,8 @@ public class CommandCenter : Building
         renderer.materials = mats;
     }
 
+    public override bool UnitInteract(Unit unit) { return false; } //Left empty on purpose
+
     //[Button("Update defensive positions")]
     //public void SetDefensivePositions()
     //{

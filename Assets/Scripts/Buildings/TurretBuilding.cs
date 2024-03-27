@@ -105,4 +105,6 @@ public class TurretBuilding : Building, IAIControllable
             );
     }
 
+    public override bool UnitInteract(Unit unit) { return false; } //Left empty on purpose
+
 }

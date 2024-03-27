@@ -67,4 +67,20 @@ public class SupplyCenter : Building
 
         renderer.materials = mats;
     }
+
+    public override bool UnitInteract(Unit unit) 
+    {
+        if (unit is not SupplyTruck) return false;
+        
+        SupplyTruck supplyTruck = unit as SupplyTruck;
+        if (supplyTruck.HasLoad)
+        {
+            var economy = GameManager.Instance.economyManager.GetEconomy(supplyTruck.OwnedByTeam.teamByColour);
+            economy.IncreaseMoney(500);
+            supplyTruck.HasLoad = false;
+            return true;
+        }
+        return false;
+    }
+
 }
