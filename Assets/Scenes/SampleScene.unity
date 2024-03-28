@@ -506,6 +506,18 @@ MonoBehaviour:
   mouseInputToMoveCamera: 1
   keyToOrbitCameraWihoutMouse: 308
   keyToKeepSelectedUnits: 304
+--- !u!114 &228559238 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4581913285060308921, guid: b1cf62749a524eb4d8487a51296f4edd,
+    type: 3}
+  m_PrefabInstance: {fileID: 1748139141}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d736faef39c678a4297192576954fcfb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &237530471
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1446,6 +1458,9 @@ MonoBehaviour:
   - position: {x: 150.68999, y: 0, z: 137.83}
     occupied: 0
   - position: {x: 149.09999, y: 0, z: 175.7}
+    occupied: 0
+  supplyDockPosition:
+    position: {x: 253.62, y: 0.22, z: 225.44}
     occupied: 0
 --- !u!1 &498789286
 GameObject:
@@ -3633,6 +3648,7 @@ MonoBehaviour:
   dangerDetectionRadius: 25
   controllingCommandCenter: {fileID: 393127601}
   buildingPositioner: {fileID: 479529160}
+  closestSupplyDock: {fileID: 228559238}
   desiredConstructors: 0.5
   desiredOffensiveUnits: 0.5
   desiredDefenses: 0.5

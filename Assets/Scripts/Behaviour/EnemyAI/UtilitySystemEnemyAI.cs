@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using NaughtyAttributes;
 using System.Linq;
+using Unity.VisualScripting;
 
 public enum DesirePriority
 {
@@ -38,6 +39,8 @@ public class UtilitySystemEnemyAI : MonoBehaviour, IAIControllable, IAIEnemyBase
 
     [SerializeField] private CommandCenter controllingCommandCenter; //This is the main structure of the AI base, if destroyed the base is lost.
     [SerializeField] private BuildingPositioner buildingPositioner; //This determines where the AI enemy can construct buildings
+    [SerializeField] private SupplyDock closestSupplyDock; //The closest supplyDock for economy sake.
+
 
     [SerializeField, ProgressBar("Constructor Desire", 1)] private float desiredConstructors = 0.5f;
     [SerializeField, ProgressBar("Attacker Desire", 1)] private float desiredOffensiveUnits = 0.5f;
@@ -134,9 +137,12 @@ public class UtilitySystemEnemyAI : MonoBehaviour, IAIControllable, IAIEnemyBase
                 ConstructDefenses();
                 break;
             case DesirePriority.SupplyCenter:
+                ConstructSupplyCenter();
                 break;
-            case DesirePriority.SupplyTruck:
-                break;
+            //case DesirePriority.SupplyTruck:
+            //    //This should check for whether or not there is a supply center but no truck,
+            //    //if that's the case the existing supply center should spawn a truck
+            //    break;
             default:
                 break;
         }
@@ -151,8 +157,8 @@ public class UtilitySystemEnemyAI : MonoBehaviour, IAIControllable, IAIEnemyBase
         {
             ConstructionDozer randomBulldozer = bulldozers.ElementAt(UnityEngine.Random.Range(0, bulldozers.Count())) as ConstructionDozer;
             BuildingPosition buildingPosition = buildingPositioner.GetRandomBuildingPosition(false);
-            var warFactoryPrefab = randomBulldozer.ConstructWarFactoryAction.GetPanelInfo().actionPrefab;
-            var warFactory = GameManager.Instance.buildingManager.InstantiateBuildingAndGiveTask(warFactoryPrefab, buildingPosition.position, randomBulldozer);
+            GameObject warFactoryPrefab = randomBulldozer.ConstructWarFactoryAction.GetPanelInfo().actionPrefab;
+            GameObject warFactory = GameManager.Instance.buildingManager.InstantiateBuildingAndGiveTask(warFactoryPrefab, buildingPosition.position, randomBulldozer);
             ownedBuildings.Add(warFactory.GetComponent<WarFactory>());
             buildingPositioner.SetOccupied(buildingPosition);
         }
@@ -162,15 +168,17 @@ public class UtilitySystemEnemyAI : MonoBehaviour, IAIControllable, IAIEnemyBase
     {
         List<Unit> bulldozers = GetAvailableBulldozers();
 
-        if (bulldozers.Any() &&
-            buildingPositioner.buildingPositions.Any(t => !t.occupied))
+        if (bulldozers.Any() && closestSupplyDock != null)
         {
-            ConstructionDozer randomBulldozer = bulldozers.ElementAt(UnityEngine.Random.Range(0, bulldozers.Count())) as ConstructionDozer;
-            BuildingPosition buildingPosition = buildingPositioner.GetRandomBuildingPosition(false);
-            var warFactoryPrefab = randomBulldozer.ConstructWarFactoryAction.GetPanelInfo().actionPrefab;
-            var warFactory = GameManager.Instance.buildingManager.InstantiateBuildingAndGiveTask(warFactoryPrefab, buildingPosition.position, randomBulldozer);
-            ownedBuildings.Add(warFactory.GetComponent<WarFactory>());
-            buildingPositioner.SetOccupied(buildingPosition);
+            BuildingPosition supplyCenterPosition = buildingPositioner.GetSupplyDockPosition();
+            ConstructionDozer bullDozerUnit = ArrayHelpers.GetRandomElement(bulldozers) as ConstructionDozer;
+            if (supplyCenterPosition.occupied) return;
+
+            GameObject supplyCenterPrefab = bullDozerUnit.ConstructSupplyCenter.GetPanelInfo().actionPrefab;
+            GameObject supplyCenter = GameManager.Instance.buildingManager.InstantiateBuildingAndGiveTask(supplyCenterPrefab, supplyCenterPosition.position, bullDozerUnit);
+            ownedBuildings.Add(supplyCenter.GetComponent<SupplyCenter>());
+
+            buildingPositioner.SetOccupied(supplyCenterPosition);
         }
     }
 
@@ -189,7 +197,6 @@ public class UtilitySystemEnemyAI : MonoBehaviour, IAIControllable, IAIEnemyBase
                 }
             }
         }
-
         return bulldozers;
     }
 
@@ -273,24 +280,24 @@ public class UtilitySystemEnemyAI : MonoBehaviour, IAIControllable, IAIEnemyBase
         int enemyUnitsAmount = GameManager.Instance.unitManager.GetEnemyUnits(controllingCommandCenter.ownedByTeam).Count();
 
         // Calculate desires using the desire objects
-        desiredConstructors = constructorDesireObject.CalculateDesire(dozerAmount + bullDozersInQueue, 1);
-        desiredFactories = factoryDesireObject.CalculateDesire(warFactoryAmount, dozerAmount);
-        commandCenterDanger = commandCenterDangerObject.CalculateDesire(GetEnemiesInProximity().Count);
+        desiredConstructors =   constructorDesireObject.CalculateDesire(dozerAmount + bullDozersInQueue, 1);
+        desiredFactories =      factoryDesireObject.CalculateDesire(warFactoryAmount, dozerAmount);
+        commandCenterDanger =   commandCenterDangerObject.CalculateDesire(GetEnemiesInProximity().Count);
         desiredOffensiveUnits = offensiveUnitDesireObject.CalculateDesire(warFactoryAmount, ownedUnits.Count);
-        desiredDefenses = defensiveUnitDesireObject.CalculateDesire(dozerAmount, GetTurrets(controllingCommandCenter.ownedByTeam).Count, enemyUnitsAmount);
-        desiredSupplyCenters = supplyResourceDesireObject.CalculateSupplyCenterDesire(ownedBuildings.Count(b => b is SupplyCenter));
-        desiredSupplyTrucks = supplyResourceDesireObject.CalculateSupplyTruckDesire(ownedUnits.Count(t => t is SupplyTruck));
+        desiredDefenses =       defensiveUnitDesireObject.CalculateDesire(dozerAmount, GetTurrets(controllingCommandCenter.ownedByTeam).Count, enemyUnitsAmount);
+        desiredSupplyCenters =  supplyResourceDesireObject.CalculateSupplyCenterDesire(ownedBuildings.Count(b => b is SupplyCenter));
+        desiredSupplyTrucks = 0;//supplyResourceDesireObject.CalculateSupplyTruckDesire(ownedUnits.Count(t => t is SupplyTruck));
 
         desiredOffensiveUnits *= currentPersonality.aggressivenessModifier;
         desiredDefenses *= currentPersonality.defensivenessModifier;
 
-        desiredConstructors = Mathf.Clamp(desiredConstructors, 0, 1);
-        desiredFactories = Mathf.Clamp(desiredFactories, 0, 1);
-        commandCenterDanger = Mathf.Clamp(commandCenterDanger, 0, 1);
+        desiredConstructors =   Mathf.Clamp(desiredConstructors, 0, 1);
+        desiredFactories =      Mathf.Clamp(desiredFactories, 0, 1);
+        commandCenterDanger =   Mathf.Clamp(commandCenterDanger, 0, 1);
         desiredOffensiveUnits = Mathf.Clamp(desiredOffensiveUnits, 0, 1);
-        desiredDefenses = Mathf.Clamp(desiredDefenses, 0, 1);
-        desiredSupplyTrucks = Mathf.Clamp(desiredSupplyTrucks, 0, 1);
-        desiredSupplyCenters = Mathf.Clamp(desiredSupplyCenters, 0, 1);
+        desiredDefenses =       Mathf.Clamp(desiredDefenses, 0, 1);
+        desiredSupplyTrucks =   Mathf.Clamp(desiredSupplyTrucks, 0, 1);
+        desiredSupplyCenters =  Mathf.Clamp(desiredSupplyCenters, 0, 1);
 
         // Determine the highest desire and return the corresponding DesirePriority
         float maxDesire = Mathf.Max(desiredConstructors, desiredOffensiveUnits, desiredFactories, commandCenterDanger, desiredDefenses, desiredSupplyTrucks, desiredSupplyCenters);
@@ -385,8 +392,27 @@ public class UtilitySystemEnemyAI : MonoBehaviour, IAIControllable, IAIEnemyBase
 
     private void OnDrawGizmos()
     {
-
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(controllingCommandCenter.transform.position, dangerDetectionRadius);
     }
+
+    //private SupplyDock GetClostestSupplyDock()
+    //{
+    //    var teamManager = GameManager.Instance.teamManager;
+    //    List<ITeamable> enemyObjects = new List<ITeamable>();
+
+    //    if (controllingCommandCenter != null)
+    //    {
+    //        Collider[] colliders;
+
+    //        colliders = Physics.OverlapSphere(controllingCommandCenter.transform.position, 100);
+    //        for (int i = 0; i < colliders.Length; i++)
+    //        {
+    //            SupplyDock dock = colliders[i].gameObject.GetComponent<SupplyDock>();
+    //            if (dock != null) return dock;
+    //        }
+            
+    //    }
+    //    return null;
+    //}
 }
