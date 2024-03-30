@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SavingAndLoadingManager : MonoBehaviour
 {
-    public void SaveValues(ValueSetter setter)
+    public void SaveValues(ValueManager setter)
     {
         var holder = setter.ValueHolder;
 
@@ -12,7 +12,7 @@ public class SavingAndLoadingManager : MonoBehaviour
         File.WriteAllText(setter.path, json);
     }
 
-    public void LoadValues(ValueSetter setter)
+    public void LoadValues(ValueManager setter)
     {
         var holder = setter.ValueHolder;
 
@@ -20,7 +20,7 @@ public class SavingAndLoadingManager : MonoBehaviour
         holder.Values = JsonUtility.FromJson<NoiseValues>(json);
     }
 
-    public void ExportImage(ValueSetter setter)
+    public void ExportImage(ValueManager setter)
     {
         var holder = setter.ValueHolder;
 
