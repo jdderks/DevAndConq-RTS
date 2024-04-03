@@ -7,6 +7,8 @@ public class SequenceTask : UnitTask
     private List<UnitTask> subtasks = new List<UnitTask>();
     protected int currentTaskIndex = 0;
 
+    public List<UnitTask> Subtasks { get => subtasks; set => subtasks = value; }
+
     public SequenceTask(Unit agent/*, params UnitTask[] tasks*/)
     {
         this.unit = agent;
@@ -15,7 +17,7 @@ public class SequenceTask : UnitTask
 
     public override void OnBegin()
     {
-        if (subtasks.Count > 0)
+        if (Subtasks.Count > 0)
         {
             ExecuteNextTask();
         }
@@ -27,35 +29,44 @@ public class SequenceTask : UnitTask
 
     public override void OnCancelled()
     {
-        if (currentTaskIndex < subtasks.Count)
+        if (currentTaskIndex < Subtasks.Count)
         {
-            subtasks[currentTaskIndex].Cancel();
+            Subtasks[currentTaskIndex].Cancel();
         }
     }
 
     public override void OnComplete()
     {
         Debug.Log("Sequence Task completed.");
-        // SequenceTask completed
     }
 
     public void AddTask(UnitTask task, bool addAsNext = false)
     {
         if (addAsNext)
         {
-            subtasks.Insert(currentTaskIndex, task);
+            Subtasks.Insert(currentTaskIndex, task);
         }
         else
         {
-            subtasks.Add(task);
+            Subtasks.Add(task);
         }
     }
 
+    public void AddTaskAndRunImmediately(UnitTask task)
+    {
+        var currentRunningTask = Subtasks[currentTaskIndex];
+        Subtasks.Insert(currentTaskIndex + 1, task);
+        task.Completed += ExecuteNextTask;
+    }
+
+
+
+
     protected void ExecuteNextTask()
     {
-        if (currentTaskIndex < subtasks.Count)
+        if (currentTaskIndex < Subtasks.Count)
         {
-            UnitTask nextTask = subtasks[currentTaskIndex];
+            UnitTask nextTask = Subtasks[currentTaskIndex];
             nextTask.Completed += OnSubtaskCompleted;
             nextTask.Begin();
         }
@@ -67,7 +78,7 @@ public class SequenceTask : UnitTask
 
     private void OnSubtaskCompleted()
     {
-        UnitTask completedTask = subtasks[currentTaskIndex];
+        UnitTask completedTask = Subtasks[currentTaskIndex];
         completedTask.Completed -= OnSubtaskCompleted;
 
         currentTaskIndex++;
@@ -76,9 +87,9 @@ public class SequenceTask : UnitTask
 
     public UnitTask GetCurrentTask()
     {
-        if (currentTaskIndex >= 0 && currentTaskIndex < subtasks.Count)
+        if (currentTaskIndex >= 0 && currentTaskIndex < Subtasks.Count)
         {
-            return subtasks[currentTaskIndex];
+            return Subtasks[currentTaskIndex];
         }
         else
         {

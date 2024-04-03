@@ -8,16 +8,20 @@ public class AttackTask : UnitTask
 
     IDamageable target;
 
-    public AttackTask(IDamageable target, bool chaseTarget = false)
+    public AttackTask(IDamageable target)
     {
         this.target = target;
     }
 
     public override void OnBegin()
     {
-        if (Vector3.Distance(unit.transform.position,target.GetGameObject().transform.position) < unit.AttackRange)
+        if (Vector3.Distance(unit.transform.position, target.GetGameObject().transform.position) < unit.AttackRange)
         {
             unit.RangedAttack(unit, target);
+        } 
+        else
+        {
+            Cancel();
         }
     }
 
