@@ -73,7 +73,6 @@ public class Turret : MonoBehaviour
                     StopAttacking();
                 break;
             case TurretState.Disabled:
-
                 break;
             default:
                 break;

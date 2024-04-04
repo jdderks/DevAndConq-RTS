@@ -4,14 +4,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Assertions;
+using static UnityEngine.GraphicsBuffer;
 
-public enum UnitType
+
+enum MovementState
 {
-    Humanoid = 0,    //Infantry unit
-    Quadricycle = 1, //For all car-alikes
-    TwoWheeler = 2,  //For bicycles and motorcycles.
-    AirPlane = 3,    //For jet aircraft which fly with wings.
-    VTOL = 4         //For aircraft that can hover and land and take off vertically
+    Idle,
+    Chasing,
+    Following,
+    Attacking
 }
 
 /// <summary>
@@ -20,6 +21,10 @@ public enum UnitType
 /// </summary>
 public class Unit : MonoBehaviour, ISelectable, IDamageable, IAIControllable, ITeamable
 {
+
+    protected GameObject chaseTarget;
+    private MovementState currentMoveState;
+
     //private and not meant to be shown in inspector
     private float timer = 0f;
     private float timerIntervalInSeconds = 2f;
@@ -42,7 +47,6 @@ public class Unit : MonoBehaviour, ISelectable, IDamageable, IAIControllable, IT
     [SerializeField] protected GameObject[] visualObjects;
 
     [SerializeField] private Transform selectableHighlightParent;
-    [SerializeField] private UnitType unitType;
 
     [SerializeField] private NavMeshAgent agent;
 
@@ -60,13 +64,13 @@ public class Unit : MonoBehaviour, ISelectable, IDamageable, IAIControllable, IT
         get => _rtsActions;
         set => _rtsActions = value;
     }
+    internal MovementState CurrentMoveState { get => currentMoveState; set => currentMoveState = value; }
 
     private GameObject _instantiatedObject = null;
 
 
     public bool IsMoving { get; set; }
 
-    public UnitType UnitType { get => unitType; set => unitType = value; }
     public UnitTask CurrentTask { get => currentTask; private set => currentTask = value; }
     public bool TaskDebugInfo { get => taskDebugInfo; set => taskDebugInfo = value; }
     public float UnitSpeed { get => unitSpeed; set => unitSpeed = value; }
@@ -309,5 +313,35 @@ public class Unit : MonoBehaviour, ISelectable, IDamageable, IAIControllable, IT
     public void MoveInProximityOfPoint(Vector3 destination, float proximityDistance)
     {
         Agent.SetDestination(destination);
+    }
+
+    protected void HandleMoveState()
+    {
+        switch (currentMoveState)
+        {
+            case MovementState.Idle:
+                Agent.stoppingDistance = 0f;
+                break;
+            case MovementState.Chasing:
+                
+                HandleChase();
+                break;
+
+            case MovementState.Following:
+                break;
+            case MovementState.Attacking:
+                break;
+            default:
+                Agent.stoppingDistance = 0f;
+                break;
+        }
+    }
+
+    protected virtual void HandleChase()
+    {
+        if (chaseTarget == null) Debug.LogWarning("Chase target is null.");
+        var distanceToMoveWithin = detectionRadius;
+        Agent.stoppingDistance = distanceToMoveWithin; //The attack range divided by 4 is to make sure it stops well within range to possibly fire the cannon, even if the target moves.
+        Agent.SetDestination(chaseTarget.transform.position);
     }
 }

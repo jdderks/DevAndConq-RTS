@@ -1,15 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Net;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.Android;
 
+
+
 public class Tank : Unit
 {
-
     //private Coroutine resetRotationCoroutine = null;
     [SerializeField] private Turret turret;
     [SerializeField] private bool turretActiveWhileDriving = true;
+
 
     //[SerializeField] private GameObject turret;
 
@@ -20,20 +23,26 @@ public class Tank : Unit
 
     public override void AIUpdate()
     {
-        //if enemies in proximity and taskstate is idle, start attack task
-        List<IDamageable> closeEnemies = GetEnemiesInProximity();
-        if (closeEnemies.Count > 0 && CurrentTask.Priority == TaskPriority.Idle)
-        {
-            ChaseTask chaseTask = new(this, true);
-
-            ///TODO: FINISH THIS CODE, ITS A DEAD END
-            //start attack task to attack closest target
-            //StartTask(new AttackTask(target: closeEnemies[0], chaseTarget: false));
-        }
+        HandleMoveState();
     }
 
     public override void TakeDamage(float amount)
     {
         Health -= amount;
+    }
+
+    protected override void HandleChase()
+    {
+        if (chaseTarget == null) Debug.LogWarning("Chase target is null.");
+        if (Vector3.Distance(this.transform.position, chaseTarget.transform.position) < AttackRange)
+        {
+            if (chaseTarget.GetComponent<IDamageable>() is IDamageable damageable)
+                turret.Attack(damageable);
+        }
+        var distanceToMoveWithin = AttackRange - (AttackRange / 4);
+        Agent.stoppingDistance = distanceToMoveWithin; //The attack range divided by 4 is to make sure it stops well within range to possibly fire the cannon, even if the target moves.
+        Agent.SetDestination(chaseTarget.transform.position);
+
+
     }
 }
