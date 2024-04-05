@@ -22,7 +22,7 @@ enum MovementState
 public class Unit : MonoBehaviour, ISelectable, IDamageable, IAIControllable, ITeamable
 {
 
-    protected GameObject chaseTarget;
+    private GameObject movementTarget;
     private MovementState currentMoveState;
 
     //private and not meant to be shown in inspector
@@ -64,7 +64,7 @@ public class Unit : MonoBehaviour, ISelectable, IDamageable, IAIControllable, IT
         get => _rtsActions;
         set => _rtsActions = value;
     }
-    internal MovementState CurrentMoveState { get => currentMoveState; set => currentMoveState = value; }
+    internal MovementState CurrentMoveState { get => CurrentMoveState1; set => CurrentMoveState1 = value; }
 
     private GameObject _instantiatedObject = null;
 
@@ -80,6 +80,8 @@ public class Unit : MonoBehaviour, ISelectable, IDamageable, IAIControllable, IT
     public Team OwnedByTeam { get => ownedByTeam; set => ownedByTeam = value; }
     public float Health { get => health; set => health = value; }
     public float AttackRange { get => attackRange; set => attackRange = value; }
+    internal MovementState CurrentMoveState1 { get => currentMoveState; set => currentMoveState = value; }
+    public GameObject MovementTarget { get => movementTarget; set => movementTarget = value; }
 
     private void Start()
     {
@@ -315,21 +317,22 @@ public class Unit : MonoBehaviour, ISelectable, IDamageable, IAIControllable, IT
         Agent.SetDestination(destination);
     }
 
-    protected void HandleMoveState()
+    /// <summary>
+    /// Handles the movement of the unit and should be called approx,. once a second in the AIUpdate method.
+    /// </summary>
+    protected void HandleMovement()
     {
-        switch (currentMoveState)
+        switch (CurrentMoveState1)
         {
             case MovementState.Idle:
                 Agent.stoppingDistance = 0f;
                 break;
             case MovementState.Chasing:
-                
                 HandleChase();
                 break;
 
             case MovementState.Following:
-                break;
-            case MovementState.Attacking:
+                HandleFollow();
                 break;
             default:
                 Agent.stoppingDistance = 0f;
@@ -337,11 +340,26 @@ public class Unit : MonoBehaviour, ISelectable, IDamageable, IAIControllable, IT
         }
     }
 
+
+    public void ResetTargetAndMoveState()
+    {
+        MovementTarget = null;
+        CurrentMoveState = MovementState.Idle;
+    }
+
     protected virtual void HandleChase()
     {
-        if (chaseTarget == null) Debug.LogWarning("Chase target is null.");
+        if (MovementTarget == null) Debug.LogWarning("Chase target is null.");
         var distanceToMoveWithin = detectionRadius;
         Agent.stoppingDistance = distanceToMoveWithin; //The attack range divided by 4 is to make sure it stops well within range to possibly fire the cannon, even if the target moves.
-        Agent.SetDestination(chaseTarget.transform.position);
+        Agent.SetDestination(MovementTarget.transform.position);
+    }
+
+    protected virtual void HandleFollow()
+    {
+        if (MovementTarget == null) Debug.LogWarning("Follow target is null.");
+        var distanceToMoveWithin = 2f;
+        Agent.stoppingDistance = distanceToMoveWithin;
+        Agent.SetDestination(MovementTarget.transform.position);
     }
 }

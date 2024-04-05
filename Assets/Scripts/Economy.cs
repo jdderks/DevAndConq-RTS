@@ -36,7 +36,7 @@ public class Economy : MonoBehaviour
         if (CurrentAmountOfMoney - amount < 0) return false;
 
         CurrentAmountOfMoney -= amount;
-        Debug.Log($"Money decreased by {amount.ToString()}, new amount: {CurrentAmountOfMoney}");
+        //Debug.Log($"Money decreased by {amount.ToString()}, new amount: {CurrentAmountOfMoney}");
         return true;
     }
 }

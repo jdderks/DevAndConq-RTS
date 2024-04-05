@@ -3732,6 +3732,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debugMode: 0
+  moveActionableLayerMask:
+    serializedVersion: 2
+    m_Bits: 160
   cam: {fileID: 330585545}
   debugMouseState: 0
   selectionPrefab: {fileID: 5018503143670621054, guid: 1207f58a6800a5e4bbaf401d5756ea80,

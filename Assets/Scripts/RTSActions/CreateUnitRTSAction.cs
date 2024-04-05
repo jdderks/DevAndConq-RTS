@@ -32,7 +32,7 @@ public class CreateUnitRTSAction : RtsBuildingAction
         Assert.IsNotNull(spawnPointOrigin, "Use SetUnitValues to set the values before activating the RTSAction!");
         
         var economy = GameManager.Instance.economyManager.GetEconomy(building.ownedByTeam.teamByColour);
-        Debug.Log("Activated effect with cost: " + GetPanelInfo().cost);
+        //Debug.Log("Activated effect with cost: " + GetPanelInfo().cost);
 
         bool couldAfford = economy.CanAffordAction(this);
         if (!couldAfford)

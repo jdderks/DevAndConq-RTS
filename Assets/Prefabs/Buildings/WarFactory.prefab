@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5441139941214426858}
   - component: {fileID: 6381509430990324851}
   - component: {fileID: 1250715649108826694}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: ConstructionPlatform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -116,7 +116,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5257856818522418645}
   - component: {fileID: 1687161568290935247}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: PathfindingCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -165,7 +165,7 @@ GameObject:
   - component: {fileID: 8619482586386401440}
   - component: {fileID: 4444243430382928092}
   - component: {fileID: 8081147086776855001}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -299,7 +299,7 @@ GameObject:
   - component: {fileID: 1509757796723374169}
   - component: {fileID: 3372705885448389953}
   - component: {fileID: 664566930645919150}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: WarFactory
   m_TagString: Building
   m_Icon: {fileID: 0}
@@ -386,7 +386,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7513823913775839106}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: UnderConstruction
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -418,7 +418,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8312614883363445547}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: UnitSpawnPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -449,7 +449,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4932796389901929149}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: SelectionParent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -483,7 +483,7 @@ GameObject:
   - component: {fileID: 124089615480425288}
   - component: {fileID: 8326715079067887704}
   - component: {fileID: 2743704430715083749}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: ConstructionCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -650,6 +650,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Factory
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: dfe699c6e52dfe043ad199a9394a894b,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: dfe699c6e52dfe043ad199a9394a894b,
         type: 3}

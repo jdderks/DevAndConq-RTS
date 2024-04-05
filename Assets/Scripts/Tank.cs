@@ -23,7 +23,7 @@ public class Tank : Unit
 
     public override void AIUpdate()
     {
-        HandleMoveState();
+        HandleMovement();
     }
 
     public override void TakeDamage(float amount)
@@ -33,15 +33,15 @@ public class Tank : Unit
 
     protected override void HandleChase()
     {
-        if (chaseTarget == null) Debug.LogWarning("Chase target is null.");
-        if (Vector3.Distance(this.transform.position, chaseTarget.transform.position) < AttackRange)
+        if (MovementTarget == null) Debug.LogWarning("Chase target is null.");
+        if (Vector3.Distance(this.transform.position, MovementTarget.transform.position) < AttackRange)
         {
-            if (chaseTarget.GetComponent<IDamageable>() is IDamageable damageable)
+            if (MovementTarget.GetComponent<IDamageable>() is IDamageable damageable)
                 turret.Attack(damageable);
         }
         var distanceToMoveWithin = AttackRange - (AttackRange / 4);
         Agent.stoppingDistance = distanceToMoveWithin; //The attack range divided by 4 is to make sure it stops well within range to possibly fire the cannon, even if the target moves.
-        Agent.SetDestination(chaseTarget.transform.position);
+        Agent.SetDestination(MovementTarget.transform.position);
 
 
     }

@@ -11,7 +11,7 @@ public class RepeatingSequenceTask : SequenceTask
 
     public override void OnComplete()
     {
-        Debug.Log("Repeating Sequence Task completed.");
+        //Debug.Log("Repeating Sequence Task completed.");
 
         if (shouldRepeat)
         {

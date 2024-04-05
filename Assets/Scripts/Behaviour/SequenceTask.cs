@@ -37,7 +37,7 @@ public class SequenceTask : UnitTask
 
     public override void OnComplete()
     {
-        Debug.Log("Sequence Task completed.");
+        //Debug.Log("Sequence Task completed.");
     }
 
     public void AddTask(UnitTask task, bool addAsNext = false)

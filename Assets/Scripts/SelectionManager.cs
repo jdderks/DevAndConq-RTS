@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.EventSystems;
 using static UnitSelectionHelper;
 
@@ -23,6 +24,10 @@ public enum CursorInputState
 
 public class SelectionManager : Manager
 {
+
+    [SerializeField] private LayerMask moveActionableLayerMask; // The layermask whose purpose it is to check whether or not a unit or building is being clicked on
+    private int groundMask = 1 << 8;
+
     [SerializeField] private Camera cam;
     [SerializeField] private bool debugMouseState = true;
 
@@ -159,7 +164,6 @@ public class SelectionManager : Manager
 
         #region unit movement & unit interaction
 
-        int groundMask = 1 << 8;
 
         //1. register start of line input
         if (GameManager.Instance.inputManager.GetMouseToMoveInputDown())
@@ -192,20 +196,19 @@ public class SelectionManager : Manager
 
             if (lineInput == true)
             {
-                Ray ray1 = cam.ScreenPointToRay(lineSelectOrigin);//Ray 1 of the line
-                Ray ray2 = cam.ScreenPointToRay(Input.mousePosition); //Ray 2 of the line
+                Ray ray1 = cam.ScreenPointToRay(lineSelectOrigin);     //Ray 1 of the line
+                Ray ray2 = cam.ScreenPointToRay(Input.mousePosition);  //Ray 2 of the line
 
-                RaycastHit hit1;
-                RaycastHit hit2;
+                RaycastHit lineBeginhit;
+                RaycastHit lineEndHit;
 
-
-                if (Physics.Raycast(ray1, out hit1, 5000f, groundMask))
+                if (Physics.Raycast(ray1, out lineBeginhit, 5000f, groundMask))
                 {
-                    lineSelectionPosition1 = hit1.point;
+                    lineSelectionPosition1 = lineBeginhit.point;
                 }
-                if (Physics.Raycast(ray2, out hit2, 5000f, groundMask))
+                if (Physics.Raycast(ray2, out lineEndHit, 5000f, groundMask))
                 {
-                    lineSelectionPosition2 = hit2.point;
+                    lineSelectionPosition2 = lineEndHit.point;
                 }
 
                 List<Vector3> movementPoints = PointGenerator.GeneratePointsInLine(lineSelectionPosition1, lineSelectionPosition2, units.Count).ToList();
@@ -218,32 +221,120 @@ public class SelectionManager : Manager
                     Destroy(instantiatedObject, 0.4f);
                 }
             }
-
             Ray ray = cam.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out hit, 50000.0f, groundMask))
+
+            bool gotSelectable = false;
+            if (Physics.Raycast(ray, out hit, 50000f, moveActionableLayerMask))
             {
+                var possibleMovemenetTarget = hit.transform.gameObject;
                 if (lineInput == false)
                 {
-                    GiveCommandToUnits(units);
+                    Debug.Log("Layermasked a building or unit!");
+                    GiveAccordingTaskToUnits(units, possibleMovemenetTarget);
+                    gotSelectable = true;
+                }
+            }
+
+            if (!gotSelectable && Physics.Raycast(ray, out hit, 50000.0f, groundMask))
+            {
+                //var possibleMovemenetTarget = hit.transform.gameObject;
+                if (lineInput == false)
+                {
+                    GiveAccordingTaskToUnits(units);
                 }
             }
             lineInput = false;
         }
-
         #endregion
     }
 
-    private void GiveCommandToUnits(List<Unit> units)
+    private void GiveAccordingTaskToUnits(List<Unit> units, GameObject movementTargetGameObject = null)
     {
-        List<Vector3> movementPoints = PointGenerator.GenerateSunflowerPoints(hit.point, numberOfPoints: units.Count, radius: units.Count * 0.5f);
+        Team currentControllingTeam = GameManager.Instance.teamManager.TeamCurrentlyControlling;
+        ISelectable movementUnitTarget = null;
+        movementUnitTarget = movementTargetGameObject?.GetComponent<ISelectable>();
 
-        for (int i = 0; i < units.Count; i++)
+        if (movementUnitTarget != null)
         {
-            var instantiatedObject = Instantiate(unitMovementPrefab, movementPoints[i], Quaternion.identity);
-            Unit unit = units[i];
-            var task = new MoveUnitTask(unit, movementPoints[i]);
-            unit.StartTask(task);
-            Destroy(instantiatedObject, 0.4f);
+            //Check the specific types of the ISelectable interface and handle accordingly
+            switch (movementUnitTarget)
+            {
+                case Unit unit:
+                    SetUnitSpecificMovement(units, currentControllingTeam, unit);
+                    break;
+                case Building building:
+                    SetBuildingSpecificMovement(units, currentControllingTeam, building);
+                    break;
+                default:
+                    break;
+            }
+        }
+        else
+        {
+            //Just give regular movement command if not selecting a unit
+            for (int i = 0; i < units.Count; i++)
+            {
+                List<Vector3> movementPoints = PointGenerator.GenerateSunflowerPoints(hit.point, numberOfPoints: units.Count, radius: units.Count * 0.5f);
+                var instantiatedObject = Instantiate(unitMovementPrefab, movementPoints[i], Quaternion.identity);
+                var task = new MoveUnitTask(units[i], movementPoints[i]);
+                units[i].StartTask(task);
+                Destroy(instantiatedObject, 0.4f);
+            }
+        }
+
+    }
+
+    private void SetBuildingSpecificMovement(List<Unit> units, Team currentControllingTeam, Building building)
+    {
+        if (!building.ownedByTeam.enemies.Contains(currentControllingTeam.teamByColour))
+        {
+            //If not an enemy building
+            for (int i = 0; i < units.Count; i++)
+            {
+                List<Vector3> movementPoints = PointGenerator.GenerateSunflowerPoints(building.transform.position, numberOfPoints: units.Count, radius: units.Count * 0.5f);
+                var instantiatedObject = Instantiate(unitMovementPrefab, movementPoints[i], Quaternion.identity);
+                var task = new ChaseUnitTask(units[i], building.gameObject);
+                units[i].StartTask(task);
+                Destroy(instantiatedObject, 0.4f);
+            }
+        }
+        else
+        {
+            //If an allied or neutral building
+            for (int i = 0; i < units.Count; i++)
+            {
+                List<Vector3> movementPoints = PointGenerator.GenerateSunflowerPoints(building.transform.position, numberOfPoints: units.Count, radius: units.Count * 0.5f);
+                var instantiatedObject = Instantiate(unitMovementPrefab, movementPoints[i], Quaternion.identity);
+                var task = new MoveUnitTask(units[i], building.transform.position);
+                units[i].StartTask(task);
+                Destroy(instantiatedObject, 0.4f);
+            }
+        }
+    }
+
+    private void SetUnitSpecificMovement(List<Unit> units, Team currentControllingTeam, Unit unit)
+    {
+        if (!unit.OwnedByTeam.enemies.Contains(currentControllingTeam.teamByColour))
+        {
+            for (int i = 0; i < units.Count; i++)
+            {
+                List<Vector3> movementPoints = PointGenerator.GenerateSunflowerPoints(unit.transform.position, numberOfPoints: units.Count, radius: units.Count * 0.5f);
+                var instantiatedObject = Instantiate(unitMovementPrefab, movementPoints[i], Quaternion.identity);
+                var task = new FollowUnitTask(units[i].gameObject);
+                units[i].StartTask(task);
+                Destroy(instantiatedObject, 0.4f);
+            }
+        }
+        else
+        {
+            for (int i = 0; i < units.Count; i++)
+            {
+                List<Vector3> movementPoints = PointGenerator.GenerateSunflowerPoints(unit.transform.position, numberOfPoints: units.Count, radius: units.Count * 0.5f);
+                var instantiatedObject = Instantiate(unitMovementPrefab, movementPoints[i], Quaternion.identity);
+                var task = new ChaseUnitTask(units[i], unit.gameObject);
+                units[i].StartTask(task);
+                Destroy(instantiatedObject, 0.4f);
+            }
         }
     }
 
@@ -278,15 +369,10 @@ public class SelectionManager : Manager
         if (debugMouseState)
         {
             if (lineInput)
-            {
                 ShowTextBelowCursor("Drawing a line.");
-            }
             else
-            {
                 ShowTextBelowCursor(cursorState.ToString());
-            }
         }
-
     }
 
     private void OnDrawGizmos()
