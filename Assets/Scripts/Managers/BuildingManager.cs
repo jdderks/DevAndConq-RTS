@@ -70,23 +70,22 @@ public class BuildingManager : Manager
 
     public void ConstructingBuilding()
     {
-        if (isBuilding)
+
+        if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit hit, Mathf.Infinity, terrainLayerMask))
         {
-            if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit hit, Mathf.Infinity, terrainLayerMask))
+            posToPlace = hit.point;
+            ghostObject.transform.position = posToPlace;
+
+            if (Input.GetMouseButtonDown(0)) // Left mouse button to place object
             {
-                posToPlace = hit.point;
-                ghostObject.transform.position = posToPlace;
+                InstantiateBuildingAndGiveTask(buildingToPlace, hit.point, originUnit);
 
-                if (Input.GetMouseButtonDown(0)) // Left mouse button to place object
-                {
-                    InstantiateBuildingAndGiveTask(buildingToPlace, hit.point, originUnit);
-
-                    isBuilding = false;
-                    originUnit = null;
-                    buildingToPlace = null;
-                    Destroy(ghostObject);
-                }
+                isBuilding = false;
+                originUnit = null;
+                buildingToPlace = null;
+                Destroy(ghostObject);
             }
+
         }
     }
 

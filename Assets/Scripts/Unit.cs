@@ -64,7 +64,7 @@ public class Unit : MonoBehaviour, ISelectable, IDamageable, IAIControllable, IT
         get => _rtsActions;
         set => _rtsActions = value;
     }
-    internal MovementState CurrentMoveState { get => CurrentMoveState1; set => CurrentMoveState1 = value; }
+    internal MovementState currentMovementState { get => CurrentMovementState; set => CurrentMovementState = value; }
 
     private GameObject _instantiatedObject = null;
 
@@ -80,7 +80,7 @@ public class Unit : MonoBehaviour, ISelectable, IDamageable, IAIControllable, IT
     public Team OwnedByTeam { get => ownedByTeam; set => ownedByTeam = value; }
     public float Health { get => health; set => health = value; }
     public float AttackRange { get => attackRange; set => attackRange = value; }
-    internal MovementState CurrentMoveState1 { get => currentMoveState; set => currentMoveState = value; }
+    internal MovementState CurrentMovementState { get => currentMoveState; set => currentMoveState = value; }
     public GameObject MovementTarget { get => movementTarget; set => movementTarget = value; }
 
     private void Start()
@@ -322,7 +322,7 @@ public class Unit : MonoBehaviour, ISelectable, IDamageable, IAIControllable, IT
     /// </summary>
     protected void HandleMovement()
     {
-        switch (CurrentMoveState1)
+        switch (CurrentMovementState)
         {
             case MovementState.Idle:
                 Agent.stoppingDistance = 0f;
@@ -344,7 +344,7 @@ public class Unit : MonoBehaviour, ISelectable, IDamageable, IAIControllable, IT
     public void ResetTargetAndMoveState()
     {
         MovementTarget = null;
-        CurrentMoveState = MovementState.Idle;
+        currentMovementState = MovementState.Idle;
     }
 
     protected virtual void HandleChase()
@@ -362,4 +362,17 @@ public class Unit : MonoBehaviour, ISelectable, IDamageable, IAIControllable, IT
         Agent.stoppingDistance = distanceToMoveWithin;
         Agent.SetDestination(MovementTarget.transform.position);
     }
+
+    private void OnGUI()
+    {
+        if (GameManager.Instance.unitManager.DebugMode)
+        {
+            //draw text on the screen rect position of the gameobject
+            GUIStyle style = new GUIStyle(GUI.skin.label);
+            style.fontSize = Mathf.RoundToInt(16f);
+            Vector3 tankpositionOnScreen = Camera.main.WorldToScreenPoint(this.transform.position);
+            GUI.Label(new Rect(tankpositionOnScreen.x, Screen.height - tankpositionOnScreen.y, 100, 20), "Health: " + Health, style);
+        }
+    }
 }
+

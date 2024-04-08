@@ -54,15 +54,5 @@ public static class UnitSelectionHelper
         // Create Rect
         return Rect.MinMaxRect(topLeft.x, topLeft.y, bottomRight.x, bottomRight.y);
     }
-
-    public static void DrawLine(Color color, Vector2 startPosition)
-    {
-        //Vector2 endPosition = Event.current.mousePosition;
-
-        //Handles.BeginGUI();
-        //Handles.color = color;
-        //Handles.DrawAAPolyLine(2f, startPosition, endPosition);
-        //Handles.EndGUI();
-    }
 }
 

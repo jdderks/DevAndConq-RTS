@@ -14,6 +14,7 @@ public class ChaseUnitTask : UnitTask
 
     public ChaseUnitTask(Unit agent, GameObject target)
     {
+        unit = agent;
         chaseTarget = target;
     }
 
@@ -22,7 +23,7 @@ public class ChaseUnitTask : UnitTask
         Debug.Log(unit + " is chasing " + chaseTarget.ToString());
 
         unit.MovementTarget = chaseTarget;
-        unit.CurrentMoveState = MovementState.Chasing;
+        unit.currentMovementState = MovementState.Chasing;
     }
 
     public override void OnCancelled()

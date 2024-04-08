@@ -4234,7 +4234,7 @@ MonoBehaviour:
     type: 2}
   supplyResourceDesireObject: {fileID: 11400000, guid: 552d93631962c4d4db554e9382225037,
     type: 2}
-  currentPersonality: {fileID: 11400000, guid: fffc7068302ea79459fae3744202b9fe, type: 2}
+  currentPersonality: {fileID: 11400000, guid: db44bddcaf0af104daff35935764bb6a, type: 2}
 --- !u!4 &1579988677
 Transform:
   m_ObjectHideFlags: 0
@@ -4244,7 +4244,7 @@ Transform:
   m_GameObject: {fileID: 1579988675}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.03, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

@@ -18,7 +18,7 @@ public class FollowUnitTask : UnitTask
         Debug.Log(unit + " is following " + followTarget.ToString());
 
         unit.MovementTarget = followTarget;
-        unit.CurrentMoveState = MovementState.Following;
+        unit.currentMovementState = MovementState.Following;
     }
 
     public override void OnCancelled()
