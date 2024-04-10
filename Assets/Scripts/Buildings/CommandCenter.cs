@@ -1,5 +1,6 @@
 using UnityEngine.Assertions;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class CommandCenter : Building
 {
@@ -11,6 +12,8 @@ public class CommandCenter : Building
     [SerializeField] private Economy economy;
     public BuildingPositioner DefensivePositioner { get => defensivePositioner; set => defensivePositioner = value; }
     public Economy Economy { get => economy; set => economy = value; }
+
+    [SerializeField] private UnityEvent OnCommandCenterDestroyed;
 
 
     //ActionQueue ActionQueue = new();
@@ -78,4 +81,10 @@ public class CommandCenter : Building
     //        defensivePositioner.buildingPositions.Add(newBuildingPosition);
     //    }
     //}
+
+    public override void Die()
+    {
+        OnCommandCenterDestroyed?.Invoke();
+        base.Die();
+    }
 }

@@ -276,18 +276,12 @@ public class Unit : MonoBehaviour, ISelectable, IDamageable, IAIControllable, IT
         List<GameObject> teamableObjectsInProximity = GetUnitsAndBuildingsInProximity();
 
         List<TeamColour> enemyTeams = teamManager.GetEnemyTeams(OwnedByTeam);
-
-        List<string> enemyTags = new List<string>();
-        foreach (var enemyTeam in enemyTeams)
-        {
-            Team team = teamManager.GetTeamByColour(enemyTeam);
-            enemyTags.Add(team.teamTagName);
-        }
-
         List<IDamageable> enemyObjects = new List<IDamageable>();
-        foreach (var obj in teamableObjectsInProximity)
+
+        foreach (GameObject obj in teamableObjectsInProximity)
         {
-            if (enemyTags.Contains(obj.tag))
+            TeamColour teamable = obj.GetComponent<ITeamable>().GetTeam();
+            if (enemyTeams.Contains(teamable))
             {
                 enemyObjects.Add(obj.GetComponent<IDamageable>());
             }

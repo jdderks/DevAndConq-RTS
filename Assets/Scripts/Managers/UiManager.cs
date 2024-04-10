@@ -9,6 +9,7 @@ public class UiManager : Manager
     [SerializeField] private RtsActionPanel rtsActionPanel;
     [SerializeField] private ActionQueuePanel actionQueuePanel;
     [SerializeField] private GameObject actionQueuePanelGameObject;
+    [SerializeField] private GameObject gameOverPanel;
 
     [SerializeField] private TextMeshProUGUI moneyAmountText;
 
@@ -57,6 +58,12 @@ public class UiManager : Manager
     public void UpdateInfoPanelValues()
     {
         infoPanel.AmountOfUnitsSelectedValue.text = GameManager.Instance.SelectableCollection.selectedTable.Values.Count.ToString();
+    }
+
+    public void OpenGameEndScreen(bool win)
+    {
+        gameOverPanel.SetActive(true);
+        gameOverPanel.GetComponent<GameFinishedPanel>().SetGameFinishedPanel(win);
     }
 
     private void SetInfoPanelDescriptors()

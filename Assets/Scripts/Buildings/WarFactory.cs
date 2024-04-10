@@ -65,21 +65,14 @@ public class WarFactory : Building
                 mats[j] = ownedByTeam.teamMaterial;
         }
 
-        //mats[1] = OwnedByTeam.teamMaterial;
         renderer.materials = mats;
 
-
-
-        //Renderer renderer = visualObject.GetComponent<Renderer>();
-        //var mats = renderer.materials;
-        //mats[1] = ownedByTeam.teamMaterial;
-        //renderer.materials = mats;
-        //foreach (var item in renderer.materials)
-        //{
-        //    Debug.Log(item);
-        //}
-        //renderer.materials[1] = ownedByTeam.teamMaterial;
     }
 
     public override bool UnitInteract(Unit unit) { return false; } //Left empty on purpose
+
+    public override void Die()
+    {
+        Destroy(gameObject);
+    }
 }

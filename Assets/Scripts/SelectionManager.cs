@@ -226,11 +226,11 @@ public class SelectionManager : Manager
             bool gotSelectable = false;
             if (Physics.Raycast(ray, out hit, 50000f, moveActionableLayerMask))
             {
-                var possibleMovemenetTarget = hit.transform.gameObject;
+                var possibleTaskTarget = hit.transform.gameObject;
                 if (lineInput == false)
                 {
                     Debug.Log("Layermasked a building or unit!");
-                    GiveAccordingTaskToUnits(units, possibleMovemenetTarget);
+                    GiveAccordingTaskToUnits(units, possibleTaskTarget);
                     gotSelectable = true;
                 }
             }
@@ -251,11 +251,11 @@ public class SelectionManager : Manager
     private void GiveAccordingTaskToUnits(List<Unit> units, GameObject movementTargetGameObject = null)
     {
         Team currentControllingTeam = GameManager.Instance.teamManager.TeamCurrentlyControlling;
-        ISelectable movementUnitTarget = null;
-        movementUnitTarget = movementTargetGameObject?.GetComponent<ISelectable>();
 
-        if (movementUnitTarget != null)
+        if (movementTargetGameObject != null)
         {
+            ISelectable movementUnitTarget = null;
+            movementUnitTarget = movementTargetGameObject.GetComponent<ISelectable>();
             //Check the specific types of the ISelectable interface and handle accordingly
             switch (movementUnitTarget)
             {
@@ -263,7 +263,7 @@ public class SelectionManager : Manager
                     SetUnitSpecificMovement(units, currentControllingTeam, unit);
                     break;
                 case Building building:
-                    SetBuildingSpecificMovement(units, currentControllingTeam, building);
+                    SetBuildingSpecificMovement(units, building);
                     break;
                 default:
                     break;
@@ -284,32 +284,57 @@ public class SelectionManager : Manager
 
     }
 
-    private void SetBuildingSpecificMovement(List<Unit> units, Team currentControllingTeam, Building building)
+    private void SetBuildingSpecificMovement(List<Unit> units, Building building)
     {
-        if (!building.ownedByTeam.enemies.Contains(currentControllingTeam.teamByColour))
+        //if building is enemy owned
+        for (int i = 0; i < units.Count; i++)
         {
-            //If not an enemy building
-            for (int i = 0; i < units.Count; i++)
+            Unit unit = units[i];
+            if (building == null) return;
+
+            //If building is enemy owned, give task to attack building
+            if (unit.OwnedByTeam.enemies.Contains(building.GetTeam()))
             {
-                List<Vector3> movementPoints = PointGenerator.GenerateSunflowerPoints(building.transform.position, numberOfPoints: units.Count, radius: units.Count * 0.5f);
-                var instantiatedObject = Instantiate(unitMovementPrefab, movementPoints[i], Quaternion.identity);
-                var task = new ChaseUnitTask(units[i], building.gameObject);
-                units[i].StartTask(task);
-                Destroy(instantiatedObject, 0.4f);
+                var task = new ChaseUnitTask(unit, building.gameObject);
+                unit.StartTask(task);
+            }
+            // If building is allied or neutral, give task to move to building
+            else
+            {
+                var positions = PointGenerator.GeneratePointsInCircle(building.transform.position, units.Count, 8);
+                var moveTask = new MoveUnitTask(unit, positions[i]);
+                unit.StartTask(moveTask);
             }
         }
-        else
-        {
-            //If an allied or neutral building
-            for (int i = 0; i < units.Count; i++)
-            {
-                List<Vector3> movementPoints = PointGenerator.GenerateSunflowerPoints(building.transform.position, numberOfPoints: units.Count, radius: units.Count * 0.5f);
-                var instantiatedObject = Instantiate(unitMovementPrefab, movementPoints[i], Quaternion.identity);
-                var task = new MoveUnitTask(units[i], building.transform.position);
-                units[i].StartTask(task);
-                Destroy(instantiatedObject, 0.4f);
-            }
-        }
+
+
+
+
+
+        //if (!building.ownedByTeam.enemies.Contains(currentControllingTeam.teamByColour))
+        //{
+        //    //If not an enemy building
+        //    for (int i = 0; i < units.Count; i++)
+        //    {
+        //        List<Vector3> movementPoints = PointGenerator.GenerateSunflowerPoints(building.transform.position, numberOfPoints: units.Count, radius: units.Count * 0.5f);
+        //        var instantiatedObject = Instantiate(unitMovementPrefab, movementPoints[i], Quaternion.identity);
+        //        var task = new ChaseUnitTask(units[i], building.gameObject);
+        //        units[i].StartTask(task);
+        //        Destroy(instantiatedObject, 0.4f);
+        //    }
+        //}
+        //else
+        //{
+        //    //If an allied or neutral building
+        //    for (int i = 0; i < units.Count; i++)
+        //    {
+        //        List<Vector3> movementPoints = PointGenerator.GenerateSunflowerPoints(building.transform.position, numberOfPoints: units.Count, radius: units.Count * 0.5f);
+        //        var instantiatedObject = Instantiate(unitMovementPrefab, movementPoints[i], Quaternion.identity);
+        //        var task = new MoveUnitTask(units[i], building.transform.position);
+        //        units[i].StartTask(task);
+        //        Destroy(instantiatedObject, 0.4f);
+        //    }
+        //}
     }
 
     private void SetUnitSpecificMovement(List<Unit> units, Team currentControllingTeam, Unit unit)

@@ -1,6 +1,5 @@
-using System.Collections;
+using NaughtyAttributes;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -33,4 +32,18 @@ public class GameManager : MonoBehaviour
     public SelectableCollection SelectableCollection { get => selectableCollection; set => selectableCollection = value; }
 
     public List<ActionPanelItem> PanelItems = new();
+
+    [Button("Win game")]
+    public void GameEndWin()
+    {
+        bool win = true;
+        uiManager.OpenGameEndScreen(win);
+    }
+
+    [Button("Lose game")]
+    public void GameEndLose()
+    {
+        bool win = false;
+        uiManager.OpenGameEndScreen(win);
+    }
 }
