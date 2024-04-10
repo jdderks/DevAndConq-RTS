@@ -4,6 +4,7 @@ using UnityEngine;
 using NaughtyAttributes;
 using System.Linq;
 using Unity.VisualScripting;
+using NUnit.Framework;
 
 public enum DesirePriority
 {
@@ -58,23 +59,39 @@ public class UtilitySystemEnemyAI : MonoBehaviour, IAIControllable, IAIEnemyBase
     [SerializeField] private AISupplyResourceDesireScriptableObject supplyResourceDesireObject;
 
     [Header("Personality related")]
-    [SerializeField] private AIPersonalityScriptableObject currentPersonality;
+    //[SerializeField] private AIPersonalityScriptableObject currentPersonality;
+    private float loadedAggresiveness = 0;
+    private float loadedDefensiveness = 0;
 
     private void Start()
     {
         ownedBuildings.Add(controllingCommandCenter);
         SetCommandCenters();
-        if (currentPersonality == null)
-        {
-            currentPersonality = GameManager.Instance.personalityManager.GetRandomPersonality();
-        }
+        //if (currentPersonality == null)
+        //{
+        //    currentPersonality = GameManager.Instance.personalityManager.GetRandomPersonality();
+        //}
         amountOfUnitsOnHold = GetArmySize();
+        LoadPersonalitiesFromPrefs();
+    }
+
+    public void LoadPersonalitiesFromPrefs()
+    {
+        loadedAggresiveness = PlayerPrefs.GetFloat("Aggressiveness");
+        loadedDefensiveness = PlayerPrefs.GetFloat("Defensiveness");
+
+        if (loadedAggresiveness == 0 || loadedDefensiveness == 0)
+        {
+            Debug.LogError("Personality not loaded correctly!");
+        }
+        
+        //Debug.Log("Loaded personalities!");
     }
 
     private int GetArmySize()
     {
         int size = UnityEngine.Random.Range(5, 15);
-        size *= (int)currentPersonality.aggressivenessModifier;
+        size *= (int)loadedAggresiveness;
         return size;
     }
 
@@ -117,6 +134,7 @@ public class UtilitySystemEnemyAI : MonoBehaviour, IAIControllable, IAIEnemyBase
 
     private void SetCurrentDesire()
     {
+        Debug.Log("Current AI desire is: " + currentDesire.ToString());
         switch (currentDesire)
         {
             case DesirePriority.None:
@@ -276,7 +294,7 @@ public class UtilitySystemEnemyAI : MonoBehaviour, IAIControllable, IAIEnemyBase
     {
         // Calculate all desired amounts
         int dozerAmount = ownedUnits.Count(u => u is ConstructionDozer);
-        int warFactoryAmount = ownedBuildings.Count(u => u is WarFactory);
+        int warFactoryAmount = ownedBuildings.Count(b => b is WarFactory);
         int enemyUnitsAmount = GameManager.Instance.unitManager.GetEnemyUnits(controllingCommandCenter.ownedByTeam).Count();
 
         // Calculate desires using the desire objects
@@ -288,8 +306,8 @@ public class UtilitySystemEnemyAI : MonoBehaviour, IAIControllable, IAIEnemyBase
         desiredSupplyCenters =  supplyResourceDesireObject.CalculateSupplyCenterDesire(ownedBuildings.Count(b => b is SupplyCenter));
         desiredSupplyTrucks = 0;//supplyResourceDesireObject.CalculateSupplyTruckDesire(ownedUnits.Count(t => t is SupplyTruck));
 
-        desiredOffensiveUnits *= currentPersonality.aggressivenessModifier;
-        desiredDefenses *= currentPersonality.defensivenessModifier;
+        desiredOffensiveUnits *= loadedAggresiveness;
+        desiredDefenses *= loadedDefensiveness;
 
         desiredConstructors =   Mathf.Clamp(desiredConstructors, 0, 1);
         desiredFactories =      Mathf.Clamp(desiredFactories, 0, 1);

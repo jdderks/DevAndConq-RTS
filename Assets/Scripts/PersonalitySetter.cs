@@ -12,11 +12,15 @@ public class PersonalitySetter : MonoBehaviour
 
     public void SetAgressivePersonality()
     {
-        selectedPersonality = agressivePersonality;
+        PlayerPrefs.SetFloat("Aggressiveness", agressivePersonality.aggressivenessModifier);
+        PlayerPrefs.SetFloat("Defensiveness", agressivePersonality.defensivenessModifier);
+        PlayerPrefs.Save();
     }
     
     public void SetDefensivePersonality()
     {
-        selectedPersonality = defensivePersonality;
+        PlayerPrefs.SetFloat("Aggressiveness", defensivePersonality.aggressivenessModifier);
+        PlayerPrefs.SetFloat("Defensiveness", defensivePersonality.defensivenessModifier);
+        PlayerPrefs.Save();
     }
 }

@@ -57,7 +57,7 @@ public class BuildingManager : Manager
             AllBuildings.Remove(building);
             return;
         }
-        Debug.Log(gameObject.name + " building you tried to unsubscribe is not subsribed!");
+        //Debug.Log(gameObject.name + " building you tried to unsubscribe is not subscribed!");
     }
 
     public void Update()

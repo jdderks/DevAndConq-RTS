@@ -24,6 +24,8 @@ public class PersonalityManager : MonoBehaviour
     }
 
 
+
+
     [SerializeField] private AIPersonalityScriptableObject basePersonality;
     [SerializeField] private AIPersonalityScriptableObject offensivePersonality;
     [SerializeField] private AIPersonalityScriptableObject defensivePersonality;

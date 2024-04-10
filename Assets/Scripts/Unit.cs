@@ -280,7 +280,8 @@ public class Unit : MonoBehaviour, ISelectable, IDamageable, IAIControllable, IT
 
         foreach (GameObject obj in teamableObjectsInProximity)
         {
-            TeamColour teamable = obj.GetComponent<ITeamable>().GetTeam();
+            var iteamable = obj.GetComponent<ITeamable>();
+            TeamColour teamable = iteamable.GetTeam();
             if (enemyTeams.Contains(teamable))
             {
                 enemyObjects.Add(obj.GetComponent<IDamageable>());

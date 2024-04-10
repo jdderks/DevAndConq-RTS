@@ -10,16 +10,13 @@ public class AIWarFactoryDesireObject : ScriptableObject
 
     public float CalculateDesire(int sampleSize, int dozerAmount = 0) //in this case minimumRequirement means the minimum amount of bulldozers
     {
-        if (dozerAmount == 0)
-        {
-            return 0;
-        }
-        else
-        {
-            float normalizedSampleSize = Mathf.InverseLerp(0, weightCurve.length, sampleSize);
-            float curveValue = weightCurve.Evaluate(normalizedSampleSize);
+        Debug.Log(sampleSize + "  aa  " + dozerAmount);
+        if (dozerAmount == 0) return 0;//this requires at least one dozer to exist
 
-            return curveValue;
-        }
+        float normalizedSampleSize = Mathf.InverseLerp(0, weightCurve.length, sampleSize);
+        float curveValue = weightCurve.Evaluate(normalizedSampleSize);
+
+        return curveValue;
+
     }
 }

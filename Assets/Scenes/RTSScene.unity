@@ -546,11 +546,26 @@ PrefabInstance:
         type: 3}
       propertyPath: OnCommandCenterDestroyed.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 2024898262}
+      objectReference: {fileID: 2024898266}
     - target: {fileID: 5112606933372525163, guid: faef5b01627610f49bd6925e12f03b38,
         type: 3}
       propertyPath: OnCommandCenterDestroyed.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5112606933372525163, guid: faef5b01627610f49bd6925e12f03b38,
+        type: 3}
+      propertyPath: OnCommandCenterDestroyed.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: GameEndLose
+      objectReference: {fileID: 0}
+    - target: {fileID: 5112606933372525163, guid: faef5b01627610f49bd6925e12f03b38,
+        type: 3}
+      propertyPath: OnCommandCenterDestroyed.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: GameManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 5112606933372525163, guid: faef5b01627610f49bd6925e12f03b38,
+        type: 3}
+      propertyPath: OnCommandCenterDestroyed.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 6041605619507586267, guid: faef5b01627610f49bd6925e12f03b38,
         type: 3}
@@ -4200,6 +4215,41 @@ PrefabInstance:
       propertyPath: economy
       value: 
       objectReference: {fileID: 1962454133}
+    - target: {fileID: 5112606933372525163, guid: faef5b01627610f49bd6925e12f03b38,
+        type: 3}
+      propertyPath: OnCommandCenterDestroyed.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5112606933372525163, guid: faef5b01627610f49bd6925e12f03b38,
+        type: 3}
+      propertyPath: OnCommandCenterDestroyed.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5112606933372525163, guid: faef5b01627610f49bd6925e12f03b38,
+        type: 3}
+      propertyPath: OnCommandCenterDestroyed.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 2024898266}
+    - target: {fileID: 5112606933372525163, guid: faef5b01627610f49bd6925e12f03b38,
+        type: 3}
+      propertyPath: OnCommandCenterDestroyed.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5112606933372525163, guid: faef5b01627610f49bd6925e12f03b38,
+        type: 3}
+      propertyPath: OnCommandCenterDestroyed.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: GameEndWin
+      objectReference: {fileID: 0}
+    - target: {fileID: 5112606933372525163, guid: faef5b01627610f49bd6925e12f03b38,
+        type: 3}
+      propertyPath: OnCommandCenterDestroyed.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: GameManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 5112606933372525163, guid: faef5b01627610f49bd6925e12f03b38,
+        type: 3}
+      propertyPath: OnCommandCenterDestroyed.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 5291194142343624478, guid: faef5b01627610f49bd6925e12f03b38,
         type: 3}
       propertyPath: buildingPositions.Array.data[0].position.x
