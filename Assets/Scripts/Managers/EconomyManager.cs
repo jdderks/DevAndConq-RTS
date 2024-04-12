@@ -21,7 +21,7 @@ public class EconomyManager : MonoBehaviour
                 return commandCenter.Economy;
             }
         }
-        Debug.LogError($"There's no command centers with an economy of {colour.ToString()}");
+        //Debug.LogError($"There's no command centers with an economy of {colour.ToString()}");
         return null;
     }
 }

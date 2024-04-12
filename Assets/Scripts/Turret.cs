@@ -31,6 +31,9 @@ public class Turret : MonoBehaviour
 
     [SerializeField] private float damage = 12.5f;
     [SerializeField] private float fireRatePerSeconds = 2f;
+
+    [SerializeField] private ParticleSystem fireParticles;
+
     private float timeSinceLastFire = 0f;
 
     private TurretState turretState = TurretState.Idle;
@@ -141,6 +144,7 @@ public class Turret : MonoBehaviour
         //TODO: Particles/Effects user feedback
         if (target != null || target.GetGameObject() != null)
         {
+            fireParticles.Play();
             target.TakeDamage(damage);
             StopAttacking();
         }
