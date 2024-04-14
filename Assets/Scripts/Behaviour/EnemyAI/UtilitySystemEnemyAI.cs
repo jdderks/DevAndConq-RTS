@@ -60,8 +60,8 @@ public class UtilitySystemEnemyAI : MonoBehaviour, IAIControllable, IAIEnemyBase
 
     [Header("Personality related")]
     //[SerializeField] private AIPersonalityScriptableObject currentPersonality;
-    private float loadedAggresiveness = 0;
-    private float loadedDefensiveness = 0;
+    [SerializeField]private float loadedAggresiveness = 0;
+    [SerializeField]private float loadedDefensiveness = 0;
 
     private void Start()
     {
@@ -72,7 +72,7 @@ public class UtilitySystemEnemyAI : MonoBehaviour, IAIControllable, IAIEnemyBase
         //    currentPersonality = GameManager.Instance.personalityManager.GetRandomPersonality();
         //}
         amountOfUnitsOnHold = GetArmySize();
-        LoadPersonalitiesFromPrefs();
+        //LoadPersonalitiesFromPrefs();
     }
 
     public void LoadPersonalitiesFromPrefs()
@@ -84,13 +84,13 @@ public class UtilitySystemEnemyAI : MonoBehaviour, IAIControllable, IAIEnemyBase
         {
             Debug.LogError("Personality not loaded correctly!");
         }
-        
+
         //Debug.Log("Loaded personalities!");
     }
 
     private int GetArmySize()
     {
-        int size = UnityEngine.Random.Range(5, 15);
+        int size = UnityEngine.Random.Range(3, 7);
         size *= (int)loadedAggresiveness;
         return size;
     }
@@ -164,6 +164,21 @@ public class UtilitySystemEnemyAI : MonoBehaviour, IAIControllable, IAIEnemyBase
             default:
                 break;
         }
+
+
+        var tanks = ownedUnits.Where(u => u is Tank).Select(u => u as Tank).ToList();
+        if (tanks.Count >= amountOfUnitsOnHold)
+        {
+            foreach (Tank tank in tanks)
+            {
+                ownedUnits.Remove(tank);
+                if (enemyCommandCenters.Any())
+                    tank.StartTask(new MoveUnitTask(tank, enemyCommandCenters[UnityEngine.Random.Range(0, enemyCommandCenters.Count)].transform.position));
+                else
+                    tank.StartTask(new MoveUnitTask(tank, controllingCommandCenter.transform.position));
+            }
+            amountOfUnitsOnHold = UnityEngine.Random.Range(5, 15);
+        }
     }
 
     private void ConstructFactory()
@@ -176,7 +191,7 @@ public class UtilitySystemEnemyAI : MonoBehaviour, IAIControllable, IAIEnemyBase
             ConstructionDozer randomBulldozer = bulldozers.ElementAt(UnityEngine.Random.Range(0, bulldozers.Count())) as ConstructionDozer;
             BuildingPosition buildingPosition = buildingPositioner.GetRandomBuildingPosition(false);
             GameObject warFactoryPrefab = randomBulldozer.ConstructWarFactoryAction.GetPanelInfo().actionPrefab;
-            GameObject warFactory = GameManager.Instance.buildingManager.InstantiateBuildingAndGiveTask(warFactoryPrefab, buildingPosition.position, randomBulldozer);
+            GameObject warFactory = GameManager.Instance.buildingManager.InstantiateBuildingAndGiveTask(warFactoryPrefab, buildingPosition.transform.position, randomBulldozer);
             ownedBuildings.Add(warFactory.GetComponent<WarFactory>());
             buildingPositioner.SetOccupied(buildingPosition);
         }
@@ -189,14 +204,14 @@ public class UtilitySystemEnemyAI : MonoBehaviour, IAIControllable, IAIEnemyBase
         if (bulldozers.Any() && closestSupplyDock != null)
         {
             BuildingPosition supplyCenterPosition = buildingPositioner.GetSupplyDockPosition();
-            ConstructionDozer bullDozerUnit = ArrayHelpers.GetRandomElement(bulldozers) as ConstructionDozer;
             if (supplyCenterPosition.occupied) return;
 
-            GameObject supplyCenterPrefab = bullDozerUnit.ConstructSupplyCenter.GetPanelInfo().actionPrefab;
-            GameObject supplyCenter = GameManager.Instance.buildingManager.InstantiateBuildingAndGiveTask(supplyCenterPrefab, supplyCenterPosition.position, bullDozerUnit);
-            ownedBuildings.Add(supplyCenter.GetComponent<SupplyCenter>());
-
             buildingPositioner.SetOccupied(supplyCenterPosition);
+            ConstructionDozer bullDozerUnit = ArrayHelpers.GetRandomElement(bulldozers) as ConstructionDozer;
+
+            GameObject supplyCenterPrefab = bullDozerUnit.ConstructSupplyCenter.GetPanelInfo().actionPrefab;
+            GameObject supplyCenter = GameManager.Instance.buildingManager.InstantiateBuildingAndGiveTask(supplyCenterPrefab, supplyCenterPosition.transform.position, bullDozerUnit);
+            ownedBuildings.Add(supplyCenter.GetComponent<SupplyCenter>());
         }
     }
 
@@ -227,13 +242,22 @@ public class UtilitySystemEnemyAI : MonoBehaviour, IAIControllable, IAIEnemyBase
             ConstructionDozer randomBulldozer = bulldozers.ElementAt(UnityEngine.Random.Range(0, bulldozers.Count())) as ConstructionDozer;
             BuildingPosition buildingPosition;
             if (enemyCommandCenters.Any())
-                buildingPosition = controllingCommandCenter.DefensivePositioner.GetBuildingPositionClosestToTransform(enemyCommandCenters[0].transform, false);
+                buildingPosition = controllingCommandCenter.DefensivePositioner.GetRandomBuildingPosition(false);
             else
                 buildingPosition = controllingCommandCenter.DefensivePositioner.GetRandomBuildingPosition(false);
             var defensesPrefab = randomBulldozer.ConstructTurretAction.GetPanelInfo().actionPrefab;
-            var warFactory = GameManager.Instance.buildingManager.InstantiateBuildingAndGiveTask(defensesPrefab, buildingPosition.position, randomBulldozer);
+            var warFactory = GameManager.Instance.buildingManager.InstantiateBuildingAndGiveTask(defensesPrefab, buildingPosition.transform.position, randomBulldozer);
             ownedBuildings.Add(warFactory.GetComponent<WarFactory>());
-            buildingPositioner.SetOccupied(buildingPosition);
+
+            for (int i = 0; i < controllingCommandCenter.DefensivePositioner.buildingPositions.Count; i++)
+            {
+                BuildingPosition buildingPos = controllingCommandCenter.DefensivePositioner.buildingPositions[i];
+                if (buildingPos.transform == buildingPosition.transform)
+                {
+                    buildingPos.occupied = true;
+                    buildingPosition.occupied = true;
+                }
+            }
         }
     }
 
@@ -264,18 +288,7 @@ public class UtilitySystemEnemyAI : MonoBehaviour, IAIControllable, IAIEnemyBase
                     tanks.Add(lightTank);
                 }
             }
-            if (tanks.Count >= amountOfUnitsOnHold)
-            {
-                foreach (Tank tank in tanks)
-                {
-                    ownedUnits.Remove(tank);
-                    if (enemyCommandCenters.Any())
-                        tank.StartTask(new MoveUnitTask(tank, enemyCommandCenters[UnityEngine.Random.Range(0, enemyCommandCenters.Count)].transform.position));
-                    else
-                        tank.StartTask(new MoveUnitTask(tank, controllingCommandCenter.transform.position));
-                }
-                amountOfUnitsOnHold = UnityEngine.Random.Range(5, 15);
-            }
+
         }
     }
 
@@ -298,24 +311,24 @@ public class UtilitySystemEnemyAI : MonoBehaviour, IAIControllable, IAIEnemyBase
         int enemyUnitsAmount = GameManager.Instance.unitManager.GetEnemyUnits(controllingCommandCenter.ownedByTeam).Count();
 
         // Calculate desires using the desire objects
-        desiredConstructors =   constructorDesireObject.CalculateDesire(dozerAmount + bullDozersInQueue, 1);
-        desiredFactories =      factoryDesireObject.CalculateDesire(warFactoryAmount, dozerAmount);
-        commandCenterDanger =   commandCenterDangerObject.CalculateDesire(GetEnemiesInProximity().Count);
+        desiredConstructors = constructorDesireObject.CalculateDesire(dozerAmount + bullDozersInQueue, 1);
+        desiredFactories = factoryDesireObject.CalculateDesire(warFactoryAmount, dozerAmount);
+        commandCenterDanger = commandCenterDangerObject.CalculateDesire(GetEnemiesInProximity().Count);
         desiredOffensiveUnits = offensiveUnitDesireObject.CalculateDesire(warFactoryAmount, ownedUnits.Count);
-        desiredDefenses =       defensiveUnitDesireObject.CalculateDesire(dozerAmount, GetTurrets(controllingCommandCenter.ownedByTeam).Count, enemyUnitsAmount);
-        desiredSupplyCenters =  supplyResourceDesireObject.CalculateSupplyCenterDesire(ownedBuildings.Count(b => b is SupplyCenter));
+        desiredDefenses = defensiveUnitDesireObject.CalculateDesire(dozerAmount, GetTurrets(controllingCommandCenter.ownedByTeam).Count, enemyUnitsAmount);
+        desiredSupplyCenters = supplyResourceDesireObject.CalculateSupplyCenterDesire(ownedBuildings.Count(b => b is SupplyCenter));
         desiredSupplyTrucks = 0;//supplyResourceDesireObject.CalculateSupplyTruckDesire(ownedUnits.Count(t => t is SupplyTruck));
 
         desiredOffensiveUnits *= loadedAggresiveness;
         desiredDefenses *= loadedDefensiveness;
 
-        desiredConstructors =   Mathf.Clamp(desiredConstructors, 0, 1);
-        desiredFactories =      Mathf.Clamp(desiredFactories, 0, 1);
-        commandCenterDanger =   Mathf.Clamp(commandCenterDanger, 0, 1);
+        desiredConstructors = Mathf.Clamp(desiredConstructors, 0, 1);
+        desiredFactories = Mathf.Clamp(desiredFactories, 0, 1);
+        commandCenterDanger = Mathf.Clamp(commandCenterDanger, 0, 1);
         desiredOffensiveUnits = Mathf.Clamp(desiredOffensiveUnits, 0, 1);
-        desiredDefenses =       Mathf.Clamp(desiredDefenses, 0, 1);
-        desiredSupplyTrucks =   Mathf.Clamp(desiredSupplyTrucks, 0, 1);
-        desiredSupplyCenters =  Mathf.Clamp(desiredSupplyCenters, 0, 1);
+        desiredDefenses = Mathf.Clamp(desiredDefenses, 0, 1);
+        desiredSupplyTrucks = Mathf.Clamp(desiredSupplyTrucks, 0, 1);
+        desiredSupplyCenters = Mathf.Clamp(desiredSupplyCenters, 0, 1);
 
         // Determine the highest desire and return the corresponding DesirePriority
         float maxDesire = Mathf.Max(desiredConstructors, desiredOffensiveUnits, desiredFactories, commandCenterDanger, desiredDefenses, desiredSupplyTrucks, desiredSupplyCenters);
@@ -429,7 +442,7 @@ public class UtilitySystemEnemyAI : MonoBehaviour, IAIControllable, IAIEnemyBase
     //            SupplyDock dock = colliders[i].gameObject.GetComponent<SupplyDock>();
     //            if (dock != null) return dock;
     //        }
-            
+
     //    }
     //    return null;
     //}

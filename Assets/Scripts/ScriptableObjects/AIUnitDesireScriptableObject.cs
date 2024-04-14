@@ -10,12 +10,24 @@ public class AIUnitDesireScriptableObject : AIDesireScriptableObject
     {
         if (sampleSize > 0)
         {
-            return 1;
+            if (minimumRequirement != 0)
+            {
+                return Mathf.Abs(sampleSize / minimumRequirement - 1);
+            }
+            else
+            {
+                return 0;
+            }
         }
         else
         {
             return 0;
         }
+
+
+
+
+        
         //return base.CalculateDesire(sampleSize, minimumRequirement);
     }
 }

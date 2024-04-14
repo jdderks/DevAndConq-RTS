@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class CameraPanningBehaviour : MonoBehaviour
 {
+    [SerializeField] private GameObject enemyCommandCenter;
+
+
     [Header("Camera speeds")]
     [SerializeField] private float keyboardMovementSpeed = 5.0f;
     [SerializeField] private float edgeScrollingMovementspeed = 3.0f;
@@ -68,6 +71,11 @@ public class CameraPanningBehaviour : MonoBehaviour
             desiredMove = m_transform.InverseTransformDirection(desiredMove);
 
             m_transform.Translate(desiredMove, Space.Self);
+        }
+
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            m_transform.position = enemyCommandCenter.transform.position;
         }
     }
 }

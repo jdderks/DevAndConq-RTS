@@ -23,7 +23,7 @@ public class BuildingPositioner : MonoBehaviour
             BuildingPosition newBuildingPosition = new BuildingPosition();
 
             // Give the new buildingPosition the Vector3 position from the child object
-            newBuildingPosition.position = child.position;
+            newBuildingPosition.transform = child.transform;
 
             // Add the new BuildingPosition to the list
             buildingPositions.Add(newBuildingPosition);
@@ -71,11 +71,11 @@ public class BuildingPositioner : MonoBehaviour
         }
 
         BuildingPosition closestPosition = eligiblePositions[0];
-        float closestDistance = Vector3.Distance(transform.position, closestPosition.position);
+        float closestDistance = Vector3.Distance(transform.position, closestPosition.transform.position);
 
         foreach (BuildingPosition position in eligiblePositions)
         {
-            float distance = Vector3.Distance(transform.position, position.position);
+            float distance = Vector3.Distance(transform.position, position.transform.position);
             if (distance < closestDistance)
             {
                 closestDistance = distance;
@@ -101,6 +101,6 @@ public class BuildingPositioner : MonoBehaviour
 [System.Serializable]
 public struct BuildingPosition
 {
-    public Vector3 position;
+    public Transform transform;
     public bool occupied;
 }
