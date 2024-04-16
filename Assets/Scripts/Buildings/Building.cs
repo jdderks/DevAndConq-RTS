@@ -1,10 +1,6 @@
 using NaughtyAttributes;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public enum ConstructionState
@@ -159,7 +155,7 @@ public abstract class Building : MonoBehaviour, ISelectable, ITeamable, IDamagea
         Destroy(gameObject);
     }
 
-    public TeamColour GetTeam()
+    public virtual TeamColour GetTeam()
     {
         return ownedByTeam.teamByColour;
     }

@@ -69,8 +69,13 @@ public class ActionQueue
         {
             queueAction.OnActivate += () =>
             {
-                var unit = action.Activate().GetComponent<Unit>();
-                listToAddTo.Add(unit);
+                var unitgo = action.Activate();
+                if (unitgo != null)
+                {
+                    var unit = unitgo.GetComponent<Unit>();
+                    if (unit != null)
+                        listToAddTo.Add(unit);
+                }
             };
         }
         else

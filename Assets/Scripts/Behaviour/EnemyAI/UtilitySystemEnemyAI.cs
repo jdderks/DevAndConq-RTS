@@ -43,13 +43,13 @@ public class UtilitySystemEnemyAI : MonoBehaviour, IAIControllable, IAIEnemyBase
     [SerializeField] private SupplyDock closestSupplyDock; //The closest supplyDock for economy sake.
 
 
-    [SerializeField, ProgressBar("Constructor Desire", 1)] private float desiredConstructors = 0.5f;
-    [SerializeField, ProgressBar("Attacker Desire", 1)] private float desiredOffensiveUnits = 0.5f;
-    [SerializeField, ProgressBar("Defender Desire", 1)] private float desiredDefenses = 0.5f;
-    [SerializeField, ProgressBar("Factory Desire", 1)] private float desiredFactories = 0.5f;
-    [SerializeField, ProgressBar("SupplyCenter Desire", 1)] private float desiredSupplyCenters = 0.5f;
-    [SerializeField, ProgressBar("SupplyTruck Desire", 1)] private float desiredSupplyTrucks = 0.5f;
-    [SerializeField, ProgressBar("CommandCenter Danger", 1, EColor.Orange)] private float commandCenterDanger = 0.5f;
+    [SerializeField, ProgressBar("Constructor Desire", 1)]   private float desiredConstructors = 0.5f;
+    [SerializeField, ProgressBar("Attacker Desire", 1)]      private float desiredOffensiveUnits = 0.5f;
+    [SerializeField, ProgressBar("Defender Desire", 1)]      private float desiredDefenses = 0.5f;
+    [SerializeField, ProgressBar("Factory Desire", 1)]       private float desiredFactories = 0.5f;
+    [SerializeField, ProgressBar("SupplyCenter Desire", 1)]  private float desiredSupplyCenters = 0.5f;
+    [SerializeField, ProgressBar("SupplyTruck Desire", 1)]   private float desiredSupplyTrucks = 0.5f;
+    [SerializeField, ProgressBar("CommandCenter Danger", 1)] private float commandCenterDanger = 0.5f;
 
     [SerializeField] private AIDesireScriptableObject constructorDesireObject;
     [SerializeField] private AIWarFactoryDesireObject factoryDesireObject;

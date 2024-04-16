@@ -66,6 +66,12 @@ public class TurretBuilding : Building, IAIControllable
         return enemyObjects;
     }
 
+    public override TeamColour GetTeam()
+    {
+
+        return base.GetTeam();
+    }
+
     public List<GameObject> GetUnitsAndBuildingsInProximity()
     {
         Collider[] colliders = Physics.OverlapSphere(transform.position, detectionRadius);
@@ -107,4 +113,6 @@ public class TurretBuilding : Building, IAIControllable
 
     public override bool UnitInteract(Unit unit) { return false; } //Left empty on purpose
 
+
+    
 }

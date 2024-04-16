@@ -774,7 +774,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1618682024109760194
 Transform:
   m_ObjectHideFlags: 0
@@ -958,7 +958,7 @@ MonoBehaviour:
   isInstantiated: 0
   visualObject: {fileID: 3037041720452554887}
   constructionPlatform: {fileID: 7250035132444311075}
-  interactable: 1
+  interactable: 0
   constructionPercentageText: {fileID: 6592094094917834363}
   constructionDurationInSeconds: 20
   unitSpawnPoint: {fileID: 2054099608802601775}
@@ -2082,7 +2082,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2799234255448231145
 Transform:
   m_ObjectHideFlags: 0
